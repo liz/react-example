@@ -57,13 +57,14 @@ export default class Listing extends Component {
         super(props);
 
         this.state = {
+            selectedRepo: null,
             repos: ''
         };
     }
 
     componentDidMount() {
         const octokit = new Octokit({
-            auth: "eed7e39f1b240f6014560075954213e6d7baa93b"
+            auth: this.props.apiKey
         });
 
         octokit.repos.list({})
@@ -74,15 +75,31 @@ export default class Listing extends Component {
             });
     }
 
+    selectRepo = (index) => {
+        this.setState({ selectedRepo: index });
+    };
+
+    renderRepoList = () => {
+        const repoList = this.state.repos.map((repo, index) => (
+            <li>
+                <button title={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
+            </li>
+        ));
+
+        return repoList;
+    };
+
 	render() {
         // console.log(keys)
         console.log(this.props)
+        console.log(this.state.repos)
 		if (this.props.apiKey) {
             return (
                 <Container>
                     <Row>
                         <ColA>
                             <h2>Repos</h2>
+                            {this.state.repos && this.state.repos.length && this.renderRepoList()}
                         </ColA>
                         <ColB>
                             <h2>Issue</h2>
