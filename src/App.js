@@ -1,11 +1,14 @@
-
 import React, { Component } from 'react';
+
 // import styled from 'styled-components';
 // import MediaQueries from './media-queries';
 // import Octokit from '@octokit/rest';
 
-import { ApiKeyForm } from './api-key-form';
-import { Listing } from './listing';
+// import ApiKeyForm from './api-key-form';
+
+import SaveKey from './save-key';
+// import ConnectedListing from './connected-listing';
+import Listing from './listing';
 
 import './App.scss';
 
@@ -19,13 +22,13 @@ import './App.scss';
 
 
 export default class App extends Component {
-    constructor(props) {
-        super(props);
+    // constructor(props) {
+    //     super(props);
 
-        this.state = {
-            apiKey: ''
-        };
-    }
+    //     this.state = {
+    //         apiKey: ''
+    //     };
+    // }
 
     // componentDidMount() {
     //     const octokit = new Octokit({
@@ -76,9 +79,9 @@ export default class App extends Component {
 
     // handleChange = (event) => {
     //     console.log("HELLO handleChange")
-    //     this.setState({
-    //         apiKey: event.target.value
-    //     });
+        // this.setState({
+        //     apiKey: event.target.value
+        // });
     //     console.log("logged event.target.value: " + event.target.value)
     //     console.log("logged state: " + this.state.apiKey)
     // };
@@ -89,11 +92,29 @@ export default class App extends Component {
     //     alert('A name was submitted: ' + this.state.apiKey);
     // };
 
+    // render() {
+    //     // if (this.state.apiKey) {
+    //     //    return <ConnectedListing apiKey={this.props.apiKey} />;
+    //     // }
+
+    //     return (
+    //         <div>
+    //             <SaveKey apiKey={this.props.apiKey} />
+    //             <ConnectedListing apiKey={this.props.apiKey} />
+    //         </div>
+    //     );
+       
+    // }
+
     render() {
-        if (this.state.apiKey) {
-           return <Listing apiKey={this.props.apiKey} />;
+        console.log(this.props.apiKey[0])
+        if (this.props.apiKey && this.props.apiKey.length) {
+           return <Listing apiKey={this.props.apiKey[0].key} />;
         }
 
-        return <ApiKeyForm apiKey={this.props.apiKey} />;
+        return (
+            <SaveKey />
+        );
+       
     }
 }

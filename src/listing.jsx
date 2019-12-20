@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Octokit from '@octokit/rest';
 
 import mediaQueries from './media-queries';
 
@@ -34,8 +35,48 @@ const ColB = styled.div`
 `;
 ColB.displayName = 'ColB';
 
-export class Listing extends Component {
+// const Listing = ({ keys }) => (
+//     <Container>
+//         {console.log("keys", keys)}
+//         <Row>
+//             <ColA>
+//                 <h2>Repos</h2>
+//                 <p>{keys}</p>
+//             </ColA>
+//             <ColB>
+//                 <h2>Issue</h2>
+//             </ColB>
+//         </Row>
+//     </Container>
+// );
+
+// export default Listing;
+
+export default class Listing extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            repos: ''
+        };
+    }
+
+    componentDidMount() {
+        const octokit = new Octokit({
+            auth: "eed7e39f1b240f6014560075954213e6d7baa93b"
+        });
+
+        octokit.repos.list({})
+            .then(({ data }) => {
+                this.setState({
+                    repos: data
+                });
+            });
+    }
+
 	render() {
+        // console.log(keys)
+        console.log(this.props)
 		if (this.props.apiKey) {
             return (
                 <Container>
@@ -54,3 +95,5 @@ export class Listing extends Component {
         return null;
 	}
 }
+
+// export default Listing;
