@@ -41,30 +41,81 @@ const ColB = styled.div`
 ColB.displayName = 'ColB';
 
 export default class App extends Component {
+    constructor(props) {
+        super(props);
 
-    componentDidMount() {
-        const octokit = new Octokit({
-            auth: ""
-        });
-
-        octokit.repos.list({})
-            .then(({ data }) => {
-                console.log(data);
-            });
+        this.state = {
+            apiKey: ''
+        };
     }
 
+    // componentDidMount() {
+    //     const octokit = new Octokit({
+    //         auth: ""
+    //     });
+
+    //     octokit.repos.list({})
+    //         .then(({ data }) => {
+    //             console.log(data);
+    //         });
+    // }
+
+    renderListing = () => {
+        if (this.state.apiKey) {
+            return (
+                <Container>
+                    <Row>
+                        <ColA>
+                            <h2>Repos</h2>
+                        </ColA>
+                        <ColB>
+                            <h2>Issue</h2>
+                        </ColB>
+                    </Row>
+                </Container>
+            );
+        }
+
+        return null;
+    };
+
+    renderForm = () => {
+        if (!this.state.apiKey) {
+            return (
+                <Container>
+                    <form onSubmit={this.handleSubmit}>
+                        <fieldset>
+                            <input type="text" value={this.state.apiKey} onChange={this.handleChange} />
+                            <input type="submit" value="Submit API Key" />
+                        </fieldset>
+                    </form>
+                </Container>
+            );
+        }
+
+        return null;
+    };
+
+    handleChange = (event) => {
+        console.log("HELLO handleChange")
+        this.setState({
+            apiKey: event.target.value
+        });
+        console.log("logged event.target.value: " + event.target.value)
+        console.log("logged state: " + this.state.apiKey)
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        console.log("HELLO handleSubmit")
+        alert('A name was submitted: ' + this.state.apiKey);
+    };
+
     render() {
-        return (
-            <Container>
-                <Row>
-                    <ColA>
-                        <h2>Repos</h2>
-                    </ColA>
-                    <ColB>
-                        <h2>Issue</h2>
-                    </ColB>
-                </Row>
-            </Container>
-        );
+        if (this.state.apiKey) {
+           return this.renderListing(); 
+        }
+
+        return this.renderForm();
     }
 }
