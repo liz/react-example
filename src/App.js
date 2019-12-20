@@ -1,44 +1,22 @@
 
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import MediaQueries from './media-queries';
-import Octokit from '@octokit/rest';
+// import styled from 'styled-components';
+// import MediaQueries from './media-queries';
+// import Octokit from '@octokit/rest';
 
-const Container = styled.div`
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-`;
-Container.displayName = 'Container';
+import { ApiKeyForm } from './api-key-form';
+import { Listing } from './listing';
 
-const Row = styled.div`
-    display: flex;
-`;
-Row.displayName = 'Row';
+import './App.scss';
 
-const ColA = styled.div`
-    width: 100%;
+// const Container = styled.div`
+//     max-width: 1200px;
+//     margin-left: auto;
+//     margin-right: auto;
+// `;
+// Container.displayName = 'Container';
 
-        @media (min-width: ${MediaQueries.min.medium}) {
-            width: 33.3333%;
-            max-width: 33.3333%;
-            min-width: 33.3333%;
 
-        }
-`;
-ColA.displayName = 'ColA';
-
-const ColB = styled.div`
-    width: 100%;
-
-        @media (min-width: ${MediaQueries.min.medium}) {
-            width: 66.6667%;
-            max-width: 66.6667%;
-            min-width: 66.6667%;
-
-        }
-`;
-ColB.displayName = 'ColB';
 
 export default class App extends Component {
     constructor(props) {
@@ -60,62 +38,62 @@ export default class App extends Component {
     //         });
     // }
 
-    renderListing = () => {
-        if (this.state.apiKey) {
-            return (
-                <Container>
-                    <Row>
-                        <ColA>
-                            <h2>Repos</h2>
-                        </ColA>
-                        <ColB>
-                            <h2>Issue</h2>
-                        </ColB>
-                    </Row>
-                </Container>
-            );
-        }
+    // renderListing = () => {
+    //     if (this.state.apiKey) {
+    //         return (
+    //             <Container>
+    //                 <Row>
+    //                     <ColA>
+    //                         <h2>Repos</h2>
+    //                     </ColA>
+    //                     <ColB>
+    //                         <h2>Issue</h2>
+    //                     </ColB>
+    //                 </Row>
+    //             </Container>
+    //         );
+    //     }
 
-        return null;
-    };
+    //     return null;
+    // };
 
-    renderForm = () => {
-        if (!this.state.apiKey) {
-            return (
-                <Container>
-                    <form onSubmit={this.handleSubmit}>
-                        <fieldset>
-                            <input type="text" value={this.state.apiKey} onChange={this.handleChange} />
-                            <input type="submit" value="Submit API Key" />
-                        </fieldset>
-                    </form>
-                </Container>
-            );
-        }
+    // renderForm = () => {
+    //     if (!this.state.apiKey) {
+    //         return (
+    //             <Container>
+    //                 <form onSubmit={this.handleSubmit}>
+    //                     <fieldset>
+    //                         <input type="text" value={this.state.apiKey} onChange={this.handleChange} />
+    //                         <input type="submit" value="Submit API Key" />
+    //                     </fieldset>
+    //                 </form>
+    //             </Container>
+    //         );
+    //     }
 
-        return null;
-    };
+    //     return null;
+    // };
 
-    handleChange = (event) => {
-        console.log("HELLO handleChange")
-        this.setState({
-            apiKey: event.target.value
-        });
-        console.log("logged event.target.value: " + event.target.value)
-        console.log("logged state: " + this.state.apiKey)
-    };
+    // handleChange = (event) => {
+    //     console.log("HELLO handleChange")
+    //     this.setState({
+    //         apiKey: event.target.value
+    //     });
+    //     console.log("logged event.target.value: " + event.target.value)
+    //     console.log("logged state: " + this.state.apiKey)
+    // };
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        console.log("HELLO handleSubmit")
-        alert('A name was submitted: ' + this.state.apiKey);
-    };
+    // handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     console.log("HELLO handleSubmit")
+    //     alert('A name was submitted: ' + this.state.apiKey);
+    // };
 
     render() {
         if (this.state.apiKey) {
-           return this.renderListing(); 
+           return <Listing apiKey={this.props.apiKey} />;
         }
 
-        return this.renderForm();
+        return <ApiKeyForm apiKey={this.props.apiKey} />;
     }
 }
