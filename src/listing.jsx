@@ -92,7 +92,7 @@ export default class Listing extends Component {
     renderRepoList = () => {
         const repoList = this.state.repos.map((repo, index) => (
             <li key={index} >
-                <button title={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
+                <button title={repo.name} aria-label={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
             </li>
         ));
 
