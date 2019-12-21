@@ -82,17 +82,14 @@ const Icon = styled.span`
     order: ${(props) => (props.iconOnRight ? '2' : '0')};
     padding-right: ${(props) => (props.iconOnRight ? '0' : '5px')};
     padding-left: ${(props) => (props.iconOnRight ? '5px' : '0')};
-
-    &:empty {
-    	padding-left: 0;
-    	padding-right: 0;
-    }
 `;
 Icon.displayName = 'Icon';
 
 const Text = styled.span`
     display: flex;
     align-items: center;
+    padding-left: ${(props) => (props.iconOnRight ? '5px' : '0')};
+	padding-right: ${(props) => (props.iconOnRight ? '0' : '5px')};
 `;
 Text.displayName = 'Text';
 
@@ -124,7 +121,7 @@ export class Button extends Component {
 
     renderText = () => {
         if (this.props.buttonText) {
-            return <Text>{this.props.buttonText}</Text>;
+            return <Text iconOnRight={this.props.iconOnRight}>{this.props.buttonText}</Text>;
         }
         return null;
     };

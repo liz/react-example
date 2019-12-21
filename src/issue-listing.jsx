@@ -51,21 +51,30 @@ const TableHeader = styled.thead`
 `;
 
 const SortArrow = styled.span`
-	display: inline-block;
 	height: 0;
 	width: 0;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
+	// margin-left: 5px;
+
+	// &.asc,
+	// &.desc {
+	// 	margin-left: 5px;
+	// }
 
 	&.asc {
-		border-bottom: 5px solid black;
+		border-bottom: 5px solid ${(props) => props.color};;
 	}
 
 	&.desc {
-		border-top: 5px solid black;
+		border-top: 5px solid ${(props) => props.color};;
 	}
 `;
 SortArrow.displayName = 'SortArrow';
+
+SortArrow.defaultProps = {
+	color: theme.primaryColor
+}
 
 export default class IssueListing extends Component {
 	   constructor(props) {
