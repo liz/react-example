@@ -97,7 +97,6 @@ Image.propTypes = {
 };
 
 Image.defaultProps = {
-    src: 'https://www.globalcitizen.org/static/img/festival-banner.png',
     width: '100%',
     height: 'auto',
     maxWidth: '100%',

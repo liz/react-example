@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Octokit from '@octokit/rest';
 
 import { LoadingSpinner } from './components/loading-spinner';
+import { Image } from './components/image';
 
 const SortArrow = styled.span`
 	display: inline-block;
@@ -51,6 +52,9 @@ export default class IssueListing extends Component {
                     issues: data,
                     isLoaded: true
                 });
+                // console.log(data[0].assignee)
+                // console.log(data[0].assignee.login)
+                // console.log(data[0].assignee.avatar_url)
             });
     };
 
@@ -91,7 +95,7 @@ export default class IssueListing extends Component {
         }
         
         this.setState({
-          data: sortedData,
+          issues: sortedData,
           sort: {
             column,
             direction,
@@ -150,7 +154,7 @@ export default class IssueListing extends Component {
 							return (
 								<tr key={index}>
 									<td>
-										<img src={issue.avatar_url} alt="" width="25px" />
+										<Image src={issue.assignee && issue.assignee.avatar_url} alt={issue.assignee && issue.assignee.login} width="40px" height="40px" />
 									</td>
 									<td>{issue.title}</td>
 									<td>{issue.created_at}</td>
