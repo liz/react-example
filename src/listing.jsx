@@ -47,7 +47,6 @@ export default class Listing extends Component {
         this.state = {
             selectedRepo: null,
             repos: '',
-            user: '',
             isLoaded: false
         };
     }
@@ -65,12 +64,12 @@ export default class Listing extends Component {
                 });
             });
 
-        octokit.users.getAuthenticated().then(({ data }) => {
-                this.setState({
-                    user: data
-                });
-                console.log(data)
-            });
+        // octokit.users.getAuthenticated().then(({ data }) => {
+        //         this.setState({
+        //             user: data
+        //         });
+        //         console.log(data)
+        //     });
     }
 
     selectRepo = (index) => {
@@ -102,7 +101,10 @@ export default class Listing extends Component {
                         </ColA>
                         <ColB>
                             <h2>Issue</h2>
-                            <IssueListing selectedRepo={this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].name} user={this.state.user && this.state.user.name} />
+                            <IssueListing 
+                                selectedRepoName={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].name} 
+                                selectedRepoOwner={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].owner && this.state.repos[this.state.selectedRepo].owner.login} 
+                            />
                         </ColB>
                     </Row>
                 </Container>
@@ -112,5 +114,10 @@ export default class Listing extends Component {
         return null;
 	}
 }
+
+Listing.defaultProps = {
+    selectedRepoId: null,
+    selectedRepoOwner: null
+};
 
 // export default Listing;

@@ -55,12 +55,6 @@ const SortArrow = styled.span`
 	width: 0;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	// margin-left: 5px;
-
-	// &.asc,
-	// &.desc {
-	// 	margin-left: 5px;
-	// }
 
 	&.asc {
 		border-bottom: 5px solid ${(props) => props.color};;
@@ -81,7 +75,7 @@ export default class IssueListing extends Component {
         super(props);
 
         this.state = {
-            issues: '',
+            issues: null,
             sort: {
            		column: 'created_at',
            		direction: 'desc'
@@ -96,20 +90,29 @@ export default class IssueListing extends Component {
         });
 
         octokit.issues.listForRepo({
-        	owner: this.props.user,
-        	repo: this.props.selectedRepo
+        	owner: this.props.selectedRepoOwner,
+        	repo: this.props.selectedRepoName
         }).then(({ data }) => {
+        		console.log(data)
                 this.setState({
                     issues: data,
+                    isLoaded: true
+                });
+            }).catch(err => {
+            	console.log(err)
+            	this.setState({
+                    issues: [],
                     isLoaded: true
                 });
             });
     };
 
     componentDidUpdate(prevProps) {
-        if (prevProps.selectedRepo !== this.props.selectedRepo) {
-        	this.setState({ isLoaded: false });
-            this.fetchIssues();
+        if (prevProps.selectedRepoName !== this.props.selectedRepoName) {
+        	if (this.props.selectedRepoOwner && this.props.selectedRepoName) {
+        		this.setState({ isLoaded: false });
+            	this.fetchIssues();
+        	}
         }
     }
 
@@ -231,6 +234,10 @@ export default class IssueListing extends Component {
 		    );
     	}
 
+    	if (this.state.isLoaded && this.state.issues && !this.state.issues.length) {
+    		return <p>This repo has no issues.</p>;
+    	}
+    	
     	return <LoadingSpinner />;
     };
 
