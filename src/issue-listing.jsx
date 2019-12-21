@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { darken } from 'polished';
 import Octokit from '@octokit/rest';
 
 import theme from './theme';
 
 import { LoadingSpinner } from './components/loading-spinner';
 import { Image } from './components/image';
+import { Button } from './components/button';
 
 const Table = styled.table`
     table-layout: auto;
     margin-top: 0;
-    th,
     td {
         padding: 1.5rem ${theme.gutter};
     }
@@ -20,12 +21,25 @@ const Table = styled.table`
     }
     tr {
         &:nth-child(even) {
-            background: #ccc;
+            background: ${theme.backgroundAlt};
         }
         td {
             border-bottom: 0;
             max-width: 350px;
         }
+    }
+`;
+
+const TableHeader = styled.thead`
+    th {
+        border-bottom: 0;
+        background: ${theme.backgroundAlt};
+    }
+
+    button {
+    	width: 100%;
+    	height: 100%;
+    	padding: 0.75rem ${theme.gutter};
     }
 `;
 
@@ -135,38 +149,46 @@ export default class IssueListing extends Component {
     	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
 			return (
 				<Table>
-					<thead>
+					<TableHeader>
 						<tr>
 							<th>
-								<button 
-									onClick={this.onSort('avatar_url')}  
-								>
-									Assignee <SortArrow className={this.setArrow('avatar_url')}></SortArrow>
-								</button>
+								<Button 
+									handleClick={this.onSort('avatar_url')} 
+									buttonText="Assignee"
+									icon={<SortArrow className={this.setArrow('avatar_url')}></SortArrow>}
+									iconOnRight
+									className="btn btn--link"
+								/>
 							</th>
 							<th>
-								<button 
-									onClick={this.onSort('title')}  
-								>
-									Title <SortArrow className={this.setArrow('title')}></SortArrow>
-								</button>
+								<Button 
+									handleClick={this.onSort('title')}  
+									buttonText="Title"
+									icon={<SortArrow className={this.setArrow('title')}></SortArrow>}
+									iconOnRight
+									className="btn btn--link"
+								/>
 							</th>
 							<th>
-								<button 
-									onClick={this.onSort('created_at')}  
-								>
-									Created Time <SortArrow className={this.setArrow('created_at')}></SortArrow>
-								</button>
+								<Button 
+									handleClick={this.onSort('created_at')}
+									buttonText="Time Created"
+									icon={<SortArrow className={this.setArrow('created_at')}></SortArrow>}
+									iconOnRight
+									className="btn btn--link"
+								/>
 							</th>
 							<th>
-								<button 
-									onClick={this.onSort('last_updated')}  
-								>
-									Last Updated <SortArrow className={this.setArrow('last_updated')}></SortArrow>
-								</button>
+								<Button 
+									handleClick={this.onSort('last_updated')}  
+									buttonText="Last Updated "
+									icon={<SortArrow className={this.setArrow('last_updated')}></SortArrow>}
+									iconOnRight
+									className="btn btn--link"
+								/>
 							</th>
 						</tr>
-					</thead>
+					</TableHeader>
 					<tbody>
 						{this.state.issues && this.state.issues.map(function(issue, index) {
 							return (
