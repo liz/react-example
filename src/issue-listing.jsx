@@ -38,9 +38,6 @@ export default class IssueListing extends Component {
             auth: this.props.apiKey
         });
 
-        console.log("selectedRepoOwner", this.props.selectedRepoOwner)
-        console.log("selectedRepoId", this.props.selectedRepoId)
-
         octokit.issues.listForRepo({
         	owner: this.props.user,
         	repo: this.props.selectedRepo
@@ -61,8 +58,6 @@ export default class IssueListing extends Component {
 
     onSort = (column) => (e) => {
         const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-        console.log("this.state.issues:")
-        console.log(this.state.issues)
 
         const sortedData = this.state.issues.sort((a, b) => {
 		if (column === 'title') {
@@ -82,13 +77,11 @@ export default class IssueListing extends Component {
 			} else if (column === 'updated_at') {
 				return a.updated_at - b.updated_at; 
 			} else {
-				console.log("else ran")
 				return a.created_at - b.created_at;
 			}
         });
           
         if (direction === 'desc') {
-        	console.log("direction === 'desc' ran")
           sortedData.reverse();
         }
         
@@ -102,8 +95,6 @@ export default class IssueListing extends Component {
       };
 
        setArrow = (column) => {
-      	// console.log("set arrow ran, column:")
-      	// console.log(column)
         let className = 'sort-direction';
         
         if (this.state.sort.column === column) {
@@ -111,12 +102,7 @@ export default class IssueListing extends Component {
       		console.log(column)
       		console.log('this.state.sort.direction:', this.state.sort.direction)
         	className += this.state.sort.direction === 'asc' ? ' asc' : ' desc';
-        } else {
-        	console.log("set arrow ELSE RAN, column:")
-        	console.log(column)
         }
-        
-        console.log("className", className);
         
         return className;
     };
@@ -162,7 +148,7 @@ export default class IssueListing extends Component {
 							return (
 								<tr key={index}>
 									<td>
-										<img src={issue.avatar_url} title="" width="25px" />
+										<img src={issue.avatar_url} alt="" width="25px" />
 									</td>
 									<td>{issue.title}</td>
 									<td>{issue.created_at}</td>
