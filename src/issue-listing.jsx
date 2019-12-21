@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { darken } from 'polished';
 import Octokit from '@octokit/rest';
 
 import theme from './theme';
@@ -12,17 +11,21 @@ import { Button } from './components/button';
 const Table = styled.table`
     table-layout: auto;
     margin-top: 0;
+
     td {
         padding: 1.5rem ${theme.gutter};
     }
+
     td,
     tr {
-        vertical-align: top;
+        vertical-align: middle;
     }
+
     tr {
         &:nth-child(even) {
             background: ${theme.backgroundAlt};
         }
+
         td {
             border-bottom: 0;
             max-width: 350px;
@@ -194,7 +197,7 @@ export default class IssueListing extends Component {
 							return (
 								<tr key={index}>
 									<td>
-										<Image src={issue.assignee && issue.assignee.avatar_url} alt={issue.assignee && issue.assignee.login} width="40px" height="40px" />
+										{(issue.assignee && issue.assignee.avatar_url) ? <Image src={issue.assignee.avatar_url} alt={issue.assignee.login} width="40px" height="40px" /> : "None"}
 									</td>
 									<td>{issue.title}</td>
 									<td>{issue.created_at}</td>
