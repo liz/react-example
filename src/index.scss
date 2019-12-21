@@ -16,6 +16,15 @@ code {
     monospace;
 }
 
+h1, h2, h3 h4, h5 {
+	margin-top: $base-type-spacing;
+	margin-bottom: $base-type-spacing;
+}
+
+p {
+	margin-top: $base-type-spacing;
+}
+
 h1 {
 	font-size: $xxlarge-base-font;
 }
