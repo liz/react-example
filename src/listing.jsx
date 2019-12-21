@@ -5,6 +5,7 @@ import Octokit from '@octokit/rest';
 import mediaQueries from './media-queries';
 
 import { Container } from './components/container';
+import { LoadingSpinner } from './components/loading-spinner';
 
 import IssueListing from './issue-listing';
 
@@ -61,7 +62,8 @@ export default class Listing extends Component {
         this.state = {
             selectedRepo: null,
             repos: '',
-            user: ''
+            user: '',
+            isLoaded: false
         };
     }
 
@@ -73,7 +75,8 @@ export default class Listing extends Component {
         octokit.repos.list({})
             .then(({ data }) => {
                 this.setState({
-                    repos: data
+                    repos: data,
+                    isLoaded: true
                 });
             });
 
@@ -89,14 +92,32 @@ export default class Listing extends Component {
         this.setState({ selectedRepo: index });
     };
 
-    renderRepoList = () => {
-        const repoList = this.state.repos.map((repo, index) => (
-            <li key={index} >
-                <button title={repo.name} aria-label={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
-            </li>
-        ));
+    // renderRepoList = () => {
+    //     const repoList = this.state.repos.map((repo, index) => (
+    //         <li key={index} >
+    //             <button title={repo.name} aria-label={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
+    //         </li>
+    //     ));
 
-        return repoList;
+    //     return repoList;
+    // };
+
+    renderRepoList = () => {
+        // if (!this.state.isLoaded) {
+        //     return <LoadingSpinner />
+        // }
+
+        if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
+            const repoList = this.state.repos.map((repo, index) => (
+                <li key={index} >
+                    <button title={repo.name} aria-label={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
+                </li>
+            ));
+
+            return repoList;
+        }
+
+        return <LoadingSpinner />;
     };
 
 	render() {
@@ -106,7 +127,7 @@ export default class Listing extends Component {
                     <Row>
                         <ColA>
                             <h2>Repos</h2>
-                            {this.state.repos && this.state.repos.length && this.renderRepoList()}
+                            {this.renderRepoList()}
                         </ColA>
                         <ColB>
                             <h2>Issue</h2>
