@@ -38,8 +38,6 @@ export default class IssueListing extends Component {
     }
 
     fetchIssues = () => {
-    	// this.setState({ isLoaded: false });
-
     	const octokit = new Octokit({
             auth: this.props.apiKey
         });
@@ -52,9 +50,6 @@ export default class IssueListing extends Component {
                     issues: data,
                     isLoaded: true
                 });
-                // console.log(data[0].assignee)
-                // console.log(data[0].assignee.login)
-                // console.log(data[0].assignee.avatar_url)
             });
     };
 
@@ -171,72 +166,10 @@ export default class IssueListing extends Component {
     };
 
      render() {
-    	// if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
-    	// 	return enderIssueTable()''
-    	// }
-
     	if (this.state.isLoaded === null) {
     		return <p>Please select a repo from the lefthand column</p>;
     	}
 
     	return this.renderIssueTable();
     }
-
-   //  render() {
-   //  	if (this.state.issues && this.state.issues.length) {
-			// return (
-			// 	<table>
-			// 		<thead>
-			// 			<tr>
-			// 				<th>
-			// 					<button 
-			// 						onClick={this.onSort('avatar_url')}  
-			// 					>
-			// 						Assignee <SortArrow className={this.setArrow('avatar_url')}></SortArrow>
-			// 					</button>
-			// 				</th>
-			// 				<th>
-			// 					<button 
-			// 						onClick={this.onSort('title')}  
-			// 					>
-			// 						Title <SortArrow className={this.setArrow('title')}></SortArrow>
-			// 					</button>
-			// 				</th>
-			// 				<th>
-			// 					<button 
-			// 						onClick={this.onSort('created_at')}  
-			// 					>
-			// 						Created Time <SortArrow className={this.setArrow('created_at')}></SortArrow>
-			// 					</button>
-			// 				</th>
-			// 				<th>
-			// 					<button 
-			// 						onClick={this.onSort('last_updated')}  
-			// 					>
-			// 						Last Updated <SortArrow className={this.setArrow('last_updated')}></SortArrow>
-			// 					</button>
-			// 				</th>
-			// 			</tr>
-			// 		</thead>
-			// 		<tbody>
-			// 			{this.state.issues && this.state.issues.map(function(issue, index) {
-			// 				return (
-			// 					<tr key={index}>
-			// 						<td>
-			// 							<img src={issue.avatar_url} alt="" width="25px" />
-			// 						</td>
-			// 						<td>{issue.title}</td>
-			// 						<td>{issue.created_at}</td>
-			// 						<td>{issue.updated_at}</td>
-			// 					</tr>
-			// 				);
-			// 			})}
-			// 		</tbody>
-			// 	</table>
-		 //    );
-   //  	}
-
-   //  	return <p>Please select a repo from the lefthand column</p>;
-   //  }
-
 }
