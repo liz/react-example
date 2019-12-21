@@ -38,23 +38,6 @@ const ColB = styled.div`
 `;
 ColB.displayName = 'ColB';
 
-// const Listing = ({ keys }) => (
-//     <Container>
-//         {console.log("keys", keys)}
-//         <Row>
-//             <ColA>
-//                 <h2>Repos</h2>
-//                 <p>{keys}</p>
-//             </ColA>
-//             <ColB>
-//                 <h2>Issue</h2>
-//             </ColB>
-//         </Row>
-//     </Container>
-// );
-
-// export default Listing;
-
 export default class Listing extends Component {
     constructor(props) {
         super(props);
@@ -92,21 +75,7 @@ export default class Listing extends Component {
         this.setState({ selectedRepo: index });
     };
 
-    // renderRepoList = () => {
-    //     const repoList = this.state.repos.map((repo, index) => (
-    //         <li key={index} >
-    //             <button title={repo.name} aria-label={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
-    //         </li>
-    //     ));
-
-    //     return repoList;
-    // };
-
     renderRepoList = () => {
-        // if (!this.state.isLoaded) {
-        //     return <LoadingSpinner />
-        // }
-
         if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
             const repoList = this.state.repos.map((repo, index) => (
                 <li key={index} >
@@ -131,7 +100,6 @@ export default class Listing extends Component {
                         </ColA>
                         <ColB>
                             <h2>Issue</h2>
-                            {console.log(this.state.user)}
                             <IssueListing selectedRepo={this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].name} user={this.state.user && this.state.user.name} />
                         </ColB>
                     </Row>
