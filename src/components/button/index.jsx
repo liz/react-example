@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { darken } from 'polished';
 
 import theme from '../../theme';
@@ -82,6 +82,11 @@ const Icon = styled.span`
     order: ${(props) => (props.iconOnRight ? '2' : '0')};
     padding-right: ${(props) => (props.iconOnRight ? '0' : '5px')};
     padding-left: ${(props) => (props.iconOnRight ? '5px' : '0')};
+
+    &:empty {
+    	padding-left: 0;
+    	padding-right: 0;
+    }
 `;
 Icon.displayName = 'Icon';
 

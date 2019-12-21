@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Octokit from '@octokit/rest';
+import Moment from 'react-moment';
 
 import theme from './theme';
 
@@ -9,11 +10,13 @@ import { Image } from './components/image';
 import { Button } from './components/button';
 
 const Table = styled.table`
+	width: 100%;
     table-layout: auto;
     margin-top: 0;
 
     td {
         padding: 1.5rem ${theme.gutter};
+        text-align: center;
     }
 
     td,
@@ -43,6 +46,7 @@ const TableHeader = styled.thead`
     	width: 100%;
     	height: 100%;
     	padding: 0.75rem ${theme.gutter};
+    	font-size: ${theme.mediumBaseFont};
     }
 `;
 
@@ -200,8 +204,16 @@ export default class IssueListing extends Component {
 										{(issue.assignee && issue.assignee.avatar_url) ? <Image src={issue.assignee.avatar_url} alt={issue.assignee.login} width="40px" height="40px" /> : "None"}
 									</td>
 									<td>{issue.title}</td>
-									<td>{issue.created_at}</td>
-									<td>{issue.updated_at}</td>
+									<td>
+										<Moment format="MM/DD/YYYY">
+							                {issue.created_at}
+							            </Moment>
+									</td>
+									<td>
+										<Moment fromNow>
+											{issue.updated_at}
+										</Moment>
+									</td>
 								</tr>
 							);
 						})}

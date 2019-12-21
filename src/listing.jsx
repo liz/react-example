@@ -10,7 +10,9 @@ import { LoadingSpinner } from './components/loading-spinner';
 import IssueListing from './issue-listing';
 
 const Row = styled.div`
-    display: flex;
+    @media (min-width: ${mediaQueries.min.medium}) {
+        display: flex;
+    }
 `;
 Row.displayName = 'Row';
 
