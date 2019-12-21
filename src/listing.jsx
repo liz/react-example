@@ -6,6 +6,8 @@ import mediaQueries from './media-queries';
 
 import { Container } from './components/container';
 
+import IssueListing from './issue-listing';
+
 const Row = styled.div`
     display: flex;
 `;
@@ -58,7 +60,8 @@ export default class Listing extends Component {
 
         this.state = {
             selectedRepo: null,
-            repos: ''
+            repos: '',
+            user: ''
         };
     }
 
@@ -73,6 +76,13 @@ export default class Listing extends Component {
                     repos: data
                 });
             });
+
+        octokit.users.getAuthenticated().then(({ data }) => {
+                this.setState({
+                    user: data
+                });
+                console.log(data)
+            });
     }
 
     selectRepo = (index) => {
@@ -81,7 +91,7 @@ export default class Listing extends Component {
 
     renderRepoList = () => {
         const repoList = this.state.repos.map((repo, index) => (
-            <li>
+            <li key={index} >
                 <button title={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
             </li>
         ));
@@ -90,9 +100,6 @@ export default class Listing extends Component {
     };
 
 	render() {
-        // console.log(keys)
-        console.log(this.props)
-        console.log(this.state.repos)
 		if (this.props.apiKey) {
             return (
                 <Container>
@@ -103,6 +110,8 @@ export default class Listing extends Component {
                         </ColA>
                         <ColB>
                             <h2>Issue</h2>
+                            {console.log(this.state.user)}
+                            <IssueListing selectedRepo={this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].name} user={this.state.user && this.state.user.name} />
                         </ColB>
                     </Row>
                 </Container>
