@@ -2,8 +2,32 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Octokit from '@octokit/rest';
 
+import theme from './theme';
+
 import { LoadingSpinner } from './components/loading-spinner';
 import { Image } from './components/image';
+
+const Table = styled.table`
+    table-layout: auto;
+    margin-top: 0;
+    th,
+    td {
+        padding: 1.5rem ${theme.gutter};
+    }
+    td,
+    tr {
+        vertical-align: top;
+    }
+    tr {
+        &:nth-child(even) {
+            background: #ccc;
+        }
+        td {
+            border-bottom: 0;
+            max-width: 350px;
+        }
+    }
+`;
 
 const SortArrow = styled.span`
 	display: inline-block;
@@ -21,7 +45,6 @@ const SortArrow = styled.span`
 	}
 `;
 SortArrow.displayName = 'SortArrow';
-
 
 export default class IssueListing extends Component {
 	   constructor(props) {
@@ -111,7 +134,7 @@ export default class IssueListing extends Component {
     renderIssueTable  = () => {
     	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
 			return (
-				<table>
+				<Table>
 					<thead>
 						<tr>
 							<th>
@@ -158,7 +181,7 @@ export default class IssueListing extends Component {
 							);
 						})}
 					</tbody>
-				</table>
+				</Table>
 		    );
     	}
 
