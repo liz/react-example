@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Octokit from '@octokit/rest';
 
 import mediaQueries from './media-queries';
