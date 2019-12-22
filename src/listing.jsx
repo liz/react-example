@@ -6,23 +6,26 @@ import theme from './theme';
 import mediaQueries from './media-queries';
 
 import { Container } from './components/container';
+import { Row } from './components/row';
 import { LoadingSpinner } from './components/loading-spinner';
 import { Button } from './components/button';
 
 import IssueListing from './issue-listing';
 import SaveKey from './save-key';
 
-const Row = styled.div`
-    margin-left: -${theme.gutter};
-    margin-right: -${theme.gutter};
+// const Row = styled.div`
+//     margin-left: -${theme.gutter};
+//     margin-right: -${theme.gutter};
 
-    @media (min-width: ${mediaQueries.min.medium}) {
-        display: flex;
-    }
-`;
-Row.displayName = 'Row';
+//     @media (min-width: ${mediaQueries.min.medium}) {
+//         display: flex;
+//     }
+// `;
+// Row.displayName = 'Row';
 
 const ColA = styled.div`
+    box-sizing: border-box;
+    width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
 
@@ -33,6 +36,8 @@ const ColA = styled.div`
 ColA.displayName = 'ColA';
 
 const ColB = styled.div`
+    box-sizing: border-box;
+    width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
 

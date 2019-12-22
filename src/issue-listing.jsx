@@ -4,6 +4,7 @@ import Octokit from '@octokit/rest';
 import Moment from 'react-moment';
 
 import theme from './theme';
+import mediaQueries from './media-queries';
 
 import { LoadingSpinner } from './components/loading-spinner';
 import { Image } from './components/image';
@@ -13,7 +14,11 @@ const Table = styled.table`
 	width: 100%;
     table-layout: auto;
     margin-top: 0;
-    font-size: ${theme.smallBaseFont};
+    font-size: ${theme.xxsmallBaseFont};
+
+    @media (min-width: ${mediaQueries.min.medium}) {
+    	font-size: ${theme.smallBaseFont};
+    }
 
     td {
         padding: 1.5rem ${theme.gutter};
@@ -47,7 +52,11 @@ const TableHeader = styled.thead`
     	width: 100%;
     	height: 100%;
     	padding: 0.75rem ${theme.gutter};
-    	font-size: ${theme.mediumBaseFont};
+    	font-size: ${theme.smallBaseFont};
+
+    	@media (min-width: ${mediaQueries.min.medium}) {
+    		font-size: ${theme.baseFontSize};
+    	}
     }
 `;
 

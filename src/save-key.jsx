@@ -13,6 +13,7 @@ import { FormInput } from './components/form-input';
 import { Button } from './components/button';
 
 const Col = styled.div`
+    box-sizing: border-box;
     width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
