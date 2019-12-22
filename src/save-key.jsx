@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { connect } from 'react-redux'
 
@@ -19,17 +19,30 @@ const Col = styled.div`
 `;
 Col.displayName = 'Col';
 
-const SaveKey = ({ dispatch }, props) => {
-    const [value, setValue] = useState('');
+const SaveKey = ({ dispatch }) => {
+    const [fieldValue, setFieldValue] = useState('');
+    const [buttonDisabled, setButtonDisabled] = useState(true);
 
     const onSubmit = (event) => {
         event.preventDefault();
-        dispatch(saveKey(value))
+        dispatch(saveKey(fieldValue))
+    }; 
+
+    useEffect(() => {
+        if (fieldValue) {
+            setButtonDisabled(false)
+        } else {
+            setButtonDisabled(true)
+        }
+    }, [fieldValue]);
+
+    const onFieldChange = (event) => {
+        setFieldValue(event.target.value)
     }; 
 
     return (
         <Container>
-            <Row breakPoint={props.breakPoint}>
+            <Row>
                 <Col>
                     <form
                         onSubmit={(event) => onSubmit(event)}
@@ -38,16 +51,18 @@ const SaveKey = ({ dispatch }, props) => {
                             <Row>
                                 <Col>
                                     <FormInput
-                                        value={value}
-                                        fieldChange={e => setValue(e.target.value)} 
+                                        value={fieldValue}
+                                        fieldChange={event => onFieldChange(event)} 
+                                        placeHolder="Github API Key"
                                     />
                                 </Col>
                             </Row>
-                            <Row breakPoint={props.breakPoint}>
+                            <Row>
                                 <Col>
                                     <Button 
                                         type="submit"
-                                        buttonText="Submit ApiKey"
+                                        buttonText="Submit"
+                                        disabled={buttonDisabled}
                                     />
                                 </Col>
                             </Row>
@@ -57,10 +72,6 @@ const SaveKey = ({ dispatch }, props) => {
             </Row>
         </Container>
     );
-}
-
-SaveKey.defaultProps = {
-    breakPoint: null
 }
 
 export default connect()(SaveKey)

@@ -29,6 +29,7 @@ export const FormInput = (props) => {
 			type={props.fieldType}
 			name={props.fieldId}
 			value={props.value}
+			placeholder={props.placeHolder}
 	        onChange={(event) => onChange(event)}
 	        required={props.required}
 	        disabled={props.disabled}
