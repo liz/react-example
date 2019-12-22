@@ -27,8 +27,6 @@ const ColA = styled.div`
 
         @media (min-width: ${mediaQueries.min.medium}) {
             width: 33.3333%;
-            max-width: 33.3333%;
-            min-width: 33.3333%;
 
         }
 `;
@@ -41,9 +39,6 @@ const ColB = styled.div`
 
         @media (min-width: ${mediaQueries.min.medium}) {
             width: 66.6667%;
-            max-width: 66.6667%;
-            min-width: 66.6667%;
-
         }
 `;
 ColB.displayName = 'ColB';
