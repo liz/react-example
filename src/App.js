@@ -5,8 +5,8 @@ import Listing from './listing';
 
 export default class App extends Component {
     render() {
-        if (this.props.apiKey && this.props.apiKey.length) {
-           return <Listing apiKey={this.props.apiKey[0].key} />;
+        if (this.props.apiKey && this.props.apiKey.key) {
+           return <Listing apiKey={this.props.apiKey.key} />;
         }
 
         return (

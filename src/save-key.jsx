@@ -26,23 +26,39 @@ const OuterCol = styled(Col)`
 `;
 OuterCol.displayName = 'OuterCol';
 
-const SaveKey = ({ dispatch }) => {
+const SaveKey = (props) => {
     const [fieldValue, setFieldValue] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
-    const [fieldError, setFieldError] = useState('');
+    // const [fieldError, setFieldError] = useState('');
+    // const [fieldError, setFieldError] = useState('');
+    const [fieldError, setFieldError] = useState(...props.fieldError);
+
+    // useEffect(() => {
+    //     if (fieldValue) {
+    //         setButtonDisabled(false)
+    //     } else {
+    //         setButtonDisabled(true)
+    //     }
+
+    //     setFieldError(props.fieldError);
+    // }, [fieldValue], [setFieldError], props.fieldError);
 
     useEffect(() => {
-        if (fieldValue) {
+        setFieldError(props.fieldError);
+
+        if (fieldValue || fieldError) {
             setButtonDisabled(false)
         } else {
             setButtonDisabled(true)
         }
-    }, [fieldValue]);
+    }, [props.fieldError, fieldValue, fieldError]);
 
     const onSubmit = (event) => {
         event.preventDefault();
+        console.log(fieldValue)
         if (fieldValue) {
-            dispatch(saveKey(fieldValue))
+            console.log("should dispatch")
+            props.dispatch(saveKey(fieldValue))
         } else {
             setFieldError("Please enter an API Key")
         }
@@ -86,5 +102,9 @@ const SaveKey = ({ dispatch }) => {
         </Container>
     );
 }
+
+SaveKey.defaultProps = {
+    fieldError: '',
+};
 
 export default connect()(SaveKey)

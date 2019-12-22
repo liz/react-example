@@ -9,6 +9,7 @@ import { Container } from './components/container';
 import { LoadingSpinner } from './components/loading-spinner';
 
 import IssueListing from './issue-listing';
+import SaveKey from './save-key';
 
 const Row = styled.div`
     margin-left: -${theme.gutter};
@@ -54,7 +55,41 @@ export default class Listing extends Component {
         };
     }
 
-    componentDidMount() {
+    // componentDidMount() {
+    //     const octokit = new Octokit({
+    //         auth: this.props.apiKey
+    //     });
+
+    //     octokit.repos.list({})
+    //         .then(({ data }) => {
+    //             this.setState({
+    //                 repos: data,
+    //                 isLoaded: true
+    //             });
+    //         });
+    // }
+
+    // componentDidMount() {
+    //     const octokit = new Octokit({
+    //         auth: this.props.apiKey
+    //     });
+
+    //     octokit.repos.list({})
+    //         .then(({ data }) => {
+    //             this.setState({
+    //                 repos: data,
+    //                 isLoaded: true
+    //             });
+    //         }).catch(err => {
+    //             this.setState({
+    //                 repos: [],
+    //                 isLoaded: true,
+    //                 fieldError: "Api Key not accepted, please try again."
+    //             });
+    //         });;
+    // }
+
+    fetchRepos = () => {
         const octokit = new Octokit({
             auth: this.props.apiKey
         });
@@ -65,14 +100,30 @@ export default class Listing extends Component {
                     repos: data,
                     isLoaded: true
                 });
-            });
+            }).catch(err => {
+                this.setState({
+                    repos: [],
+                    isLoaded: true,
+                    fieldError: "Api Key not accepted, please try again."
+                });
+            });;
+    };
 
-        // octokit.users.getAuthenticated().then(({ data }) => {
-        //         this.setState({
-        //             user: data
-        //         });
-        //         console.log(data)
-        //     });
+    componentDidMount() {
+        if (this.props.apiKey) {
+            this.fetchRepos();
+        }
+    };
+
+    componentDidUpdate(prevProps) {
+        console.log(prevProps.apiKey)
+        if (prevProps.apiKey !== this.props.apiKey) {
+            console.log("prevProps check ran")
+            if (this.props.apiKey) {
+                // this.setState({ isLoaded: false });
+                this.fetchRepos();
+            }
+        }
     }
 
     selectRepo = (index) => {
@@ -94,7 +145,7 @@ export default class Listing extends Component {
     };
 
 	render() {
-		if (this.props.apiKey) {
+		if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
             return (
                 <Container>
                     <Row>
@@ -114,7 +165,9 @@ export default class Listing extends Component {
             );
         }
 
-        return null;
+        return <SaveKey fieldError={this.state.fieldError} />;
+
+        // return null;
 	}
 }
 
