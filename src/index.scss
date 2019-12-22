@@ -32,3 +32,8 @@ h1 {
 h2 {
 	font-size: $xlarge-base-font;
 }
+
+input {
+	padding: $button-padding;
+	border-radius: $button-radius;
+}

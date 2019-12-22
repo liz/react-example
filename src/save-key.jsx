@@ -14,6 +14,7 @@ const Col = styled.div`
     width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
+    text-align: center;
 `;
 Col.displayName = 'Col';
 

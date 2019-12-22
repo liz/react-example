@@ -12,8 +12,8 @@ const ColoredButton = styled.button`
         background-color: ${(props) => props.color};
         cursor: pointer;
         font-weight: bold;
-        padding: 10px 5px;
-        border-radius: 5px;
+        padding: ${theme.buttonPadding};
+        border-radius: ${theme.buttonRadius};
 
         &:hover {
             background-image: ${(props) =>
