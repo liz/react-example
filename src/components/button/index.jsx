@@ -10,6 +10,7 @@ const ColoredButton = styled.button`
         min-width: ${(props) => props.minWidth};
         background-color: ${(props) => props.color};
         cursor: pointer;
+        font-weight: bold;
 
         &:hover {
             background-image: ${(props) =>

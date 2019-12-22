@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components/macro';
 import Octokit from '@octokit/rest';
 
+import theme from './theme';
 import mediaQueries from './media-queries';
 
 import { Container } from './components/container';
@@ -10,6 +11,9 @@ import { LoadingSpinner } from './components/loading-spinner';
 import IssueListing from './issue-listing';
 
 const Row = styled.div`
+    margin-left: -${theme.gutter};
+    margin-right: -${theme.gutter};
+
     @media (min-width: ${mediaQueries.min.medium}) {
         display: flex;
     }
@@ -18,6 +22,8 @@ Row.displayName = 'Row';
 
 const ColA = styled.div`
     width: 100%;
+    padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
 
         @media (min-width: ${mediaQueries.min.medium}) {
             width: 33.3333%;
@@ -30,6 +36,8 @@ ColA.displayName = 'ColA';
 
 const ColB = styled.div`
     width: 100%;
+    padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
 
         @media (min-width: ${mediaQueries.min.medium}) {
             width: 66.6667%;

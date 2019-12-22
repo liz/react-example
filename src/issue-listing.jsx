@@ -13,6 +13,7 @@ const Table = styled.table`
 	width: 100%;
     table-layout: auto;
     margin-top: 0;
+    font-size: ${theme.smallBaseFont};
 
     td {
         padding: 1.5rem ${theme.gutter};

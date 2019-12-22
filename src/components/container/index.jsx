@@ -7,6 +7,8 @@ const Shell = styled.div`
     max-width: ${theme.container};
     margin-left: auto;
     margin-right: auto;
+    padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
 `;
 Shell.displayName = 'Shell';
 
