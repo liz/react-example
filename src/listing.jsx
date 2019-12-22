@@ -7,6 +7,7 @@ import mediaQueries from './media-queries';
 
 import { Container } from './components/container';
 import { LoadingSpinner } from './components/loading-spinner';
+import { Button } from './components/button';
 
 import IssueListing from './issue-listing';
 import SaveKey from './save-key';
@@ -22,19 +23,16 @@ const Row = styled.div`
 Row.displayName = 'Row';
 
 const ColA = styled.div`
-    width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
 
         @media (min-width: ${mediaQueries.min.medium}) {
             width: 33.3333%;
-
         }
 `;
 ColA.displayName = 'ColA';
 
 const ColB = styled.div`
-    width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
 
@@ -133,12 +131,18 @@ export default class Listing extends Component {
     renderRepoList = () => {
         if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
             const repoList = this.state.repos.map((repo, index) => (
-                <li key={index} >
-                    <button title={repo.name} aria-label={repo.name} onClick={() => this.selectRepo(index)}>{repo.name}</button>
+                <li key={index}>
+                    <p>
+                        <Button 
+                            buttonText={repo.name} 
+                            handleClick={() => this.selectRepo(index)}
+                            className="btn btn--link"
+                        />
+                    </p>
                 </li>
             ));
 
-            return repoList;
+            return <ul>{repoList}</ul>;
         }
 
         return <LoadingSpinner />;
