@@ -12,8 +12,6 @@ const ColoredButton = styled.button`
         background-color: ${(props) => props.color};
         cursor: pointer;
         font-weight: bold;
-        padding: ${theme.buttonPadding};
-        border-radius: ${theme.buttonRadius};
 
         &:hover {
             background-image: ${(props) =>
@@ -61,7 +59,6 @@ const ColoredButton = styled.button`
         background: transparent;
         color: ${(props) => props.color};
         min-width: 0;
-        border: 0;
 
         &:hover,
         &:focus,
@@ -162,7 +159,7 @@ Button.defaultProps = {
     className: 'btn',
     disabled: false,
     hidden: false,
-    minWidth: "175px"
+    minWidth: theme.buttonMinWidth
 };
 
 Button.propTypes = {

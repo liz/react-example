@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { connect } from 'react-redux'
 
-import { saveKey } from './actions'
+import { saveKey } from './actions';
 
 import theme from './theme';
 
 import { Container } from './components/container';
 import { Row } from './components/row';
+import { FormInput } from './components/form-input';
 import { Button } from './components/button';
 
 const Col = styled.div`
@@ -19,26 +20,27 @@ const Col = styled.div`
 Col.displayName = 'Col';
 
 const SaveKey = ({ dispatch }, props) => {
-    let input
+    const [value, setValue] = useState('');
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        dispatch(saveKey(value))
+    }; 
 
     return (
         <Container>
             <Row breakPoint={props.breakPoint}>
                 <Col>
                     <form
-                        onSubmit={e => {
-                          e.preventDefault();
-                          if (!input.value.trim()) {
-                            return
-                          }
-                          dispatch(saveKey(input.value))
-                          input.value = ''
-                        }}
+                        onSubmit={(event) => onSubmit(event)}
                     >
                         <fieldset>
                             <Row>
                                 <Col>
-                                    <input ref={node => (input = node)} />
+                                    <FormInput
+                                        value={value}
+                                        fieldChange={e => setValue(e.target.value)} 
+                                    />
                                 </Col>
                             </Row>
                             <Row breakPoint={props.breakPoint}>

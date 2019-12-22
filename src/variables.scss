@@ -33,5 +33,10 @@ $gutter: 15px;
 // buttons
 $button-padding: 10px 5px;
 $button-radius: 5px;
+$button-font-size: $base-font-size;
+$button-min-width: 175px;
 
 // forms
+$form-input-padding: $button-padding;
+$form-input-radius: $button-radius;
+$form-input-font-size: $button-font-size;

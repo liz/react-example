@@ -33,7 +33,21 @@ h2 {
 	font-size: $xlarge-base-font;
 }
 
-input {
+button, input {
+	font-size: $button-font-size;
 	padding: $button-padding;
 	border-radius: $button-radius;
+}
+
+button {
+	&.btn--link {
+		background: transparent;
+		border: 0;
+		padding: 0;
+		min-width: 0;
+	}
+}
+
+input {
+	
 }
