@@ -7,10 +7,13 @@ import theme from '../../theme';
 
 const ColoredButton = styled.button`
     & {
+    	color: ${(props) => (props.colorAlt ? props.colorAlt : theme.white)};
         min-width: ${(props) => props.minWidth};
         background-color: ${(props) => props.color};
         cursor: pointer;
         font-weight: bold;
+        padding: 10px 5px;
+        border-radius: 5px;
 
         &:hover {
             background-image: ${(props) =>
