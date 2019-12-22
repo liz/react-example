@@ -1,5 +1,6 @@
 @import "./reset.scss";
 @import "./variables.scss";
+@import "./utils.scss";
 
 body {
   margin: 0;
@@ -41,15 +42,31 @@ button, input {
 
 button {
 	cursor: pointer;
-	
+
 	&.btn--link {
 		background: transparent;
 		border: 0;
 		padding: 0;
 		min-width: 0;
 	}
-}
+} // end button
 
 input {
-
+	box-sizing: border-box;
 }
+
+.error {
+	color: $red;
+}
+
+form {
+	input, button {
+		width: 100%;
+	}
+
+	.error {
+		font-size: $xxxsmall-base-font;
+		text-align: left;
+		margin-top: 0.5rem;
+	}
+} // end form

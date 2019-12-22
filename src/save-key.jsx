@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { saveKey } from './actions';
 
 import theme from './theme';
+import mediaQueries from './media-queries';
 
 import { Container } from './components/container';
 import { Row } from './components/row';
@@ -19,14 +20,16 @@ const Col = styled.div`
 `;
 Col.displayName = 'Col';
 
+const OuterCol = styled(Col)`
+    max-width: ${mediaQueries.min.iphone6};
+    margin: auto;
+`;
+OuterCol.displayName = 'OuterCol';
+
 const SaveKey = ({ dispatch }) => {
     const [fieldValue, setFieldValue] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
-
-    const onSubmit = (event) => {
-        event.preventDefault();
-        dispatch(saveKey(fieldValue))
-    }; 
+    const [fieldError, setFieldError] = useState('');
 
     useEffect(() => {
         if (fieldValue) {
@@ -36,14 +39,23 @@ const SaveKey = ({ dispatch }) => {
         }
     }, [fieldValue]);
 
+    const onSubmit = (event) => {
+        event.preventDefault();
+        if (fieldValue) {
+            dispatch(saveKey(fieldValue))
+        } else {
+            setFieldError("Please enter an API Key")
+        }
+    }; 
+
     const onFieldChange = (event) => {
-        setFieldValue(event.target.value)
+        setFieldValue(event.target.value);
     }; 
 
     return (
         <Container>
             <Row>
-                <Col>
+                <OuterCol>
                     <form
                         onSubmit={(event) => onSubmit(event)}
                     >
@@ -54,6 +66,7 @@ const SaveKey = ({ dispatch }) => {
                                         value={fieldValue}
                                         fieldChange={event => onFieldChange(event)} 
                                         placeHolder="Github API Key"
+                                        fieldError={fieldError}
                                     />
                                 </Col>
                             </Row>
@@ -68,7 +81,7 @@ const SaveKey = ({ dispatch }) => {
                             </Row>
                         </fieldset>
                     </form>
-                </Col>
+                </OuterCol>
             </Row>
         </Container>
     );

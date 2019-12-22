@@ -1,4 +1,12 @@
 import React from 'react';
+import styled from 'styled-components/macro';
+
+import { FormInputError } from './error';
+
+const FieldContainer = styled.div`
+    margin-bottom: ${(props) => props.bottomSpacing};
+`;
+FieldContainer.displayName = 'FieldContainer';
 
 export const FormInput = (props) => {
 	const onChange = (event) => {
@@ -24,20 +32,26 @@ export const FormInput = (props) => {
     }
 
     return (
-	   	<Field
-			id={props.fieldId}
-			type={props.fieldType}
-			name={props.fieldId}
-			value={props.value}
-			placeholder={props.placeHolder}
-	        onChange={(event) => onChange(event)}
-	        required={props.required}
-	        disabled={props.disabled}
-	        onKeyPress={onKeyPress}
-	        rows={props.rows}
-		>
-			{props.children}
-		</Field>
+    	<FieldContainer 
+    		className={props.className}
+    		bottomSpacing={props.bottomSpacing}
+    	>
+		   	<Field
+				id={props.fieldId}
+				type={props.fieldType}
+				name={props.fieldId}
+				value={props.value}
+				placeholder={props.placeHolder}
+		        onChange={(event) => onChange(event)}
+		        required={props.required}
+		        disabled={props.disabled}
+		        onKeyPress={onKeyPress}
+		        rows={props.rows}
+			>
+				{props.children}
+			</Field>
+			<FormInputError fieldError={props.fieldError} />
+		</FieldContainer>
     );
 }
 
@@ -46,5 +60,6 @@ FormInput.defaultProps = {
 	fieldType: 'text',
 	disabled: false,
 	required: false,
-	rows: 2
+	rows: 2,
+	bottomSpacing: '1rem'
 }
