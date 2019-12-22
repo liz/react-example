@@ -52,7 +52,7 @@ const TableHeader = styled.thead`
     	width: 100%;
     	height: 100%;
     	padding: 0.75rem ${theme.gutter};
-    	font-size: ${theme.smallBaseFont};
+    	font-size: ${theme.xxsmallBaseFont};
 
     	@media (min-width: ${mediaQueries.min.medium}) {
     		font-size: ${theme.baseFontSize};

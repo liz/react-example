@@ -24,7 +24,6 @@ import SaveKey from './save-key';
 // Row.displayName = 'Row';
 
 const ColA = styled.div`
-    box-sizing: border-box;
     width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
@@ -36,7 +35,6 @@ const ColA = styled.div`
 ColA.displayName = 'ColA';
 
 const ColB = styled.div`
-    box-sizing: border-box;
     width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
