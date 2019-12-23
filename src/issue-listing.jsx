@@ -6,12 +6,14 @@ import Moment from 'react-moment';
 import theme from './theme';
 import mediaQueries from './media-queries';
 
+import { Container } from './components/container';
+import { Row } from './components/row';
 import { LoadingSpinner } from './components/loading-spinner';
 import { Image } from './components/image';
 import { Button } from './components/button';
 import SmallArrow from './components/small-arrow';
 
-const IssueListingContainer = styled.div`
+const IssueListingContainer = styled(Container)`
 	&.no-repo-selected {
 		display: none;
 
@@ -22,19 +24,52 @@ const IssueListingContainer = styled.div`
 `;
 IssueListingContainer.displayName = 'IssueListingContainer';
 
+const IssueListingContainerNoMobilePadding = styled(IssueListingContainer)`
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    @media (min-width: ${mediaQueries.min.medium}) {
+        padding-left: ${theme.gutter};
+        padding-right: ${theme.gutter};
+    }
+`;
+IssueListingContainerNoMobilePadding.displayName = 'IssueListingContainerNoMobilePadding';
+
+const FullWidthCol = styled.div`
+    width: 100%;
+    padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
+`;
+FullWidthCol.displayName = 'FullWidthCol';
+
+const FullWidthColNoPadding = styled.div`
+    width: 100%;
+    padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
+`;
+FullWidthColNoPadding.displayName = 'FullWidthColNoPadding';
+
 const Table = styled.table`
 	width: 100%;
     table-layout: auto;
     margin-top: 0;
     font-size: ${theme.xxsmallBaseFont};
+    font-size: ${theme.xxxxsmallBaseFont};
 
-    @media (min-width: ${mediaQueries.min.medium}) {
-    	font-size: ${theme.smallBaseFont};
-    }
+    // @media (min-width: ${mediaQueries.min.medium}) {
+    // 	font-size: ${theme.smallBaseFont};
+    // }
 
     td {
-        padding: 1.5rem ${theme.gutter};
+        padding: 10px 5px;
         text-align: center;
+
+        @media (min-width: ${mediaQueries.min.medium}) {
+            padding: 1.5rem ${theme.gutter};
+        }
+        
     }
 
     td,
@@ -130,12 +165,23 @@ const TableHeader = styled.thead`
     button {
     	width: 100%;
     	height: 100%;
-    	padding: 0.75rem ${theme.gutter};
-    	font-size: ${theme.xxsmallBaseFont};
+        // padding: 5px;
+        padding: 0.75rem ${theme.gutter};
+        font-size: ${theme.baseFontSize};
+    	// font-size: ${theme.xxxxsmallBaseFont};
 
-    	@media (min-width: ${mediaQueries.min.medium}) {
-    		font-size: ${theme.baseFontSize};
-    	}
+    	// @media (min-width: ${mediaQueries.min.medium}) {
+    	// 	font-size: ${theme.baseFontSize};
+     //        padding: 0.75rem ${theme.gutter};
+    	// }
+
+        *[class*='button__Icon'] {
+            transform: scale(0.7);
+
+            @media (min-width: ${mediaQueries.min.medium}) {
+                transform: scale(1);
+            }
+        }
     }
 `;
 
@@ -340,10 +386,28 @@ export default class IssueListing extends Component {
 
     render() {
     	return (
-    		<IssueListingContainer className={this.props.className}>
-    			<h2>Issues</h2>
-    			{this.renderIssues()}
-    		</IssueListingContainer>
+            <div>
+        		<IssueListingContainer 
+                    className={this.props.className}
+                    maxWidth="100%"
+                >
+                    <Row>
+            			<FullWidthCol>
+                            <h2>Issues</h2>
+                        </FullWidthCol>
+                    </Row>
+                </IssueListingContainer>
+                <IssueListingContainerNoMobilePadding 
+                    className={this.props.className}
+                    maxWidth="100%"
+                >
+                    <Row>
+                        <FullWidthColNoPadding>
+                            {this.renderIssues()}
+                        </FullWidthColNoPadding>
+                    </Row>
+        		</IssueListingContainerNoMobilePadding>
+            </div>
     	);
     }
 

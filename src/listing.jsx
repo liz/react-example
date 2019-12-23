@@ -36,6 +36,26 @@ const ColB = styled.div`
 `;
 ColB.displayName = 'ColB';
 
+const ColBNoPaddingMobile = styled.div`
+    width: 100%;
+
+        @media (min-width: ${mediaQueries.min.medium}) {
+            width: 66.6667%;
+            padding-left: ${theme.gutter};
+            padding-right: ${theme.gutter};
+        }
+`;
+ColBNoPaddingMobile.displayName = 'ColBNoPaddingMobile';
+
+const ColBNoPadding = styled.div`
+    width: 100%;
+
+        @media (min-width: ${mediaQueries.min.medium}) {
+            width: 66.6667%;
+        }
+`;
+ColBNoPadding.displayName = 'ColBNoPadding';
+
 const FullWidthCol = styled.div`
     width: 100%;
     padding-left: ${theme.gutter};
@@ -173,13 +193,13 @@ export default class Listing extends Component {
                                 </FullWidthCol>
                             </Row>
                         </ColA>
-                        <ColB>
+                        <ColBNoPadding>
                             <IssueListing 
                                 className={this.state.repos && this.state.repos[this.state.selectedRepo] ? 'repo-selected' : 'no-repo-selected'}
                                 selectedRepoName={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].name} 
                                 selectedRepoOwner={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].owner && this.state.repos[this.state.selectedRepo].owner.login} 
                             />
-                        </ColB>
+                        </ColBNoPadding>
                     </Row>
                 </Container>
             );

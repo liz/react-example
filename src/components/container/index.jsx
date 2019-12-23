@@ -19,6 +19,7 @@ export const Container = (props) => (
     	maxWidth={props.maxWidth}
     	horizontalPadding={props.horizontalPadding}
     	verticalPadding={props.verticalPadding}
+    	className={props.className}
     >
     	{props.children}
     </Shell>
