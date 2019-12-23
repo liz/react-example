@@ -13,16 +13,6 @@ import { Button } from './components/button';
 import IssueListing from './issue-listing';
 import SaveKey from './save-key';
 
-// const Row = styled.div`
-//     margin-left: -${theme.gutter};
-//     margin-right: -${theme.gutter};
-
-//     @media (min-width: ${mediaQueries.min.medium}) {
-//         display: flex;
-//     }
-// `;
-// Row.displayName = 'Row';
-
 const ColA = styled.div`
     width: 100%;
     padding-left: ${theme.gutter};
@@ -59,43 +49,10 @@ export default class Listing extends Component {
         this.state = {
             selectedRepo: null,
             repos: '',
-            isLoaded: false
+            isLoaded: false,
+            repoAccordionOpen: true
         };
     }
-
-    // componentDidMount() {
-    //     const octokit = new Octokit({
-    //         auth: this.props.apiKey
-    //     });
-
-    //     octokit.repos.list({})
-    //         .then(({ data }) => {
-    //             this.setState({
-    //                 repos: data,
-    //                 isLoaded: true
-    //             });
-    //         });
-    // }
-
-    // componentDidMount() {
-    //     const octokit = new Octokit({
-    //         auth: this.props.apiKey
-    //     });
-
-    //     octokit.repos.list({})
-    //         .then(({ data }) => {
-    //             this.setState({
-    //                 repos: data,
-    //                 isLoaded: true
-    //             });
-    //         }).catch(err => {
-    //             this.setState({
-    //                 repos: [],
-    //                 isLoaded: true,
-    //                 fieldError: "Api Key not accepted, please try again."
-    //             });
-    //         });;
-    // }
 
     fetchRepos = () => {
         const octokit = new Octokit({
@@ -112,7 +69,7 @@ export default class Listing extends Component {
                 this.setState({
                     repos: [],
                     isLoaded: true,
-                    fieldError: "Api Key not accepted, please try again."
+                    fieldError: "Github does not recognize this API Key, please try a different API Key."
                 });
             });;
     };
@@ -136,6 +93,15 @@ export default class Listing extends Component {
 
     selectRepo = (index) => {
         this.setState({ selectedRepo: index });
+        this.setRepoAccordion(false);
+    };
+
+    setRepoAccordion = (state) => {
+        this.setState({ repoAccordionOpen: state });
+    };
+
+    toggleRepoAccordion = () => {
+        this.setState({ repoAccordionOpen: !this.state.repoAccordionOpen });
     };
 
     renderRepoList = () => {
@@ -166,11 +132,18 @@ export default class Listing extends Component {
                         <ColA>
                             <Row>
                                 <FullWidthCol>
-                                    <h2>Repos</h2>
+                                    <h2>
+                                        <Button 
+                                            handleClick={this.toggleRepoAccordion}  
+                                            buttonText="Repos"
+                                            iconOnRight
+                                            className="btn btn--link"
+                                        />
+                                    </h2>
                                 </FullWidthCol>
                             </Row>
                             <Row>
-                                <FullWidthCol>
+                                <FullWidthCol className={this.state.repoAccordionOpen ? 'slidedown' : 'slideup'}>
                                     {this.renderRepoList()}
                                 </FullWidthCol>
                             </Row>

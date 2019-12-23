@@ -277,7 +277,7 @@ export default class IssueListing extends Component {
 							<th>
 								<Button 
 									handleClick={this.onSort('last_updated')}  
-									buttonText="Last Updated "
+									buttonText="Last Updated"
 									icon={<SortArrow className={this.setArrow('last_updated')}></SortArrow>}
 									iconOnRight
 									className="btn btn--link"
