@@ -9,6 +9,7 @@ import mediaQueries from './media-queries';
 import { LoadingSpinner } from './components/loading-spinner';
 import { Image } from './components/image';
 import { Button } from './components/button';
+import SmallArrow from './components/small-arrow';
 
 const Table = styled.table`
 	width: 100%;
@@ -127,25 +128,25 @@ const TableHeader = styled.thead`
     }
 `;
 
-const SortArrow = styled.span`
-	height: 0;
-	width: 0;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
+// const SortArrow = styled.span`
+// 	height: 0;
+// 	width: 0;
+// 	border-left: 5px solid transparent;
+// 	border-right: 5px solid transparent;
 
-	&.asc {
-		border-bottom: 5px solid ${(props) => props.color};;
-	}
+// 	&.asc {
+// 		border-bottom: 5px solid ${(props) => props.color};;
+// 	}
 
-	&.desc {
-		border-top: 5px solid ${(props) => props.color};;
-	}
-`;
-SortArrow.displayName = 'SortArrow';
+// 	&.desc {
+// 		border-top: 5px solid ${(props) => props.color};;
+// 	}
+// `;
+// SortArrow.displayName = 'SortArrow';
 
-SortArrow.defaultProps = {
-	color: theme.primaryColor
-}
+// SortArrow.defaultProps = {
+// 	color: theme.primaryColor
+// }
 
 export default class IssueListing extends Component {
 	   constructor(props) {
@@ -251,7 +252,7 @@ export default class IssueListing extends Component {
 								<Button 
 									handleClick={this.onSort('avatar_url')} 
 									buttonText="Assignee"
-									icon={<SortArrow className={this.setArrow('avatar_url')}></SortArrow>}
+									icon={<SmallArrow className={this.setArrow('avatar_url')}></SmallArrow>}
 									iconOnRight
 									className="btn btn--link"
 								/>
@@ -260,7 +261,7 @@ export default class IssueListing extends Component {
 								<Button 
 									handleClick={this.onSort('title')}  
 									buttonText="Title"
-									icon={<SortArrow className={this.setArrow('title')}></SortArrow>}
+									icon={<SmallArrow className={this.setArrow('title')}></SmallArrow>}
 									iconOnRight
 									className="btn btn--link"
 								/>
@@ -269,7 +270,7 @@ export default class IssueListing extends Component {
 								<Button 
 									handleClick={this.onSort('created_at')}
 									buttonText="Time Created"
-									icon={<SortArrow className={this.setArrow('created_at')}></SortArrow>}
+									icon={<SmallArrow className={this.setArrow('created_at')}></SmallArrow>}
 									iconOnRight
 									className="btn btn--link"
 								/>
@@ -278,7 +279,7 @@ export default class IssueListing extends Component {
 								<Button 
 									handleClick={this.onSort('last_updated')}  
 									buttonText="Last Updated"
-									icon={<SortArrow className={this.setArrow('last_updated')}></SortArrow>}
+									icon={<SmallArrow className={this.setArrow('last_updated')}></SmallArrow>}
 									iconOnRight
 									className="btn btn--link"
 								/>
@@ -320,9 +321,14 @@ export default class IssueListing extends Component {
 
      render() {
     	if (this.state.isLoaded === null) {
-    		return <p>Please select a repo from the lefthand column</p>;
+    		return null;
     	}
 
-    	return this.renderIssueTable();
+    	return (
+    		<div>
+	    		<h2>Issue</h2>
+	    		{this.renderIssueTable()}
+    		</div>
+    	);
     }
 }

@@ -9,6 +9,7 @@ import { Container } from './components/container';
 import { Row } from './components/row';
 import { LoadingSpinner } from './components/loading-spinner';
 import { Button } from './components/button';
+import SmallArrow from './components/small-arrow';
 
 import IssueListing from './issue-listing';
 import SaveKey from './save-key';
@@ -135,9 +136,10 @@ export default class Listing extends Component {
                                     <h2>
                                         <Button 
                                             handleClick={this.toggleRepoAccordion}  
-                                            buttonText="Repos"
+                                            buttonText="Select a Repo"
                                             iconOnRight
                                             className="btn btn--link"
+                                            icon={<SmallArrow className={this.state.repoAccordionOpen ? 'open' : 'close'}></SmallArrow>}
                                         />
                                     </h2>
                                 </FullWidthCol>
@@ -149,7 +151,6 @@ export default class Listing extends Component {
                             </Row>
                         </ColA>
                         <ColB>
-                            <h2>Issue</h2>
                             <IssueListing 
                                 selectedRepoName={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].name} 
                                 selectedRepoOwner={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].owner && this.state.repos[this.state.selectedRepo].owner.login} 
