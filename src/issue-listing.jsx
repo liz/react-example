@@ -78,7 +78,6 @@ const Table = styled.table`
         @media (min-width: ${mediaQueries.min.medium}) {
             padding: 1.5rem ${theme.gutter};
         }
-        
     }
 
     td,
@@ -97,11 +96,11 @@ const Table = styled.table`
         }
     }
 
- //    &, thead, tbody, th, tr {
- //    	@media (max-width: ${mediaQueries.max.medium}) {
- //    		display: block;
- //    	}
- //    }
+    &, thead, tbody, th, tr {
+    	@media (max-width: ${mediaQueries.max.medium}) {
+    		display: block;
+    	}
+    }
 
  //    thead tr {
  //    	@media (max-width: ${mediaQueries.max.medium}) {
@@ -109,60 +108,52 @@ const Table = styled.table`
  //    	}
  //    }
 
- //    td {
- //    	@media (max-width: ${mediaQueries.max.medium}) {
- //    		display: flex;
- //    		align-items: center;
- //    		justify-content: space-between;
+    td {
+    	@media (max-width: ${mediaQueries.max.medium}) {
+    		display: flex;
+    		align-items: center;
+    		justify-content: space-between;
 
-	//   		// border: none;
-	// 		// border-bottom: 1px solid #eee; 
-	// 		// position: relative;
-	// 		// padding-left: 50%; 
- //    	}
- //    }
+	  		// border: none;
+			// border-bottom: 1px solid #eee; 
+			// position: relative;
+			// padding-left: 50%; 
+    	}
+    }
 
- //    td:before { 
- //    	@media (max-width: ${mediaQueries.max.medium}) {
- //    		position: static;
- //    		margin-right: ${theme.gutter};
- //    		color: ${theme.primaryColor};
- //    		font-weight: bold;
- //    		font-size: ${theme.smallBaseFont};
+    td:before { 
+    	@media (max-width: ${mediaQueries.max.medium}) {
+    		position: static;
+    		margin-right: ${theme.gutter};
+    		color: ${theme.primaryColor};
+    		font-weight: bold;
+    		font-size: ${theme.smallBaseFont};
+        }
+    }
 
+	td:nth-of-type(1):before {
+		@media (max-width: ${mediaQueries.max.medium}) {
+			{ content: "Assignee"; }
+		}
+	}
 
- //   			// position: absolute;
-	// 		// top: 6px;
-	// 		// left: 6px;
-	// 		// width: 45%; 
-	// 		// padding-right: 10px; 
-	// 		// white-space: nowrap;
- //    	}
-	// }
+	td:nth-of-type(2):before {
+		@media (max-width: ${mediaQueries.max.medium}) {
+			{ content: "Title"; }
+		}
+	}
 
-	// td:nth-of-type(1):before {
-	// 	@media (max-width: ${mediaQueries.max.medium}) {
-	// 		{ content: "Assignee"; }
-	// 	}
-	// }
+	td:nth-of-type(3):before {
+		@media (max-width: ${mediaQueries.max.medium}) {
+			{ content: "Created Time"; }
+		}
+	}
 
-	// td:nth-of-type(2):before {
-	// 	@media (max-width: ${mediaQueries.max.medium}) {
-	// 		{ content: "Title"; }
-	// 	}
-	// }
-
-	// td:nth-of-type(3):before {
-	// 	@media (max-width: ${mediaQueries.max.medium}) {
-	// 		{ content: "Created Time"; }
-	// 	}
-	// }
-
-	// td:nth-of-type(4):before {
-	// 	@media (max-width: ${mediaQueries.max.medium}) {
-	// 		{ content: "Last Updated"; }
-	// 	}
-	// }
+	td:nth-of-type(4):before {
+		@media (max-width: ${mediaQueries.max.medium}) {
+			{ content: "Last Updated"; }
+		}
+	}
 `;
 
 const TableHeader = styled.thead`
