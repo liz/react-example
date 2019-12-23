@@ -85,6 +85,21 @@ const RepoToggle = styled(Button)`
 `;
 RepoToggle.displayName = 'RepoToggle';
 
+// const SelectRepoButton = styled(Button)`
+//     padding: 5px 10px;
+
+//     &.repo-selected {
+//         background: ${theme.backgroundAlt};
+//         border: 1px solid ${theme.primaryColor};
+
+//         &:hover {
+//             background: transparent;
+//             border: 0;
+//         }
+//     }
+// `;
+// SelectRepoButton.displayName = 'SelectRepoButton';
+
 export default class Listing extends Component {
     constructor(props) {
         super(props);
@@ -155,7 +170,9 @@ export default class Listing extends Component {
                         <Button 
                             buttonText={repo.name} 
                             handleClick={() => this.selectRepo(index)}
-                            className="btn btn--link"
+                            className={`btn btn--link ${this.state.selectedRepo === index? 'repo-selected' : ''}`}
+                            icon={<SmallArrow className={this.state.selectedRepo === index ? 'close' : ''} color={theme.primaryColor}></SmallArrow>}
+                            iconOnRight
                         />
                     </p>
                 </li>
@@ -181,7 +198,7 @@ export default class Listing extends Component {
                                             buttonText="Select a Repo"
                                             iconOnRight
                                             className="btn btn--link"
-                                            icon={<SmallArrow className={this.state.repoAccordionOpen ? 'open' : 'close'} color={theme.black}></SmallArrow>}
+                                            icon={<SmallArrow className={this.state.repoAccordionOpen ? 'open' : 'close'} color={theme.black} width="7px"></SmallArrow>}
                                             color={theme.black}
                                         />
                                     </h2>

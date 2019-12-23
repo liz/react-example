@@ -176,11 +176,11 @@ const TableHeader = styled.thead`
     	height: 100%;
         // padding: 5px;
         padding: 0.75rem ${theme.gutter};
-        font-size: ${theme.baseFontSize};
+        font-size: ${theme.smallBaseFont};
     	// font-size: ${theme.xxxxsmallBaseFont};
 
     	// @media (min-width: ${mediaQueries.min.medium}) {
-    	// 	font-size: ${theme.baseFontSize};
+    	// 	font-size: ${theme.smallBaseFont};
      //        padding: 0.75rem ${theme.gutter};
     	// }
 

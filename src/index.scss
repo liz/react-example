@@ -47,6 +47,8 @@ button, input {
 
 button {
 	cursor: pointer;
+	display: flex;
+	justify-content: center;
 
 	&.btn--link {
 		background: transparent;
