@@ -174,8 +174,8 @@ export default class Listing extends Component {
                             </Row>
                         </ColA>
                         <ColB>
-                            <h2>Issue</h2>
                             <IssueListing 
+                                className={this.state.repos && this.state.repos[this.state.selectedRepo] ? 'repo-selected' : 'no-repo-selected'}
                                 selectedRepoName={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].name} 
                                 selectedRepoOwner={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].owner && this.state.repos[this.state.selectedRepo].owner.login} 
                             />

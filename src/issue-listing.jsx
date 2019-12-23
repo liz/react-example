@@ -11,6 +11,17 @@ import { Image } from './components/image';
 import { Button } from './components/button';
 import SmallArrow from './components/small-arrow';
 
+const IssueListingContainer = styled.div`
+	&.no-repo-selected {
+		display: none;
+
+		@media (min-width: ${mediaQueries.min.medium}) {
+			display: block;
+		}
+	}
+`;
+IssueListingContainer.displayName = 'IssueListingContainer';
+
 const Table = styled.table`
 	width: 100%;
     table-layout: auto;
@@ -319,15 +330,40 @@ export default class IssueListing extends Component {
     	return <LoadingSpinner />;
     };
 
-     render() {
+    renderIssues  = () => {
     	if (this.state.isLoaded === null) {
     		return <p>Please select a repo from the lefthand column</p>;
     	}
 
+    	return this.renderIssueTable();
+    };
+
+    render() {
     	return (
-    		<div>
-	    		{this.renderIssueTable()}
-    		</div>
+    		<IssueListingContainer className={this.props.className}>
+    			<h2>Issues</h2>
+    			{this.renderIssues()}
+    		</IssueListingContainer>
     	);
     }
+
+    // render() {
+    // 	if (this.state.isLoaded === null) {
+    // 		return <p>Please select a repo from the lefthand column</p>;
+    // 	}
+
+    // 	return this.renderIssueTable();
+    // }
+
+    //  render() {
+    // 	if (this.state.isLoaded === null) {
+    // 		return <p>Please select a repo from the lefthand column</p>;
+    // 	}
+
+    // 	return (
+    // 		<div>
+	   //  		{this.renderIssueTable()}
+    // 		</div>
+    // 	);
+    // }
 }
