@@ -321,12 +321,11 @@ export default class IssueListing extends Component {
 
      render() {
     	if (this.state.isLoaded === null) {
-    		return null;
+    		return <p>Please select a repo from the lefthand column</p>;
     	}
 
     	return (
     		<div>
-	    		<h2>Issue</h2>
 	    		{this.renderIssueTable()}
     		</div>
     	);
