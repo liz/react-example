@@ -40,6 +40,18 @@ const FullWidthCol = styled.div`
     width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
+
+    &.slideup, &.slidedown {
+        @media (min-width: ${mediaQueries.min.medium}) {
+            max-height: 100%;
+        }
+    }
+
+    *[class*='listing__RepoToggle'] *[class*='button__Icon'] {
+        @media (min-width: ${mediaQueries.min.medium}) {
+            display: none;
+        }
+    }
 `;
 FullWidthCol.displayName = 'FullWidthCol';
 
@@ -47,7 +59,7 @@ const RepoToggle = styled(Button)`
     font-weight: normal;
     font-size: ${theme.xlargeBaseFont};
 
-    *[class|='button__Text'] { {
+    *[class*='button__Text'] {
         padding: 0;
     }
 `;
@@ -149,7 +161,7 @@ export default class Listing extends Component {
                                             buttonText="Select a Repo"
                                             iconOnRight
                                             className="btn btn--link"
-                                            icon={<SmallArrow className={this.state.repoAccordionOpen ? 'open' : 'close'}></SmallArrow>}
+                                            icon={<SmallArrow className={this.state.repoAccordionOpen ? 'open' : 'close'} color={theme.black}></SmallArrow>}
                                             color={theme.black}
                                         />
                                     </h2>
