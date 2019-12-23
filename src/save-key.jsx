@@ -12,6 +12,8 @@ import { Row } from './components/row';
 import { FormInput } from './components/form-input';
 import { Button } from './components/button';
 
+import './save-key.scss';
+
 const Col = styled.div`
     box-sizing: border-box;
     width: 100%;
@@ -22,27 +24,26 @@ const Col = styled.div`
 Col.displayName = 'Col';
 
 const OuterCol = styled(Col)`
-    max-width: ${mediaQueries.min.iphone6};
+    width: 100%;
+    height: 100%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    form {
+        width: 100%;
+        display: block;
+        max-width: ${mediaQueries.min.iphone6};
+    }
 `;
 OuterCol.displayName = 'OuterCol';
 
 const SaveKey = (props) => {
     const [fieldValue, setFieldValue] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
-    // const [fieldError, setFieldError] = useState('');
-    // const [fieldError, setFieldError] = useState('');
     const [fieldError, setFieldError] = useState(...props.fieldError);
-
-    // useEffect(() => {
-    //     if (fieldValue) {
-    //         setButtonDisabled(false)
-    //     } else {
-    //         setButtonDisabled(true)
-    //     }
-
-    //     setFieldError(props.fieldError);
-    // }, [fieldValue], [setFieldError], props.fieldError);
 
     useEffect(() => {
         setFieldError(props.fieldError);
@@ -71,8 +72,10 @@ const SaveKey = (props) => {
 
     return (
         <Container>
-            <Row>
+            <Row height="100%">
                 <OuterCol>
+                    <h1>Github Repo Issues</h1>
+                    <p>Please submit your Github API Key to see issues for your repos</p>
                     <form
                         onSubmit={(event) => onSubmit(event)}
                     >

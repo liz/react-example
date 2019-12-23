@@ -196,8 +196,7 @@ export default class Listing extends Component {
                         <ColBNoPadding>
                             <IssueListing 
                                 className={this.state.repos && this.state.repos[this.state.selectedRepo] ? 'repo-selected' : 'no-repo-selected'}
-                                selectedRepoName={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].name} 
-                                selectedRepoOwner={this.state.repos && this.state.repos[this.state.selectedRepo] && this.state.repos[this.state.selectedRepo].owner && this.state.repos[this.state.selectedRepo].owner.login} 
+                                selectedRepo={this.state.repos && this.state.repos[this.state.selectedRepo]}
                             />
                         </ColBNoPadding>
                     </Row>

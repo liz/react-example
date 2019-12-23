@@ -31,6 +31,17 @@ $base-type-spacing: 1rem;
 $container: 1200px;
 $gutter: 15px;
 
+// media query breakpoints
+$breakpoint-xxlarge: 1366px;
+$breakpoint-xlarge: 1200px;
+$breakpoint-iPadLandscape: 1024px;
+$breakpoint-large: 960px;
+$breakpoint-medium: 768px;
+$breakpoint-mobile: 460px;
+$breakpoint-small: 599px;
+$breakpoint-iphone6: 375px;
+$breakpoint-iphone5: 320px;
+
 // buttons
 $button-padding: 10px 5px;
 $button-radius: 5px;

@@ -24,6 +24,15 @@ const IssueListingContainer = styled(Container)`
 `;
 IssueListingContainer.displayName = 'IssueListingContainer';
 
+const NoIssuesMessage = styled.p`
+    padding-left: ${theme.gutter};
+
+    @media (min-width: ${mediaQueries.min.medium}) {
+        padding-left: 0;
+    }
+`;
+NoIssuesMessage.displayName = 'NoIssuesMessage';
+
 const IssueListingContainerNoMobilePadding = styled(IssueListingContainer)`
     padding-left: 0;
     padding-right: 0;
@@ -225,8 +234,8 @@ export default class IssueListing extends Component {
         });
 
         octokit.issues.listForRepo({
-        	owner: this.props.selectedRepoOwner,
-        	repo: this.props.selectedRepoName
+        	owner: this.props.selectedRepo.owner.login,
+        	repo: this.props.selectedRepo.name
         }).then(({ data }) => {
         		console.log(data)
                 this.setState({
@@ -243,8 +252,8 @@ export default class IssueListing extends Component {
     };
 
     componentDidUpdate(prevProps) {
-        if (prevProps.selectedRepoName !== this.props.selectedRepoName) {
-        	if (this.props.selectedRepoOwner && this.props.selectedRepoName) {
+        if (prevProps.selectedRepo !== this.props.selectedRepo) {
+        	if (this.props.selectedRepo) {
         		this.setState({ isLoaded: false });
             	this.fetchIssues();
         	}
@@ -370,7 +379,7 @@ export default class IssueListing extends Component {
     	}
 
     	if (this.state.isLoaded && this.state.issues && !this.state.issues.length) {
-    		return <p>This repo has no issues.</p>;
+    		return <NoIssuesMessage>This repo has no issues.</NoIssuesMessage>;
     	}
     	
     	return <LoadingSpinner />;
@@ -384,6 +393,16 @@ export default class IssueListing extends Component {
     	return this.renderIssueTable();
     };
 
+    renderRepoName  = () => {
+        if (this.props.selectedRepo &&this.props.selectedRepo.name ) {
+            return (
+                <span>for <span className="highlight">{this.props.selectedRepo.name}</span></span>
+            );
+        }
+
+        return null;
+    };
+
     render() {
     	return (
             <div>
@@ -393,7 +412,7 @@ export default class IssueListing extends Component {
                 >
                     <Row>
             			<FullWidthCol>
-                            <h2>Issues</h2>
+                            <h2>Issues {this.renderRepoName()}</h2>
                         </FullWidthCol>
                     </Row>
                 </IssueListingContainer>
