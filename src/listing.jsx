@@ -45,6 +45,13 @@ const ColB = styled.div`
 `;
 ColB.displayName = 'ColB';
 
+const FullWidthCol = styled.div`
+    width: 100%;
+    padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
+`;
+FullWidthCol.displayName = 'FullWidthCol';
+
 export default class Listing extends Component {
     constructor(props) {
         super(props);
@@ -157,8 +164,16 @@ export default class Listing extends Component {
                 <Container>
                     <Row>
                         <ColA>
-                            <h2>Repos</h2>
-                            {this.renderRepoList()}
+                            <Row>
+                                <FullWidthCol>
+                                    <h2>Repos</h2>
+                                </FullWidthCol>
+                            </Row>
+                            <Row>
+                                <FullWidthCol>
+                                    {this.renderRepoList()}
+                                </FullWidthCol>
+                            </Row>
                         </ColA>
                         <ColB>
                             <h2>Issue</h2>

@@ -40,6 +40,73 @@ const Table = styled.table`
             max-width: 350px;
         }
     }
+
+ //    &, thead, tbody, th, tr {
+ //    	@media (max-width: ${mediaQueries.max.medium}) {
+ //    		display: block;
+ //    	}
+ //    }
+
+ //    thead tr {
+ //    	@media (max-width: ${mediaQueries.max.medium}) {
+ //    		display: none;
+ //    	}
+ //    }
+
+ //    td {
+ //    	@media (max-width: ${mediaQueries.max.medium}) {
+ //    		display: flex;
+ //    		align-items: center;
+ //    		justify-content: space-between;
+
+	//   		// border: none;
+	// 		// border-bottom: 1px solid #eee; 
+	// 		// position: relative;
+	// 		// padding-left: 50%; 
+ //    	}
+ //    }
+
+ //    td:before { 
+ //    	@media (max-width: ${mediaQueries.max.medium}) {
+ //    		position: static;
+ //    		margin-right: ${theme.gutter};
+ //    		color: ${theme.primaryColor};
+ //    		font-weight: bold;
+ //    		font-size: ${theme.smallBaseFont};
+
+
+ //   			// position: absolute;
+	// 		// top: 6px;
+	// 		// left: 6px;
+	// 		// width: 45%; 
+	// 		// padding-right: 10px; 
+	// 		// white-space: nowrap;
+ //    	}
+	// }
+
+	// td:nth-of-type(1):before {
+	// 	@media (max-width: ${mediaQueries.max.medium}) {
+	// 		{ content: "Assignee"; }
+	// 	}
+	// }
+
+	// td:nth-of-type(2):before {
+	// 	@media (max-width: ${mediaQueries.max.medium}) {
+	// 		{ content: "Title"; }
+	// 	}
+	// }
+
+	// td:nth-of-type(3):before {
+	// 	@media (max-width: ${mediaQueries.max.medium}) {
+	// 		{ content: "Created Time"; }
+	// 	}
+	// }
+
+	// td:nth-of-type(4):before {
+	// 	@media (max-width: ${mediaQueries.max.medium}) {
+	// 		{ content: "Last Updated"; }
+	// 	}
+	// }
 `;
 
 const TableHeader = styled.thead`
