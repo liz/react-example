@@ -39,7 +39,7 @@ h2 {
 	font-size: $xlarge-base-font;
 }
 
-button, input {
+button, input, textarea, select {
 	font-size: $button-font-size;
 	padding: $button-padding;
 	border-radius: $button-radius;
@@ -59,8 +59,10 @@ button {
 	}
 } // end button
 
-input {
+input, textarea, select {
 	box-sizing: border-box;
+	border: 1px solid $alto;
+	background: $white;
 }
 
 .error {
@@ -68,7 +70,7 @@ input {
 }
 
 form {
-	input, button {
+	input, textarea, select, button {
 		width: 100%;
 	}
 

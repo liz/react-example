@@ -9,6 +9,7 @@ import mediaQueries from './media-queries';
 import { Container } from './components/container';
 import { Row } from './components/row';
 import { LoadingSpinner } from './components/loading-spinner';
+import { FormInput } from './components/form-input';
 import { Image } from './components/image';
 import { Button } from './components/button';
 import SmallArrow from './components/small-arrow';
@@ -29,6 +30,18 @@ const NoIssuesMessage = styled.p`
 
     @media (min-width: ${mediaQueries.min.medium}) {
         padding-left: 0;
+    }
+`;
+NoIssuesMessage.displayName = 'NoIssuesMessage';
+
+const MobileSort = styled.div`
+    display: block;
+    padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
+    margin-bottom: 0.5rem;
+
+    @media (min-width: ${mediaQueries.min.medium}) {
+        display: none;
     }
 `;
 NoIssuesMessage.displayName = 'NoIssuesMessage';
@@ -102,11 +115,28 @@ const Table = styled.table`
     	}
     }
 
- //    thead tr {
- //    	@media (max-width: ${mediaQueries.max.medium}) {
- //    		display: none;
- //    	}
- //    }
+    thead tr {
+    	@media (max-width: ${mediaQueries.max.medium}) {
+    		display: flex;
+            flex-direction: column;
+    	}
+
+        // &.slideup, &.slidedown {
+        //     @media (min-width: ${mediaQueries.min.medium}) {
+        //         max-height: 100%;
+        //     }
+        // }
+
+        // &.slideup {
+        //     max-height: 41px;
+        // }
+    }
+
+    // thead tr th:nth-of-type(3) {
+    //     @media (max-width: ${mediaQueries.max.medium}) {
+    //         order: -1;
+    //     }
+    // }
 
     td {
     	@media (max-width: ${mediaQueries.max.medium}) {
@@ -215,7 +245,8 @@ export default class IssueListing extends Component {
            		column: 'created_at',
            		direction: 'desc'
             },
-            isLoaded: null
+            isLoaded: null,
+            sortAccordionOpen: false
         };
     }
 
@@ -251,29 +282,69 @@ export default class IssueListing extends Component {
         }
     }
 
-    onSort = (column) => (e) => {
+  //   onSort = (column) => (e) => {
+  //       console.log("onSort ran", column)
+  //       console.log("onSort ran", e)
+  //       const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+  //       const sortedData = this.state.issues.sort((a, b) => {
+		// if (column === 'title') {
+		// 	const titleA = a.title.toUpperCase();
+		// 	const titleB = b.title.toUpperCase(); 
+
+		// 	if (titleA < titleB) {
+		// 		return -1;
+		// 	}
+
+		// 	if (titleA > titleB) {
+		// 		return 1;
+		// 	}
+
+		// 	return 0;
+
+		// 	} else if (column === 'updated_at') {
+		// 		return a.updated_at - b.updated_at; 
+		// 	} else {
+		// 		return a.created_at - b.created_at;
+		// 	}
+  //       });
+          
+  //       if (direction === 'desc') {
+  //         sortedData.reverse();
+  //       }
+        
+  //       this.setState({
+  //         issues: sortedData,
+  //         sort: {
+  //           column,
+  //           direction,
+  //         }
+  //       });
+  //   };
+
+    onSort = (e, column) => {
         const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-
         const sortedData = this.state.issues.sort((a, b) => {
-		if (column === 'title') {
-			const titleA = a.title.toUpperCase();
-			const titleB = b.title.toUpperCase(); 
+        if (column === 'title') {
+            const titleA = a.title.toUpperCase();
+            const titleB = b.title.toUpperCase(); 
 
-			if (titleA < titleB) {
-				return -1;
-			}
+            if (titleA < titleB) {
+                return -1;
+            }
 
-			if (titleA > titleB) {
-				return 1;
-			}
+            if (titleA > titleB) {
+                return 1;
+            }
 
-			return 0;
+            return 0;
 
-			} else if (column === 'updated_at') {
-				return a.updated_at - b.updated_at; 
-			} else {
-				return a.created_at - b.created_at;
-			}
+            } else if (column === 'avatar_url') {
+                return a.assignee && a.assignee.login - b.assignee && b.assignee.login; 
+            } else if (column === 'updated_at') {
+                return a.updated_at - b.updated_at; 
+            } else {
+                return a.created_at - b.created_at;
+            }
         });
           
         if (direction === 'desc') {
@@ -287,9 +358,9 @@ export default class IssueListing extends Component {
             direction,
           }
         });
-      };
+    };
 
-       setArrow = (column) => {
+    setArrow = (column) => {
         let className = 'sort-direction';
         
         if (this.state.sort.column === column) {
@@ -302,70 +373,89 @@ export default class IssueListing extends Component {
     renderIssueTable  = () => {
     	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
 			return (
-				<Table>
-					<TableHeader>
-						<tr>
-							<th>
-								<Button 
-									handleClick={this.onSort('avatar_url')} 
-									buttonText="Assignee"
-									icon={<SmallArrow className={this.setArrow('avatar_url')}></SmallArrow>}
-									iconOnRight
-									className="btn btn--link"
-								/>
-							</th>
-							<th>
-								<Button 
-									handleClick={this.onSort('title')}  
-									buttonText="Title"
-									icon={<SmallArrow className={this.setArrow('title')}></SmallArrow>}
-									iconOnRight
-									className="btn btn--link"
-								/>
-							</th>
-							<th>
-								<Button 
-									handleClick={this.onSort('created_at')}
-									buttonText="Time Created"
-									icon={<SmallArrow className={this.setArrow('created_at')}></SmallArrow>}
-									iconOnRight
-									className="btn btn--link"
-								/>
-							</th>
-							<th>
-								<Button 
-									handleClick={this.onSort('last_updated')}  
-									buttonText="Last Updated"
-									icon={<SmallArrow className={this.setArrow('last_updated')}></SmallArrow>}
-									iconOnRight
-									className="btn btn--link"
-								/>
-							</th>
-						</tr>
-					</TableHeader>
-					<tbody>
-						{this.state.issues && this.state.issues.map(function(issue, index) {
-							return (
-								<tr key={index}>
-									<td>
-										{(issue.assignee && issue.assignee.avatar_url) ? <Image src={issue.assignee.avatar_url} alt={issue.assignee.login} width="40px" height="40px" /> : "None"}
-									</td>
-									<td>{issue.title}</td>
-									<td>
-										<Moment format="MM/DD/YYYY">
-							                {issue.created_at}
-							            </Moment>
-									</td>
-									<td>
-										<Moment fromNow>
-											{issue.updated_at}
-										</Moment>
-									</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</Table>
+                <div>
+                    <MobileSort>
+                        <form>
+                            <FormInput
+                                fieldChange={(e) => this.onSort(e, e.target.value)}
+                                fieldValue={this.state.sort.direction}
+                                fieldType="select"
+                            >
+                                 <option>Sort by...</option>
+                                 <option value="created_at" defaultValue>Created Time</option>
+                                 <option value="avatar_url">Asignee</option>
+                                 <option value="title">Title</option>
+                                 <option value="updated_at">Last Updated</option>
+                            </FormInput>
+                        </form>
+                    </MobileSort>
+    				<Table>
+    					<TableHeader>
+    						<tr 
+                                className={this.state.sortAccordionOpen ? 'slidedown' : 'slideup'}
+                            >
+    							<th>
+    								<Button 
+    									handleClick={(e) => this.onSort(e, 'avatar_url')} 
+    									buttonText="Assignee"
+    									icon={<SmallArrow className={this.setArrow('avatar_url')}></SmallArrow>}
+    									iconOnRight
+    									className="btn btn--link"
+    								/>
+    							</th>
+    							<th>
+    								<Button 
+    									handleClick={(e) => this.onSort(e, 'title')}  
+    									buttonText="Title"
+    									icon={<SmallArrow className={this.setArrow('title')}></SmallArrow>}
+    									iconOnRight
+    									className="btn btn--link"
+    								/>
+    							</th>
+    							<th>
+    								<Button 
+    									handleClick={(e) => this.onSort(e, 'created_at')}
+    									buttonText="Time Created"
+    									icon={<SmallArrow className={this.setArrow('created_at')}></SmallArrow>}
+    									iconOnRight
+    									className="btn btn--link"
+    								/>
+    							</th>
+    							<th>
+    								<Button 
+    									handleClick={(e) => this.onSort(e, 'last_updated')}  
+    									buttonText="Last Updated"
+    									icon={<SmallArrow className={this.setArrow('last_updated')}></SmallArrow>}
+    									iconOnRight
+    									className="btn btn--link"
+    								/>
+    							</th>
+    						</tr>
+    					</TableHeader>
+    					<tbody>
+    						{this.state.issues && this.state.issues.map(function(issue, index) {
+    							return (
+    								<tr key={index}>
+    									<td>
+    										{(issue.assignee && issue.assignee.avatar_url) ? <Image src={issue.assignee.avatar_url} alt={issue.assignee.login} width="40px" height="40px" /> : "None"}
+    									</td>
+    									<td>{issue.title}</td>
+    									<td>
+    										<Moment format="MM/DD/YYYY">
+    							                {issue.created_at}
+    							            </Moment>
+    									</td>
+    									<td>
+    										<Moment fromNow>
+    											{issue.updated_at}
+    										</Moment>
+    									</td>
+    								</tr>
+    							);
+    						})}
+    					</tbody>
+    				</Table>
+                </div>
 		    );
     	}
 
