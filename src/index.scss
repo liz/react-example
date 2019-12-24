@@ -65,6 +65,15 @@ input, textarea, select {
 	background: $white;
 }
 
+select {
+	background: transparent url('./images/chevron-down.svg') 98% 50%/16px auto
+      no-repeat;
+      
+    &::-ms-expand {
+      display: none;
+    }
+}
+
 .error {
 	color: $red;
 }

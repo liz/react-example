@@ -143,6 +143,7 @@ const Table = styled.table`
     		display: flex;
     		align-items: center;
     		justify-content: space-between;
+            min-height: 40px;
 
 	  		// border: none;
 			// border-bottom: 1px solid #eee; 
