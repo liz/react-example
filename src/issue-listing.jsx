@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components/macro';
 import Octokit from '@octokit/rest';
 import Moment from 'react-moment';
+import SimpleStorage from "react-simple-storage";
 
 import theme from './theme';
 import mediaQueries from './media-queries';
@@ -243,7 +244,7 @@ export default class IssueListing extends Component {
         this.state = {
             issues: null,
             sort: {
-           		column: null,
+           		column: 'created_at',
            		direction: 'desc'
             },
             isLoaded: null
@@ -264,8 +265,10 @@ export default class IssueListing extends Component {
                     issues: data,
                     isLoaded: true
                 });
-                this.onSort(null, 'created_at')
-                this.setArrow('created_at')
+                console.log(this.state.sort.column)
+                console.log(this.state.sort.direction)
+                this.onSort(null, this.state.sort.column)
+                this.setArrow(this.state.sort.direction)
             }).catch(err => {
             	console.log(err)
             	this.setState({
@@ -383,9 +386,9 @@ export default class IssueListing extends Component {
             }
             return 0;
             } else if (column === 'avatar_url') {
-                return a.assignee && a.assignee.login - b.assignee && b.assignee.login; 
-                const assigneeA = a.assignee.login.toUpperCase();
-	            const assigneeB = b.assignee.login.toUpperCase(); 
+                // return a.assignee && a.assignee.login - b.assignee && b.assignee.login; 
+                const assigneeA = a.assignee && a.assignee.login.toUpperCase();
+	            const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
 	            if (assigneeA < assigneeB) {
 	                return -1;
 	            }
@@ -540,6 +543,7 @@ export default class IssueListing extends Component {
     render() {
     	return (
             <div>
+            	<SimpleStorage parent={this} />
         		<IssueListingContainer 
                     className={this.props.className}
                     maxWidth="100%"
