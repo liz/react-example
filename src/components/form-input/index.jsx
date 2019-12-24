@@ -40,7 +40,7 @@ export const FormInput = (props) => {
 				id={props.fieldId}
 				type={props.fieldType}
 				name={props.fieldId}
-				value={props.value}
+				value={props.fieldValue}	
 				placeholder={props.placeHolder}
 		        onChange={(event) => onChange(event)}
 		        required={props.required}

@@ -83,7 +83,7 @@ const SaveKey = (props) => {
                                 <Col>
                                 <label for="saveKey">Please submit your Github API Key to see issues for your repos</label>
                                     <FormInput
-                                        value={fieldValue}
+                                        fieldValue={fieldValue}
                                         fieldChange={event => onFieldChange(event)} 
                                         placeHolder="Github API Key"
                                         fieldError={fieldError}

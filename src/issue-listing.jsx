@@ -267,7 +267,7 @@ export default class IssueListing extends Component {
                     issues: data,
                     isLoaded: true
                 });
-                console.log(this.state.sort.column)
+                console.log("column in fetch", this.state.sort.column)
                 console.log(this.state.sort.direction)
                 this.onSort(null, this.state.sort.column)
                 this.setArrow(this.state.sort.direction)
@@ -442,11 +442,11 @@ export default class IssueListing extends Component {
                         		<label for="sort">Sort by:</label>
 	                            <FormInput
 	                                fieldChange={(e) => this.onSort(e, e.target.value)}
-	                                fieldValue={this.state.sort.direction}
+	                                fieldValue={this.state.sort.column}
 	                                fieldType="select"
 	                                fieldName="sort"
 	                            >
-	                                 <option value="created_at" defaultValue>Created Time</option>
+	                                 <option value="created_at">Created Time</option>
 	                                 <option value="avatar_url">Asignee</option>
 	                                 <option value="title">Title</option>
 	                                 <option value="updated_at">Last Updated</option>
