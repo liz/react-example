@@ -38,7 +38,7 @@ const MobileSort = styled.div`
     display: block;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
-    margin-bottom: 0.5rem;
+    // margin-bottom: 0.5rem;
 
     @media (min-width: ${mediaQueries.min.medium}) {
         display: none;
@@ -322,7 +322,9 @@ export default class IssueListing extends Component {
   //       });
   //   };
 
-    onSort = (e, column) => {
+      onSort = (e, column) => {
+        console.log("onSort ran", column)
+        console.log("onSort ran", e)
         const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
         const sortedData = this.state.issues.sort((a, b) => {
         if (column === 'title') {
@@ -339,8 +341,6 @@ export default class IssueListing extends Component {
 
             return 0;
 
-            } else if (column === 'avatar_url') {
-                return a.assignee && a.assignee.login - b.assignee && b.assignee.login; 
             } else if (column === 'updated_at') {
                 return a.updated_at - b.updated_at; 
             } else {
@@ -360,6 +360,45 @@ export default class IssueListing extends Component {
           }
         });
     };
+
+    // onSort = (e, column) => {
+    //     const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+    //     const sortedData = this.state.issues.sort((a, b) => {
+    //     if (column === 'title') {
+    //         const titleA = a.title.toUpperCase();
+    //         const titleB = b.title.toUpperCase(); 
+
+    //         if (titleA < titleB) {
+    //             return -1;
+    //         }
+
+    //         if (titleA > titleB) {
+    //             return 1;
+    //         }
+
+    //         return 0;
+
+    //         } else if (column === 'avatar_url') {
+    //             return a.assignee && a.assignee.login - b.assignee && b.assignee.login; 
+    //         } else if (column === 'updated_at') {
+    //             return a.updated_at - b.updated_at; 
+    //         } else {
+    //             return a.created_at - b.created_at;
+    //         }
+    //     });
+          
+    //     if (direction === 'desc') {
+    //       sortedData.reverse();
+    //     }
+        
+    //     this.setState({
+    //       issues: sortedData,
+    //       sort: {
+    //         column,
+    //         direction,
+    //       }
+    //     });
+    // };
 
     setArrow = (column) => {
         let className = 'sort-direction';
