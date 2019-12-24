@@ -75,18 +75,19 @@ const SaveKey = (props) => {
             <Row height="100%">
                 <OuterCol>
                     <h1>Github Repo Issues</h1>
-                    <p>Please submit your Github API Key to see issues for your repos</p>
                     <form
                         onSubmit={(event) => onSubmit(event)}
                     >
                         <fieldset>
                             <Row>
                                 <Col>
+                                <label for="saveKey">Please submit your Github API Key to see issues for your repos</label>
                                     <FormInput
                                         value={fieldValue}
                                         fieldChange={event => onFieldChange(event)} 
                                         placeHolder="Github API Key"
                                         fieldError={fieldError}
+                                        fieldName="saveKey"
                                     />
                                 </Col>
                             </Row>

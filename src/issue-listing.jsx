@@ -27,18 +27,18 @@ const IssueListingContainer = styled(Container)`
 IssueListingContainer.displayName = 'IssueListingContainer';
 
 const NoIssuesMessage = styled.p`
-    padding-left: ${theme.gutter};
+    // padding-left: ${theme.gutter};
 
-    @media (min-width: ${mediaQueries.min.medium}) {
-        padding-left: 0;
-    }
+    // @media (min-width: ${mediaQueries.min.medium}) {
+    //     padding-left: 0;
+    // }
 `;
 NoIssuesMessage.displayName = 'NoIssuesMessage';
 
 const MobileSort = styled.div`
     display: block;
-    padding-left: ${theme.gutter};
-    padding-right: ${theme.gutter};
+    // padding-left: ${theme.gutter};
+    // padding-right: ${theme.gutter};
     // margin-bottom: 0.5rem;
 
     @media (min-width: ${mediaQueries.min.medium}) {
@@ -47,18 +47,18 @@ const MobileSort = styled.div`
 `;
 NoIssuesMessage.displayName = 'NoIssuesMessage';
 
-const IssueListingContainerNoMobilePadding = styled(IssueListingContainer)`
-    padding-left: 0;
-    padding-right: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
+// const IssueListingContainerNoMobilePadding = styled(IssueListingContainer)`
+//     padding-left: 0;
+//     padding-right: 0;
+//     // overflow-x: auto;
+//     // overflow-y: hidden;
 
-    @media (min-width: ${mediaQueries.min.medium}) {
-        padding-left: ${theme.gutter};
-        padding-right: ${theme.gutter};
-    }
-`;
-IssueListingContainerNoMobilePadding.displayName = 'IssueListingContainerNoMobilePadding';
+//     @media (min-width: ${mediaQueries.min.medium}) {
+//         padding-left: ${theme.gutter};
+//         padding-right: ${theme.gutter};
+//     }
+// `;
+// IssueListingContainerNoMobilePadding.displayName = 'IssueListingContainerNoMobilePadding';
 
 const FullWidthCol = styled.div`
     width: 100%;
@@ -67,12 +67,10 @@ const FullWidthCol = styled.div`
 `;
 FullWidthCol.displayName = 'FullWidthCol';
 
-const FullWidthColNoPadding = styled.div`
-    width: 100%;
-    padding-left: ${theme.gutter};
-    padding-right: ${theme.gutter};
-`;
-FullWidthColNoPadding.displayName = 'FullWidthColNoPadding';
+// const FullWidthColNoPadding = styled.div`
+//     width: 100%;
+// `;
+// FullWidthColNoPadding.displayName = 'FullWidthColNoPadding';
 
 const Table = styled.table`
 	width: 100%;
@@ -106,7 +104,10 @@ const Table = styled.table`
 
         td {
             border-bottom: 0;
-            max-width: 350px;
+
+            @media (min-width: ${mediaQueries.min.medium}) {
+            	max-width: 350px;
+            }
         }
     }
 
@@ -145,6 +146,7 @@ const Table = styled.table`
     		align-items: center;
     		justify-content: space-between;
             min-height: 40px;
+            max-width: 100%;
 
 	  		// border: none;
 			// border-bottom: 1px solid #eee; 
@@ -390,11 +392,14 @@ export default class IssueListing extends Component {
                 const assigneeA = a.assignee && a.assignee.login.toUpperCase();
 	            const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
 	            if (assigneeA < assigneeB) {
+	            	console.log('first if ran')
 	                return -1;
 	            }
 	            if (assigneeA > assigneeB) {
+	            	console.log('second if ran')
 	                return 1;
 	            }
+	            console.log('main return ran')
 	            return 0;
             } else if (column === 'updated_at') {
                 return new Date(b.updated_at) - new Date(a.updated_at);
@@ -404,6 +409,7 @@ export default class IssueListing extends Component {
         });
           
         if (direction === 'desc') {
+        	console.log('reverse ran')
             sortedData.reverse();
         }
         
@@ -432,17 +438,20 @@ export default class IssueListing extends Component {
                 <div>
                     <MobileSort>
                         <form>
-                            <FormInput
-                                fieldChange={(e) => this.onSort(e, e.target.value)}
-                                fieldValue={this.state.sort.direction}
-                                fieldType="select"
-                            >
-                                 <option>Sort by...</option>
-                                 <option value="created_at" defaultValue>Created Time</option>
-                                 <option value="avatar_url">Asignee</option>
-                                 <option value="title">Title</option>
-                                 <option value="updated_at">Last Updated</option>
-                            </FormInput>
+                        	<fieldset>
+                        		<label for="sort">Sort by:</label>
+	                            <FormInput
+	                                fieldChange={(e) => this.onSort(e, e.target.value)}
+	                                fieldValue={this.state.sort.direction}
+	                                fieldType="select"
+	                                fieldName="sort"
+	                            >
+	                                 <option value="created_at" defaultValue>Created Time</option>
+	                                 <option value="avatar_url">Asignee</option>
+	                                 <option value="title">Title</option>
+	                                 <option value="updated_at">Last Updated</option>
+	                            </FormInput>
+                            </fieldset>
                         </form>
                     </MobileSort>
     				<Table>
@@ -546,27 +555,47 @@ export default class IssueListing extends Component {
             	<SimpleStorage parent={this} />
         		<IssueListingContainer 
                     className={this.props.className}
-                    maxWidth="100%"
                 >
                     <Row>
             			<FullWidthCol>
                             <h2>Issues {this.renderRepoName()}</h2>
+                            {this.renderIssues()}
                         </FullWidthCol>
                     </Row>
                 </IssueListingContainer>
-                <IssueListingContainerNoMobilePadding 
-                    className={this.props.className}
-                    maxWidth="100%"
-                >
-                    <Row>
-                        <FullWidthColNoPadding>
-                            {this.renderIssues()}
-                        </FullWidthColNoPadding>
-                    </Row>
-        		</IssueListingContainerNoMobilePadding>
             </div>
     	);
     }
+
+    // render() {
+    // 	return (
+    //         <div>
+    //         	<SimpleStorage parent={this} />
+    //     		<IssueListingContainer 
+    //                 className={this.props.className}
+    //                 maxWidth="100%"
+    //             >
+    //                 <Row>
+    //         			<FullWidthCol>
+    //                         <h2>Issues {this.renderRepoName()}</h2>
+    //                     </FullWidthCol>
+    //                 </Row>
+    //             </IssueListingContainer>
+    //             <IssueListingContainerNoMobilePadding 
+    //                 className={this.props.className}
+    //                 maxWidth="100%"
+    //             >
+    //                 <Row>
+    //                     <FullWidthCol>
+    //                         {this.renderIssues()}
+    //                     </FullWidthCol>
+    //                 </Row>
+    //     		</IssueListingContainerNoMobilePadding>
+    //         </div>
+    // 	);
+    // }
+
+
 
     // render() {
     // 	if (this.state.isLoaded === null) {

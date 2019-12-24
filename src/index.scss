@@ -23,11 +23,7 @@ code {
 }
 
 h1, h2, h3 h4, h5 {
-	margin-top: $base-type-spacing;
-	margin-bottom: $base-type-spacing;
-}
-
-p {
+	padding-top: $base-type-spacing;
 	margin-bottom: $base-type-spacing;
 }
 
@@ -37,6 +33,24 @@ h1 {
 
 h2 {
 	font-size: $xlarge-base-font;
+}
+
+p, label {
+	padding-bottom: $base-type-spacing;
+}
+
+p {
+	&:last-of-type {
+		margin-bottom: 0;
+	}
+
+	&:only {
+		margin-bottom: $base-type-spacing;
+	}
+}
+
+label {
+	display: block;
 }
 
 button, input, textarea, select {

@@ -12,6 +12,7 @@ const ColoredButton = styled.button`
         background-color: ${(props) => props.color};
         cursor: pointer;
         font-weight: bold;
+        border: 1px solid ${(props) => props.color};
 
         &:hover {
             background-image: ${(props) =>
@@ -32,11 +33,13 @@ const ColoredButton = styled.button`
         &.disabled,
         &:disabled {
             background: ${theme.alto};
+            border-color: ${theme.alto};
             color: ${theme.black};
 
             &:hover,
             &:active {
                 background: ${theme.alto};
+                border-color: ${theme.alto};
                 color: ${theme.black};
             }
 
@@ -47,10 +50,12 @@ const ColoredButton = styled.button`
                     ${darken(0.2, `${theme.alto}`)} 1%
                 );
                 background-color: ${darken(0.2, `${theme.alto}`)};
+                border-color: ${darken(0.2, `${theme.alto}`)};
             }
 
             &.disabled--clickable:active {
                 background-color: ${darken(0.1, `${theme.alto}`)};
+                border-color: ${darken(0.2, `${theme.alto}`)};
             }
         }
     }
