@@ -67,10 +67,15 @@ const FullWidthCol = styled.div`
 `;
 FullWidthCol.displayName = 'FullWidthCol';
 
-// const FullWidthColNoPadding = styled.div`
-//     width: 100%;
-// `;
-// FullWidthColNoPadding.displayName = 'FullWidthColNoPadding';
+const FullWidthColNoPaddingMobile = styled.div`
+    width: 100%;
+
+    @media (min-width: ${mediaQueries.min.medium}) {
+    	padding-left: ${theme.gutter};
+    	padding-right: ${theme.gutter};
+    }
+`;
+FullWidthColNoPaddingMobile.displayName = 'FullWidthColNoPaddingMobile';
 
 const Table = styled.table`
 	width: 100%;
@@ -84,7 +89,7 @@ const Table = styled.table`
     // }
 
     td {
-        padding: 10px 5px;
+        padding: 10px ${theme.gutter};
         text-align: center;
 
         @media (min-width: ${mediaQueries.min.medium}) {
@@ -435,34 +440,6 @@ export default class IssueListing extends Component {
     	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
 			return (
                 <div>
-                    <MobileSort>
-                        <form>
-                        	<fieldset>
-                        		<label for="sort_by">Sort by:</label>
-	                            <FormInput
-	                                fieldChange={(e) => this.onSort(e, e.target.value)}
-	                                fieldValue={this.state.sort.column}
-	                                fieldType="select"
-	                                fieldName="sort_by"
-	                            >
-	                                 <option value="created_at">Created Time</option>
-	                                 <option value="avatar_url">Asignee</option>
-	                                 <option value="title">Title</option>
-	                                 <option value="updated_at">Last Updated</option>
-	                            </FormInput>
-	                            <label for="sort_order">Sort order:</label>
-	                            <FormInput
-	                                fieldChange={(e) => this.onSort(e, this.state.sort.column)}
-	                                fieldValue={this.state.sort.direction}
-	                                fieldType="select"
-	                                fieldName="sort_order"
-	                            >
-	                                 <option value="asc">Ascending</option>
-	                                 <option value="desc">Descending</option>
-	                            </FormInput>
-                            </fieldset>
-                        </form>
-                    </MobileSort>
     				<Table>
     					<TableHeader>
     						<tr 
@@ -558,6 +535,39 @@ export default class IssueListing extends Component {
         return null;
     };
 
+    renderMobileSort  = () => {
+    	return (
+    		<MobileSort>
+                <form>
+                	<fieldset>
+                		<label for="sort_by">Sort by:</label>
+                        <FormInput
+                            fieldChange={(e) => this.onSort(e, e.target.value)}
+                            fieldValue={this.state.sort.column}
+                            fieldType="select"
+                            fieldName="sort_by"
+                        >
+                             <option value="created_at">Created Time</option>
+                             <option value="avatar_url">Asignee</option>
+                             <option value="title">Title</option>
+                             <option value="updated_at">Last Updated</option>
+                        </FormInput>
+                        <label for="sort_order">Sort order:</label>
+                        <FormInput
+                            fieldChange={(e) => this.onSort(e, this.state.sort.column)}
+                            fieldValue={this.state.sort.direction}
+                            fieldType="select"
+                            fieldName="sort_order"
+                        >
+                             <option value="asc">Ascending</option>
+                             <option value="desc">Descending</option>
+                        </FormInput>
+                    </fieldset>
+                </form>
+            </MobileSort>
+    	);
+    };
+
     render() {
     	return (
             <div>
@@ -568,8 +578,13 @@ export default class IssueListing extends Component {
                     <Row>
             			<FullWidthCol>
                             <h2>Issues {this.renderRepoName()}</h2>
-                            {this.renderIssues()}
+		                    {this.renderMobileSort()}
                         </FullWidthCol>
+                    </Row>
+                    <Row>
+	                    <FullWidthColNoPaddingMobile>
+	                    	{this.renderIssues()}
+	                    </FullWidthColNoPaddingMobile>
                     </Row>
                 </IssueListingContainer>
             </div>
