@@ -243,11 +243,10 @@ export default class IssueListing extends Component {
         this.state = {
             issues: null,
             sort: {
-           		column: 'created_at',
+           		column: null,
            		direction: 'desc'
             },
-            isLoaded: null,
-            sortAccordionOpen: false
+            isLoaded: null
         };
     }
 
@@ -265,6 +264,8 @@ export default class IssueListing extends Component {
                     issues: data,
                     isLoaded: true
                 });
+                this.onSort(null, 'created_at')
+                this.setArrow('created_at')
             }).catch(err => {
             	console.log(err)
             	this.setState({
@@ -322,47 +323,12 @@ export default class IssueListing extends Component {
   //       });
   //   };
 
-      onSort = (e, column) => {
-        console.log("onSort ran", column)
-        console.log("onSort ran", e)
-        const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-        const sortedData = this.state.issues.sort((a, b) => {
-        if (column === 'title') {
-            const titleA = a.title.toUpperCase();
-            const titleB = b.title.toUpperCase(); 
-
-            if (titleA < titleB) {
-                return -1;
-            }
-
-            if (titleA > titleB) {
-                return 1;
-            }
-
-            return 0;
-
-            } else if (column === 'updated_at') {
-                return a.updated_at - b.updated_at; 
-            } else {
-                return a.created_at - b.created_at;
-            }
-        });
-          
-        if (direction === 'desc') {
-          sortedData.reverse();
-        }
-        
-        this.setState({
-          issues: sortedData,
-          sort: {
-            column,
-            direction,
-          }
-        });
-    };
-
-    // onSort = (e, column) => {
+    //   onSort = (e, column) => {
+    //     console.log("onSort ran", column)
+    //     console.log("onSort ran", e)
+    //     console.log("onSort ran, current: direction", this.state.sort.direction)
     //     const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+
     //     const sortedData = this.state.issues.sort((a, b) => {
     //     if (column === 'title') {
     //         const titleA = a.title.toUpperCase();
@@ -378,17 +344,19 @@ export default class IssueListing extends Component {
 
     //         return 0;
 
-    //         } else if (column === 'avatar_url') {
-    //             return a.assignee && a.assignee.login - b.assignee && b.assignee.login; 
     //         } else if (column === 'updated_at') {
     //             return a.updated_at - b.updated_at; 
     //         } else {
+    //             console.log('this goes again')
     //             return a.created_at - b.created_at;
     //         }
     //     });
           
     //     if (direction === 'desc') {
-    //       sortedData.reverse();
+    //         console.log("desc")
+    //         sortedData.reverse();
+    //     } else {
+    //         console.log("else, probably asc")
     //     }
         
     //     this.setState({
@@ -399,6 +367,51 @@ export default class IssueListing extends Component {
     //       }
     //     });
     // };
+
+    onSort = (e, column) => {
+        const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+        const sortedData = this.state.issues.sort((a, b) => {
+        if (column === 'title') {
+            const titleA = a.title.toUpperCase();
+            const titleB = b.title.toUpperCase(); 
+
+            if (titleA < titleB) {
+                return -1;
+            }
+            if (titleA > titleB) {
+                return 1;
+            }
+            return 0;
+            } else if (column === 'avatar_url') {
+                return a.assignee && a.assignee.login - b.assignee && b.assignee.login; 
+                const assigneeA = a.assignee.login.toUpperCase();
+	            const assigneeB = b.assignee.login.toUpperCase(); 
+	            if (assigneeA < assigneeB) {
+	                return -1;
+	            }
+	            if (assigneeA > assigneeB) {
+	                return 1;
+	            }
+	            return 0;
+            } else if (column === 'updated_at') {
+                return new Date(b.updated_at) - new Date(a.updated_at);
+            } else {
+                return new Date(b.created_at) - new Date(a.created_at);
+            }
+        });
+          
+        if (direction === 'desc') {
+            sortedData.reverse();
+        }
+        
+        this.setState({
+          issues: sortedData,
+          sort: {
+            column,
+            direction,
+          }
+        });
+    };
 
     setArrow = (column) => {
         let className = 'sort-direction';
