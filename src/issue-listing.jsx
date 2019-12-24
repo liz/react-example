@@ -409,7 +409,6 @@ export default class IssueListing extends Component {
         });
           
         if (direction === 'desc') {
-        	console.log('reverse ran')
             sortedData.reverse();
         }
         
@@ -439,17 +438,27 @@ export default class IssueListing extends Component {
                     <MobileSort>
                         <form>
                         	<fieldset>
-                        		<label for="sort">Sort by:</label>
+                        		<label for="sort_by">Sort by:</label>
 	                            <FormInput
 	                                fieldChange={(e) => this.onSort(e, e.target.value)}
 	                                fieldValue={this.state.sort.column}
 	                                fieldType="select"
-	                                fieldName="sort"
+	                                fieldName="sort_by"
 	                            >
 	                                 <option value="created_at">Created Time</option>
 	                                 <option value="avatar_url">Asignee</option>
 	                                 <option value="title">Title</option>
 	                                 <option value="updated_at">Last Updated</option>
+	                            </FormInput>
+	                            <label for="sort_order">Sort order:</label>
+	                            <FormInput
+	                                fieldChange={(e) => this.onSort(e, this.state.sort.column)}
+	                                fieldValue={this.state.sort.direction}
+	                                fieldType="select"
+	                                fieldName="sort_order"
+	                            >
+	                                 <option value="asc">Ascending</option>
+	                                 <option value="desc">Descending</option>
 	                            </FormInput>
                             </fieldset>
                         </form>
