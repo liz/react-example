@@ -36,6 +36,11 @@ export const FormInput = (props) => {
     		className={props.className}
     		bottomSpacing={props.bottomSpacing}
     	>
+    		<label
+    			htmlFor={props.fieldId}
+    		>
+    			{props.fieldLabel}
+    		</label>
 		   	<Field
 				id={props.fieldId}
 				type={props.fieldType}

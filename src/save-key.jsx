@@ -81,13 +81,13 @@ const SaveKey = (props) => {
                         <fieldset>
                             <Row>
                                 <Col>
-                                <label for="saveKey">Please submit your Github API Key to see issues for your repos</label>
                                     <FormInput
                                         fieldValue={fieldValue}
                                         fieldChange={event => onFieldChange(event)} 
                                         placeHolder="Github API Key"
                                         fieldError={fieldError}
-                                        fieldName="saveKey"
+                                        fieldId="save-key"
+                                        fieldLabel="Please submit your Github API Key to see issues for your repos"
                                     />
                                 </Col>
                             </Row>

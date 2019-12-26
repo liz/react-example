@@ -26,13 +26,7 @@ const IssueListingContainer = styled(Container)`
 `;
 IssueListingContainer.displayName = 'IssueListingContainer';
 
-const NoIssuesMessage = styled.p`
-    // padding-left: ${theme.gutter};
-
-    // @media (min-width: ${mediaQueries.min.medium}) {
-    //     padding-left: 0;
-    // }
-`;
+const NoIssuesMessage = styled.p``;
 NoIssuesMessage.displayName = 'NoIssuesMessage';
 
 const MobileSort = styled.div`
@@ -46,19 +40,6 @@ const MobileSort = styled.div`
     }
 `;
 NoIssuesMessage.displayName = 'NoIssuesMessage';
-
-// const IssueListingContainerNoMobilePadding = styled(IssueListingContainer)`
-//     padding-left: 0;
-//     padding-right: 0;
-//     // overflow-x: auto;
-//     // overflow-y: hidden;
-
-//     @media (min-width: ${mediaQueries.min.medium}) {
-//         padding-left: ${theme.gutter};
-//         padding-right: ${theme.gutter};
-//     }
-// `;
-// IssueListingContainerNoMobilePadding.displayName = 'IssueListingContainerNoMobilePadding';
 
 const FullWidthCol = styled.div`
     width: 100%;
@@ -224,26 +205,6 @@ const TableHeader = styled.thead`
     }
 `;
 
-// const SortArrow = styled.span`
-// 	height: 0;
-// 	width: 0;
-// 	border-left: 5px solid transparent;
-// 	border-right: 5px solid transparent;
-
-// 	&.asc {
-// 		border-bottom: 5px solid ${(props) => props.color};;
-// 	}
-
-// 	&.desc {
-// 		border-top: 5px solid ${(props) => props.color};;
-// 	}
-// `;
-// SortArrow.displayName = 'SortArrow';
-
-// SortArrow.defaultProps = {
-// 	color: theme.primaryColor
-// }
-
 export default class IssueListing extends Component {
 	   constructor(props) {
         super(props);
@@ -294,90 +255,6 @@ export default class IssueListing extends Component {
         }
     }
 
-  //   onSort = (column) => (e) => {
-  //       console.log("onSort ran", column)
-  //       console.log("onSort ran", e)
-  //       const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-  //       const sortedData = this.state.issues.sort((a, b) => {
-		// if (column === 'title') {
-		// 	const titleA = a.title.toUpperCase();
-		// 	const titleB = b.title.toUpperCase(); 
-
-		// 	if (titleA < titleB) {
-		// 		return -1;
-		// 	}
-
-		// 	if (titleA > titleB) {
-		// 		return 1;
-		// 	}
-
-		// 	return 0;
-
-		// 	} else if (column === 'updated_at') {
-		// 		return a.updated_at - b.updated_at; 
-		// 	} else {
-		// 		return a.created_at - b.created_at;
-		// 	}
-  //       });
-          
-  //       if (direction === 'desc') {
-  //         sortedData.reverse();
-  //       }
-        
-  //       this.setState({
-  //         issues: sortedData,
-  //         sort: {
-  //           column,
-  //           direction,
-  //         }
-  //       });
-  //   };
-
-    //   onSort = (e, column) => {
-    //     console.log("onSort ran", column)
-    //     console.log("onSort ran", e)
-    //     console.log("onSort ran, current: direction", this.state.sort.direction)
-    //     const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-
-    //     const sortedData = this.state.issues.sort((a, b) => {
-    //     if (column === 'title') {
-    //         const titleA = a.title.toUpperCase();
-    //         const titleB = b.title.toUpperCase(); 
-
-    //         if (titleA < titleB) {
-    //             return -1;
-    //         }
-
-    //         if (titleA > titleB) {
-    //             return 1;
-    //         }
-
-    //         return 0;
-
-    //         } else if (column === 'updated_at') {
-    //             return a.updated_at - b.updated_at; 
-    //         } else {
-    //             console.log('this goes again')
-    //             return a.created_at - b.created_at;
-    //         }
-    //     });
-          
-    //     if (direction === 'desc') {
-    //         console.log("desc")
-    //         sortedData.reverse();
-    //     } else {
-    //         console.log("else, probably asc")
-    //     }
-        
-    //     this.setState({
-    //       issues: sortedData,
-    //       sort: {
-    //         column,
-    //         direction,
-    //       }
-    //     });
-    // };
-
     onSort = (e, column) => {
         const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
         const sortedData = this.state.issues.sort((a, b) => {
@@ -393,18 +270,14 @@ export default class IssueListing extends Component {
             }
             return 0;
             } else if (column === 'avatar_url') {
-                // return a.assignee && a.assignee.login - b.assignee && b.assignee.login; 
                 const assigneeA = a.assignee && a.assignee.login.toUpperCase();
 	            const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
 	            if (assigneeA < assigneeB) {
-	            	console.log('first if ran')
 	                return -1;
 	            }
 	            if (assigneeA > assigneeB) {
-	            	console.log('second if ran')
 	                return 1;
 	            }
-	            console.log('main return ran')
 	            return 0;
             } else if (column === 'updated_at') {
                 return new Date(b.updated_at) - new Date(a.updated_at);
@@ -540,24 +413,24 @@ export default class IssueListing extends Component {
     		<MobileSort>
                 <form>
                 	<fieldset>
-                		<label for="sort_by">Sort by:</label>
                         <FormInput
                             fieldChange={(e) => this.onSort(e, e.target.value)}
                             fieldValue={this.state.sort.column}
                             fieldType="select"
-                            fieldName="sort_by"
+                            fieldId="sort-by"
+                            fieldLable="Sort by:"
                         >
                              <option value="created_at">Created Time</option>
                              <option value="avatar_url">Asignee</option>
                              <option value="title">Title</option>
                              <option value="updated_at">Last Updated</option>
                         </FormInput>
-                        <label for="sort_order">Sort order:</label>
                         <FormInput
                             fieldChange={(e) => this.onSort(e, this.state.sort.column)}
                             fieldValue={this.state.sort.direction}
                             fieldType="select"
-                            fieldName="sort_order"
+                            fieldId="sort-order"
+                            fieldLable="Sort order:"
                         >
                              <option value="asc">Ascending</option>
                              <option value="desc">Descending</option>
@@ -590,54 +463,4 @@ export default class IssueListing extends Component {
             </div>
     	);
     }
-
-    // render() {
-    // 	return (
-    //         <div>
-    //         	<SimpleStorage parent={this} />
-    //     		<IssueListingContainer 
-    //                 className={this.props.className}
-    //                 maxWidth="100%"
-    //             >
-    //                 <Row>
-    //         			<FullWidthCol>
-    //                         <h2>Issues {this.renderRepoName()}</h2>
-    //                     </FullWidthCol>
-    //                 </Row>
-    //             </IssueListingContainer>
-    //             <IssueListingContainerNoMobilePadding 
-    //                 className={this.props.className}
-    //                 maxWidth="100%"
-    //             >
-    //                 <Row>
-    //                     <FullWidthCol>
-    //                         {this.renderIssues()}
-    //                     </FullWidthCol>
-    //                 </Row>
-    //     		</IssueListingContainerNoMobilePadding>
-    //         </div>
-    // 	);
-    // }
-
-
-
-    // render() {
-    // 	if (this.state.isLoaded === null) {
-    // 		return <p>Please select a repo from the lefthand column</p>;
-    // 	}
-
-    // 	return this.renderIssueTable();
-    // }
-
-    //  render() {
-    // 	if (this.state.isLoaded === null) {
-    // 		return <p>Please select a repo from the lefthand column</p>;
-    // 	}
-
-    // 	return (
-    // 		<div>
-	   //  		{this.renderIssueTable()}
-    // 		</div>
-    // 	);
-    // }
 }
