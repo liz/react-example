@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import App from './App';
+import { shallow } from 'enzyme';
+
+import App from './app';
 import SaveKey from './save-key';
 
 describe('App', () => {

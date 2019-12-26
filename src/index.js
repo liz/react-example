@@ -12,8 +12,6 @@ import * as serviceWorker from './serviceWorker';
 const store = createStore(app);
 const rootEl = document.getElementById('root');
 
-// ReactDOM.render(<App apiKey={store.getState()} />, document.getElementById('root'));
-
 const render = () => ReactDOM.render(
 	<Provider store={store}>	
 		<App apiKey={store.getState()} />

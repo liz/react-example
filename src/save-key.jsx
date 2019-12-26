@@ -40,7 +40,7 @@ const OuterCol = styled(Col)`
 `;
 OuterCol.displayName = 'OuterCol';
 
-const SaveKey = (props) => {
+export const SaveKey = (props) => {
     const [fieldValue, setFieldValue] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [fieldError, setFieldError] = useState(...props.fieldError);
