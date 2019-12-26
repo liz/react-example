@@ -7,6 +7,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-environment-enzyme": "^7.1.2",
+    "jest-enzyme": "^7.1.2",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
     "polished": "^3.4.2",
@@ -45,6 +48,8 @@
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.10.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^4.3.0",
     "eslint-config-prettier-react": "0.0.24",
@@ -54,6 +59,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "jest": "^24.9.0",
     "prettier": "^1.19.1"
   }
 }
