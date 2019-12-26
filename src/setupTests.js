@@ -15,7 +15,8 @@ jest.mock('./theme', () => {
     white: 'white',
     black: 'black',
     primaryColor: '#d62027',
-    alto: '#d8d8d8'
+    alto: '#d8d8d8',
+    buttonMinWidth: '175px'
   };
 });
 

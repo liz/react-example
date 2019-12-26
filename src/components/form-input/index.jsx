@@ -11,13 +11,8 @@ FieldContainer.displayName = 'FieldContainer';
 export const FormInput = (props) => {
 	const onChange = (event) => {
         if (props.fieldChange) {
+        	console.log("FormInput on change ran")
             props.fieldChange(event);
-        }
-    };
-
-	const onKeyPress = (event) => {
-        if (props.onKeyPress) {
-            props.onKeyPress(event);
         }
     };
 
@@ -45,12 +40,11 @@ export const FormInput = (props) => {
 				id={props.fieldId}
 				type={props.fieldType}
 				name={props.fieldId}
-				value={props.fieldValue}	
+				value={props.value}	
 				placeholder={props.placeHolder}
 		        onChange={(event) => onChange(event)}
 		        required={props.required}
 		        disabled={props.disabled}
-		        onKeyPress={onKeyPress}
 		        rows={props.rows}
 			>
 				{props.children}

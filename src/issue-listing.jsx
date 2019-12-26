@@ -415,7 +415,7 @@ export default class IssueListing extends Component {
                 	<fieldset>
                         <FormInput
                             fieldChange={(e) => this.onSort(e, e.target.value)}
-                            fieldValue={this.state.sort.column}
+                            value={this.state.sort.column}
                             fieldType="select"
                             fieldId="sort-by"
                             fieldLable="Sort by:"
@@ -427,7 +427,7 @@ export default class IssueListing extends Component {
                         </FormInput>
                         <FormInput
                             fieldChange={(e) => this.onSort(e, this.state.sort.column)}
-                            fieldValue={this.state.sort.direction}
+                            value={this.state.sort.direction}
                             fieldType="select"
                             fieldId="sort-order"
                             fieldLable="Sort order:"

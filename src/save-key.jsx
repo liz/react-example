@@ -61,12 +61,14 @@ export const SaveKey = (props) => {
         if (fieldValue) {
             console.log("should dispatch")
             props.dispatch(saveKey(fieldValue))
+            setButtonDisabled(true)
         } else {
             setFieldError("Please enter an API Key")
         }
     }; 
 
     const onFieldChange = (event) => {
+        console.log("onFieldChange on change ran")
         setFieldValue(event.target.value);
     }; 
 
@@ -82,7 +84,7 @@ export const SaveKey = (props) => {
                             <Row>
                                 <Col>
                                     <FormInput
-                                        fieldValue={fieldValue}
+                                        value={fieldValue}
                                         fieldChange={event => onFieldChange(event)} 
                                         placeHolder="Github API Key"
                                         fieldError={fieldError}
