@@ -95,7 +95,7 @@ describe('SaveKey', () => {
 			expect(wrapper.find('Button').prop('disabled')).toBe(false);
 		});
 
-		it('should call the dispatch function and disable the submit button on form submit', () => {
+		it('calls the dispatch function with expected params and disables the submit button on form submit', () => {
 			const dispatch = jest.fn();
 
 			wrapper = mount(
@@ -118,7 +118,7 @@ describe('SaveKey', () => {
         	expect(wrapper.find('Button').prop('disabled')).toBe(false);
 
         	act(() => { 
-	        	wrapper.find('#save-key').simulate('submit');
+	        	wrapper.find('form').simulate('submit');
         	});
 			
 			wrapper.update();
@@ -128,5 +128,67 @@ describe('SaveKey', () => {
 			expect(wrapper.find('Button').prop('disabled')).toBe(true);
 			expect(dispatch).toHaveBeenCalledWith(expectedParams);
 		});
+	});
+
+	describe('Updates fieldError state', () => {
+		it('passes fieldError prop if supplied to the FormInputError component via the fieldError state', () => {
+			wrapper = mount(
+				<Provider store={store}>
+					<SaveKey fieldError="Github does not recognize this API Key, please try a different API Key." />
+				</Provider>
+			);
+
+			expect(wrapper.find('FormInput').find('FormInputError').props().fieldError).toEqual(wrapper.find('SaveKey').props().fieldError);
+		});
+
+		// it.only('passes the fieldError state to the FormInputError component if FormInput field is empty on submit', () => {
+		// 	const setFieldError = jest.fn();
+
+		// 	wrapper = mount(
+		// 		<Provider store={store}>
+		// 			<SaveKey />
+		// 		</Provider>
+		// 	);
+
+		// 	expect(wrapper.find('#save-key').props().value).toEqual('');
+		// 	// expect(wrapper.find('Button').prop('disabled')).toBe(true);
+
+		// 	// act(() => { 
+		// 	// 	wrapper.find('#save-key').instance().value = '1234567900';
+	 //  //       	wrapper.find('#save-key').simulate('change');
+  //  //      	});
+
+  //  //      	wrapper.update();
+
+		// 	// expect(wrapper.find('#save-key').props().value).toEqual('1234567900');
+  //  //      	expect(wrapper.find('Button').prop('disabled')).toBe(false);
+
+  //  	// 		act(() => { 
+		// 		// wrapper.find('#save-key').instance().value = '1234567900';
+	 //   //      	wrapper.find('#save-key').simulate('change');
+  //   //     	});
+
+  //     		// wrapper.find('Button').prop('disabled', false);
+  //     		// // wrapper.find('Button').setProps({ disabled: false });
+  //     		// wrapper.update();
+
+  //     		// expect(wrapper.find('Button').prop('disabled')).toBe(false);
+
+  //       	act(() => { 
+	 //        	wrapper.find('form').simulate('submit', { preventDefault() {} });
+  //       	});
+			
+		// 	wrapper.update();
+
+		// 	console.log(wrapper.debug())
+
+		// 	// expect(wrapper.find('FormInput').find('FormInputError').props().fieldError).toEqual("Please enter an API Key");
+		// 	expect(setFieldError).toHaveBeenCalled();
+
+		// 	// const expectedParams = {"key": "1234567900", "type": "SAVE_KEY"};
+
+		// 	// expect(wrapper.find('Button').prop('disabled')).toBe(true);
+		// 	// expect(dispatch).toHaveBeenCalledWith(expectedParams);
+		// });
 	});
 });
