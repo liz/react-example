@@ -10,9 +10,13 @@ describe('App', () => {
 		expect(wrapper.find(SaveKey)).toHaveLength(1);
 	});
 
-	it('renders Listing when apiKey prop is supplied', () => {
+	it('renders Listing with expected props  when apiKey prop is supplied', () => {
 		const apiKey = { key: "apiKeyhere"}
 		const wrapper = shallow(<App apiKey={apiKey} />);
 		expect(wrapper.find('Listing')).toHaveLength(1);
+		expect(wrapper.find('Listing').props()).toEqual({
+			apiKey: wrapper.props().apiKey,
+			selectedRepo: null
+		});
 	});
 });

@@ -133,27 +133,32 @@ export default class Listing extends Component {
     }
 
     fetchRepos = () => {
+        console.log("why is this not stubbed")
         const octokit = new Octokit({
             auth: this.props.apiKey
         });
 
         octokit.repos.list({})
             .then(({ data }) => {
+                console.log("then in oktokit")
                 this.setState({
                     repos: data,
                     isLoaded: true
                 });
+                console.log(data)
             }).catch(err => {
+                console.log(err)
                 this.setState({
                     repos: [],
                     isLoaded: true,
                     fieldError: "Github does not recognize this API Key, please try a different API Key."
                 });
-            });;
+            });
     };
 
     componentDidMount() {
         if (this.props.apiKey) {
+            console.log("mount going")
             this.fetchRepos();
         }
     };
@@ -248,8 +253,7 @@ export default class Listing extends Component {
 }
 
 Listing.defaultProps = {
-    selectedRepoId: null,
-    selectedRepoOwner: null
+    selectedRepo: null
 };
 
 // export default Listing;

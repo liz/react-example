@@ -11,16 +11,10 @@ const mockStore = configureMockStore();
 const store = mockStore({});
 
 describe('SaveKey', () => {
-	// let wrapper = mount(
-	// 	<Provider store={store}>
-	// 		<SaveKey />
-	// 	</Provider>
-	// );
-
 	let wrapper;
 
 	beforeEach(() => {
-	   wrapper = mount(
+	    wrapper = mount(
 			<Provider store={store}>
 				<SaveKey />
 			</Provider>
@@ -140,55 +134,5 @@ describe('SaveKey', () => {
 
 			expect(wrapper.find('FormInput').find('FormInputError').props().fieldError).toEqual(wrapper.find('SaveKey').props().fieldError);
 		});
-
-		// it.only('passes the fieldError state to the FormInputError component if FormInput field is empty on submit', () => {
-		// 	const setFieldError = jest.fn();
-
-		// 	wrapper = mount(
-		// 		<Provider store={store}>
-		// 			<SaveKey />
-		// 		</Provider>
-		// 	);
-
-		// 	expect(wrapper.find('#save-key').props().value).toEqual('');
-		// 	// expect(wrapper.find('Button').prop('disabled')).toBe(true);
-
-		// 	// act(() => { 
-		// 	// 	wrapper.find('#save-key').instance().value = '1234567900';
-	 //  //       	wrapper.find('#save-key').simulate('change');
-  //  //      	});
-
-  //  //      	wrapper.update();
-
-		// 	// expect(wrapper.find('#save-key').props().value).toEqual('1234567900');
-  //  //      	expect(wrapper.find('Button').prop('disabled')).toBe(false);
-
-  //  	// 		act(() => { 
-		// 		// wrapper.find('#save-key').instance().value = '1234567900';
-	 //   //      	wrapper.find('#save-key').simulate('change');
-  //   //     	});
-
-  //     		// wrapper.find('Button').prop('disabled', false);
-  //     		// // wrapper.find('Button').setProps({ disabled: false });
-  //     		// wrapper.update();
-
-  //     		// expect(wrapper.find('Button').prop('disabled')).toBe(false);
-
-  //       	act(() => { 
-	 //        	wrapper.find('form').simulate('submit', { preventDefault() {} });
-  //       	});
-			
-		// 	wrapper.update();
-
-		// 	console.log(wrapper.debug())
-
-		// 	// expect(wrapper.find('FormInput').find('FormInputError').props().fieldError).toEqual("Please enter an API Key");
-		// 	expect(setFieldError).toHaveBeenCalled();
-
-		// 	// const expectedParams = {"key": "1234567900", "type": "SAVE_KEY"};
-
-		// 	// expect(wrapper.find('Button').prop('disabled')).toBe(true);
-		// 	// expect(dispatch).toHaveBeenCalledWith(expectedParams);
-		// });
 	});
 });
