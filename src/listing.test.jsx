@@ -38,30 +38,6 @@ describe('Listing', () => {
 				}
 	    	}
 	    ];
-
-  //   	function retrieveStub(repos) {
-		//     return new Promise((resolve, reject) => {
-		//       resolve((repos));
-		//     });
-		// }
-
-		// const mock = fixtures.mock("api.github.com/get-repository");
-
-	 //    wrapper = mount(
-		// 	<Provider store={store}>
-		// 		<Listing apiKey={apiKey} />
-		// 	</Provider>
-		// );
-
-		// mockGithub.get.mockImplementationOnce(() =>
-  //   		Promise.resolve(repos)
-  // 		);
-
-		// instance = wrapper.instance();
-
-		// let fetchReposStub = jest.spyOn(instance, 'fetchRepos');
-
-		// wrapper.update();
     });
 
 	afterEach(() => {
@@ -103,13 +79,11 @@ describe('Listing', () => {
 		  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 		  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 		  	expect(wrapper.find(SaveKey)).toHaveLength(1);
-		  	// nock.cleanAll();
 		});
 
 		it('renders SaveKey with fieldError when github API responds with an error', async () => {
 		  	const octokit = new Octokit({});
 		  	const scope = nock('https://api.github.com')
-		  	.log(console.log)
 		  	.persist()
 		    .get('/user/repos')
 		    .reply(401, {
@@ -133,7 +107,6 @@ describe('Listing', () => {
 		  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 		  	expect(wrapper.find('Listing').state().repos).toEqual([]);
 		  	expect(wrapper.find(SaveKey)).toHaveLength(1);
-		  	// nock.cleanAll();
 		});
 	 });
 
