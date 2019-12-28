@@ -27,34 +27,12 @@ ColA.displayName = 'ColA';
 
 const ColB = styled.div`
     width: 100%;
-    padding-left: ${theme.gutter};
-    padding-right: ${theme.gutter};
 
         @media (min-width: ${mediaQueries.min.medium}) {
             width: 66.6667%;
         }
 `;
 ColB.displayName = 'ColB';
-
-const ColBNoPaddingMobile = styled.div`
-    width: 100%;
-
-        @media (min-width: ${mediaQueries.min.medium}) {
-            width: 66.6667%;
-            padding-left: ${theme.gutter};
-            padding-right: ${theme.gutter};
-        }
-`;
-ColBNoPaddingMobile.displayName = 'ColBNoPaddingMobile';
-
-const ColBNoPadding = styled.div`
-    width: 100%;
-
-        @media (min-width: ${mediaQueries.min.medium}) {
-            width: 66.6667%;
-        }
-`;
-ColBNoPadding.displayName = 'ColBNoPadding';
 
 const FullWidthCol = styled.div`
     width: 100%;
@@ -84,21 +62,6 @@ const RepoToggle = styled(Button)`
     }
 `;
 RepoToggle.displayName = 'RepoToggle';
-
-// const SelectRepoButton = styled(Button)`
-//     padding: 5px 10px;
-
-//     &.repo-selected {
-//         background: ${theme.backgroundAlt};
-//         border: 1px solid ${theme.primaryColor};
-
-//         &:hover {
-//             background: transparent;
-//             border: 0;
-//         }
-//     }
-// `;
-// SelectRepoButton.displayName = 'SelectRepoButton';
 
 const SelectRepoButton = styled(Button)`
     &.repo-selected {
@@ -235,12 +198,12 @@ export default class Listing extends Component {
                                 </FullWidthCol>
                             </Row>
                         </ColA>
-                        <ColBNoPadding>
+                        <ColB>
                             <IssueListing 
                                 className={this.state.repos && this.state.repos[this.state.selectedRepo] ? 'repo-selected' : 'no-repo-selected'}
                                 selectedRepo={this.state.repos && this.state.repos[this.state.selectedRepo]}
                             />
-                        </ColBNoPadding>
+                        </ColB>
                     </Row>
                 </Container>
             );
