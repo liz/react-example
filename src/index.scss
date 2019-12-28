@@ -82,6 +82,9 @@ input, textarea, select {
 select {
 	background: transparent url('./images/chevron-down.svg') 98% 50%/16px auto
       no-repeat;
+
+    -moz-appearance: none;
+  	-webkit-appearance: none;
       
     &::-ms-expand {
       display: none;
