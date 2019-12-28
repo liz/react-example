@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { act } from 'react-dom/test-utils';
@@ -14,18 +14,9 @@ import theme from './theme';
 const mockStore = configureMockStore();
 const store = mockStore({});
 
-describe.only('Listing', () => {
-	// let wrapper;
+describe('Listing', () => {
 	let apiKey = '1234567900';
-	// let instance;
 	let repos;
-	// let fetchRepos = jest.fn().mockReturnValue(repos);
-
-	// let fetchReposStub = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation(() => ({
- //        then: (callback) => {
- //          callback({ repos });
- //        }
- //      }));
 
 	beforeEach(() => {
 
@@ -74,6 +65,7 @@ describe.only('Listing', () => {
     });
 
 	afterEach(() => {
+		nock.cleanAll();
         jest.resetAllMocks();
     });
 
@@ -89,28 +81,6 @@ describe.only('Listing', () => {
 
 	    	expect(wrapper.html()).toMatchSnapshot();
 	  	});
-
-	 //  	it.only('renders SaveKey with fieldError when github API responds with an error', async () => {
-	 //  	 	const wrapper = mount(
-		// 		<Provider store={store}>
-		// 			<Listing apiKey={apiKey} />
-		// 		</Provider>
-		// 	);
-
-		//   	const octokit = new Octokit({
-	 //            auth: apiKey
-	 //        });
-		//   	const scope = nock('https://api.github.com')
-		//   	.log(console.log)
-		//     .get('/user/repos/').reply(200);
-
-		//   	await octokit.request('/user/repos/');
-		//   	scope.done();
-
-		//   	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
-		//   	expect(wrapper.find('Listing').state().repos).toEqual([]);
-		//   	expect(wrapper.find(SaveKey)).toHaveLength(1);
-		// });
 
 	  	it('renders Listing when github responds with data', async () => {
 		  	const octokit = new Octokit({
@@ -132,6 +102,38 @@ describe.only('Listing', () => {
 
 		  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 		  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
+		  	expect(wrapper.find(SaveKey)).toHaveLength(1);
+		  	// nock.cleanAll();
+		});
+
+		it('renders SaveKey with fieldError when github API responds with an error', async () => {
+		  	const octokit = new Octokit({});
+		  	const scope = nock('https://api.github.com')
+		  	.log(console.log)
+		  	.persist()
+		    .get('/user/repos')
+		    .reply(401, {
+			  "message": "Bad credentials",
+			  "documentation_url": "https://developer.github.com/v3"
+			});
+
+		  	const wrapper = mount(
+				<Provider store={store}>
+					<Listing apiKey={apiKey} />
+				</Provider>
+			);
+
+			try {
+				await octokit.request('/user/repos');
+				scope.done();
+			} catch (e) {
+				expect(e.status).toEqual(401);
+			}
+
+		  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+		  	expect(wrapper.find('Listing').state().repos).toEqual([]);
+		  	expect(wrapper.find(SaveKey)).toHaveLength(1);
+		  	// nock.cleanAll();
 		});
 	 });
 
