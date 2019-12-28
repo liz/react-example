@@ -309,6 +309,18 @@ export default class IssueListing extends Component {
         return className;
     };
 
+    truncateByWord  = (text, length) => {
+		if (text === undefined) {
+			return '';
+		}
+
+		if (text.length > length) {
+			const tokens = text.substring(0, length).split(' ');
+			return `${tokens.slice(0, -1).join(' ')}...`;
+		}
+			return text;
+	};
+
     renderIssueTable  = () => {
     	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
 			return (
@@ -357,13 +369,13 @@ export default class IssueListing extends Component {
     						</tr>
     					</TableHeader>
     					<tbody>
-    						{this.state.issues && this.state.issues.map(function(issue, index) {
+    						{this.state.issues && this.state.issues.map((issue, index) => {
     							return (
     								<tr key={index}>
     									<td>
     										{(issue.assignee && issue.assignee.avatar_url) ? <Image src={issue.assignee.avatar_url} alt={issue.assignee.login} width="40px" height="40px" /> : "None"}
     									</td>
-    									<td>{issue.title}</td>
+    									<td>{this.truncateByWord(issue.title, 25)}</td>
     									<td>
     										<Moment format="MM/DD/YYYY">
     							                {issue.created_at}
