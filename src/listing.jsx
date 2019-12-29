@@ -17,6 +17,9 @@ import SaveKey from './save-key';
 const ListingContainer = styled(Container)``;
 ListingContainer.displayName = 'ListingContainer';
 
+const RepoList = styled.ul``;
+RepoList.displayName = 'RepoList';
+
 const ColA = styled.div`
     width: 100%;
     padding-left: ${theme.gutter};
@@ -155,29 +158,51 @@ export default class Listing extends Component {
         this.setState({ repoAccordionOpen: !this.state.repoAccordionOpen });
     };
 
+    // renderRepoList = () => {
+    //     if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
+    //         const repoList = this.state.repos.map((repo, index) => (
+    //             <li key={index}>
+    //                 <p>
+    //                     <SelectRepoButton 
+    //                         buttonText={repo.name} 
+    //                         handleClick={() => this.selectRepo(index)}
+    //                         className={`btn btn--link ${this.state.selectedRepo === index? 'repo-selected' : ''}`}
+    //                         icon={<SmallArrow className={this.state.selectedRepo === index ? 'close' : ''}></SmallArrow>}
+    //                         iconOnRight
+    //                     />
+    //                 </p>
+    //             </li>
+    //         ));
+
+    //         return <RepoList>{repoList}</RepoList>;
+    //     }
+
+    //     return <LoadingSpinner />;
+    // };
+
     renderRepoList = () => {
-        if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
-            const repoList = this.state.repos.map((repo, index) => (
-                <li key={index}>
-                    <p>
-                        <SelectRepoButton 
-                            buttonText={repo.name} 
-                            handleClick={() => this.selectRepo(index)}
-                            className={`btn btn--link ${this.state.selectedRepo === index? 'repo-selected' : ''}`}
-                            icon={<SmallArrow className={this.state.selectedRepo === index ? 'close' : ''}></SmallArrow>}
-                            iconOnRight
-                        />
-                    </p>
-                </li>
-            ));
+        const repoList = this.state.repos.map((repo, index) => (
+            <li key={index}>
+                <p>
+                    <SelectRepoButton 
+                        buttonText={repo.name} 
+                        handleClick={() => this.selectRepo(index)}
+                        className={`btn btn--link ${this.state.selectedRepo === index? 'repo-selected' : ''}`}
+                        icon={<SmallArrow className={this.state.selectedRepo === index ? 'close' : ''}></SmallArrow>}
+                        iconOnRight
+                    />
+                </p>
+            </li>
+        ));
 
-            return <ul>{repoList}</ul>;
-        }
-
-        return <LoadingSpinner />;
+        return <RepoList>{repoList}</RepoList>;
     };
 
 	render() {
+        if (!this.state.isLoaded) {
+            return <LoadingSpinner />;
+        }
+
 		if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
             return (
                 <ListingContainer>
@@ -215,8 +240,6 @@ export default class Listing extends Component {
         }
 
         return <SaveKey fieldError={this.state.fieldError} />;
-
-        // return null;
 	}
 }
 

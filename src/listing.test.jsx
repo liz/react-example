@@ -93,30 +93,77 @@ describe('Listing', () => {
 	    	expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
-	  	it('renders ListingContainer when github responds with repo data', async () => {
-		  	const octokit = new Octokit({
-	            auth: apiKey
-	        });
-		  	const scope = nock('https://api.github.com')
-		  	.persist()
-		    .get('/user/repos')
-		    .reply(200, repos);
-
-		  	const wrapper = mount(
+	  	it('renders LoadingSpinner when isLoaded state is false', () => {
+	  		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
+			const wrapper = mount(
 				<Provider store={store}>
 					<Listing apiKey={apiKey} />
 				</Provider>
 			);
 
-		  	await octokit.request('/user/repos');
-			scope.done();
-
 			wrapper.update();
 
-		  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
-		  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
-		  	expect(wrapper.find('ListingContainer')).toHaveLength(1);
-		});
+	    	expect(wrapper.find('Listing').state().isLoaded).toBe(false);
+	    	expect(wrapper.find('Listing').find('LoadingSpinner')).toHaveLength(1);
+	  	});
+
+	  	describe('Renders when github respons with github data', () => {
+	  		let wrapper;
+	  		beforeEach(async () => {
+		  		const octokit = new Octokit({
+		            auth: apiKey
+		        });
+			  	const scope = nock('https://api.github.com')
+			  	.persist()
+			    .get('/user/repos')
+			    .reply(200, repos);
+
+			  	wrapper = mount(
+					<Provider store={store}>
+						<Listing apiKey={apiKey} />
+					</Provider>
+				);
+
+			  	await octokit.request('/user/repos');
+				scope.done();
+				wrapper.update();
+	  		});
+
+	  		afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('renders ListingContainer when github responds with repo data', async () => {
+			  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
+			  	expect(wrapper.find('ListingContainer')).toHaveLength(1);
+			});
+	  	});
+
+	 //  	it('renders ListingContainer when github responds with repo data', async () => {
+		//  //  	const octokit = new Octokit({
+	 //  //           auth: apiKey
+	 //  //       });
+		//  //  	const scope = nock('https://api.github.com')
+		//  //  	.persist()
+		//  //    .get('/user/repos')
+		//  //    .reply(200, repos);
+
+		//  //  	const wrapper = mount(
+		// 	// 	<Provider store={store}>
+		// 	// 		<Listing apiKey={apiKey} />
+		// 	// 	</Provider>
+		// 	// );
+
+		//  //  	await octokit.request('/user/repos');
+		// 	// scope.done();
+
+		// 	wrapper.update();
+
+		//   	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+		//   	expect(wrapper.find('Listing').state().repos).toEqual(repos);
+		//   	expect(wrapper.find('ListingContainer')).toHaveLength(1);
+		// });
 
 		it('renders SaveKey with fieldError when github API responds with an error', async () => {
 		  	const octokit = new Octokit({});

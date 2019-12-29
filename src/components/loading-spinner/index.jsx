@@ -6,7 +6,12 @@ import loading from '../../images/loading.gif';
 import { Image } from '../image';
 
 const LoadingContainer = styled.div`
+	width: 100%;
+	height: 100%;
     margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const LoadingSpinner = (props) => (
