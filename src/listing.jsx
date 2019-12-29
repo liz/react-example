@@ -59,6 +59,9 @@ const FullWidthCol = styled.div`
 `;
 FullWidthCol.displayName = 'FullWidthCol';
 
+const RepoAccordion = styled(FullWidthCol)``;
+RepoAccordion.displayName = 'RepoAccordion';
+
 const RepoToggle = styled(Button)`
     font-weight: normal;
     font-size: ${theme.xlargeBaseFont};
@@ -158,28 +161,6 @@ export default class Listing extends Component {
         this.setState({ repoAccordionOpen: !this.state.repoAccordionOpen });
     };
 
-    // renderRepoList = () => {
-    //     if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
-    //         const repoList = this.state.repos.map((repo, index) => (
-    //             <li key={index}>
-    //                 <p>
-    //                     <SelectRepoButton 
-    //                         buttonText={repo.name} 
-    //                         handleClick={() => this.selectRepo(index)}
-    //                         className={`btn btn--link ${this.state.selectedRepo === index? 'repo-selected' : ''}`}
-    //                         icon={<SmallArrow className={this.state.selectedRepo === index ? 'close' : ''}></SmallArrow>}
-    //                         iconOnRight
-    //                     />
-    //                 </p>
-    //             </li>
-    //         ));
-
-    //         return <RepoList>{repoList}</RepoList>;
-    //     }
-
-    //     return <LoadingSpinner />;
-    // };
-
     renderRepoList = () => {
         const repoList = this.state.repos.map((repo, index) => (
             <li key={index}>
@@ -223,9 +204,9 @@ export default class Listing extends Component {
                                 </FullWidthCol>
                             </Row>
                             <Row>
-                                <FullWidthCol className={this.state.repoAccordionOpen ? 'slidedown' : 'slideup'}>
+                                <RepoAccordion className={this.state.repoAccordionOpen ? 'slidedown' : 'slideup'}>
                                     {this.renderRepoList()}
-                                </FullWidthCol>
+                                </RepoAccordion>
                             </Row>
                         </ColA>
                         <ColB>
@@ -246,5 +227,3 @@ export default class Listing extends Component {
 Listing.defaultProps = {
     selectedRepo: null
 };
-
-// export default Listing;

@@ -10,6 +10,7 @@ import nock from 'nock';
 import { SaveKey } from './save-key';
 import Listing from './listing';
 import theme from './theme';
+import SmallArrow from './components/small-arrow';
 
 const mockStore = configureMockStore();
 const store = mockStore({});
@@ -107,7 +108,7 @@ describe('Listing', () => {
 	    	expect(wrapper.find('Listing').find('LoadingSpinner')).toHaveLength(1);
 	  	});
 
-	  	describe('Renders when github respons with github data', () => {
+	  	describe('Renders when github responds with github data', () => {
 	  		let wrapper;
 	  		beforeEach(async () => {
 		  		const octokit = new Octokit({
@@ -133,37 +134,73 @@ describe('Listing', () => {
 				nock.cleanAll();
 			});
 
-			it('renders ListingContainer when github responds with repo data', async () => {
+			it('renders ListingContainer', async () => {
 			  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('ListingContainer')).toHaveLength(1);
 			});
+
+			it('renders RepoList', async () => {
+			  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
+			  	expect(wrapper.find('RepoList')).toHaveLength(1);
+			});
+
+			it('renders IssueListing with expected props when repo is selected and sets the repoAccordionOpen state to false', async () => {
+				expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
+			  	expect(wrapper.find('Listing').state().selectedRepo).toEqual(null);
+			  	expect(wrapper.find('Listing').state().repoAccordionOpen).toBe(true);
+			  	expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(true);
+			  	expect(wrapper.find('SelectRepoButton')).toHaveLength(2);
+
+				wrapper.find('SelectRepoButton').at(0).simulate('click');
+
+				wrapper.update();
+
+				expect(wrapper.find('Listing').state().selectedRepo).toEqual(0);
+				expect(wrapper.find('Listing').state().repoAccordionOpen).toBe(false);
+				expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(false);
+			  	expect(wrapper.find('IssueListing')).toHaveLength(1);
+			  	expect(wrapper.find('IssueListing').props()).toEqual({
+			  		"className": "repo-selected",
+			  		"selectedRepo": repos[0]
+				});
+			});
+
+			it('renders RepoAccordion with expected className when repoToggle is clicked', async () => {
+				expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
+			  	expect(wrapper.find('RepoAccordion')).toHaveLength(1);
+
+			  	expect(wrapper.find('RepoToggle')).toHaveLength(1);
+			  	expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(true);
+
+				wrapper.find('RepoToggle').simulate('click');
+				wrapper.update();
+
+				expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(false);
+			});
+
+			it('renders RepoAccordion with expected className when repoToggle is clicked twice in a row', async () => {
+				expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
+			  	expect(wrapper.find('RepoAccordion')).toHaveLength(1);
+
+			  	expect(wrapper.find('RepoToggle')).toHaveLength(1);
+			  	expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(true);
+
+				wrapper.find('RepoToggle').simulate('click');
+				wrapper.update();
+
+				expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(false);
+
+				wrapper.find('RepoToggle').simulate('click');
+				wrapper.update();
+
+				expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(true);
+			});
 	  	});
-
-	 //  	it('renders ListingContainer when github responds with repo data', async () => {
-		//  //  	const octokit = new Octokit({
-	 //  //           auth: apiKey
-	 //  //       });
-		//  //  	const scope = nock('https://api.github.com')
-		//  //  	.persist()
-		//  //    .get('/user/repos')
-		//  //    .reply(200, repos);
-
-		//  //  	const wrapper = mount(
-		// 	// 	<Provider store={store}>
-		// 	// 		<Listing apiKey={apiKey} />
-		// 	// 	</Provider>
-		// 	// );
-
-		//  //  	await octokit.request('/user/repos');
-		// 	// scope.done();
-
-		// 	wrapper.update();
-
-		//   	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
-		//   	expect(wrapper.find('Listing').state().repos).toEqual(repos);
-		//   	expect(wrapper.find('ListingContainer')).toHaveLength(1);
-		// });
 
 		it('renders SaveKey with fieldError when github API responds with an error', async () => {
 		  	const octokit = new Octokit({});
@@ -197,37 +234,4 @@ describe('Listing', () => {
 		  	expect(wrapper.find(SaveKey).props().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
 		});
 	 });
-
-	//   	it('renders FormInput with expected props', () => {
-	//     	expect(wrapper.find('FormInput')).toHaveLength(1);
-	// 		expect(wrapper.find('FormInput').props()).toEqual({
-	// 			value: '',
-	// 			fieldChange: expect.any(Function),
-	// 			placeHolder: 'Github API Key',
-	// 			fieldId: 'save-key',
-	// 			fieldLabel: 'Please submit your Github API Key to see issues for your repos',
-	// 			fieldType: 'text',
-	// 			fieldError:  '',
-	// 			disabled: false,
-	// 	        required: false,
-	// 	        rows: 2,
-	// 	        bottomSpacing: '1rem'
-	// 		});
-	//   	});
-
-	//   	 it('renders submit Button with expected props', () => {
-	//     	expect(wrapper.find('Button')).toHaveLength(1);
-	// 		expect(wrapper.find('Button').props()).toEqual({
-	// 			type: 'submit',
-	// 			buttonText: 'Submit',
-	// 			disabled: true,
-	// 			color: '#d62027',
-	// 			colorAlt: null,
-	// 			iconOnRight: false,
-	// 			className: 'btn',
-	// 			hidden: false,
-	// 			minWidth: '175px'
-	// 		});
-	//   	});
-	// });
 });
