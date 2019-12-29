@@ -14,6 +14,9 @@ import SmallArrow from './components/small-arrow';
 import IssueListing from './issue-listing';
 import SaveKey from './save-key';
 
+const ListingContainer = styled(Container)``;
+ListingContainer.displayName = 'ListingContainer';
+
 const ColA = styled.div`
     width: 100%;
     padding-left: ${theme.gutter};
@@ -93,9 +96,11 @@ export default class Listing extends Component {
             isLoaded: false,
             repoAccordionOpen: true
         };
+
+        this.fetchRepos = this.fetchRepos.bind(this);
     }
 
-    fetchRepos = () => {
+    fetchRepos() {
         console.log("why is this not stubbed")
         const octokit = new Octokit({
             auth: this.props.apiKey
@@ -117,7 +122,7 @@ export default class Listing extends Component {
                     fieldError: "Github does not recognize this API Key, please try a different API Key."
                 });
             });
-    };
+    }
 
     componentDidMount() {
         if (this.props.apiKey) {
@@ -128,10 +133,10 @@ export default class Listing extends Component {
 
     componentDidUpdate(prevProps) {
         console.log(prevProps.apiKey)
+        console.log("componentDidUpdate")
         if (prevProps.apiKey !== this.props.apiKey) {
             console.log("prevProps check ran")
             if (this.props.apiKey) {
-                // this.setState({ isLoaded: false });
                 this.fetchRepos();
             }
         }
@@ -175,7 +180,7 @@ export default class Listing extends Component {
 	render() {
 		if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
             return (
-                <Container>
+                <ListingContainer>
                     <Row>
                         <ColA>
                             <Row>
@@ -205,7 +210,7 @@ export default class Listing extends Component {
                             />
                         </ColB>
                     </Row>
-                </Container>
+                </ListingContainer>
             );
         }
 

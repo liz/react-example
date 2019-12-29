@@ -42,7 +42,42 @@ describe('Listing', () => {
 
 	afterEach(() => {
 		nock.cleanAll();
-        jest.resetAllMocks();
+        jest.clearAllMocks();
+    });
+
+    describe('componentDidMount', () => {
+    	it('calls fetchRepos() on componentDidMount', () => {
+		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
+			const wrapper = mount(
+				<Provider store={store}>
+					<Listing apiKey={apiKey} />
+				</Provider>
+			);
+			expect(fetchReposSpy).toHaveBeenCalled();
+	  	});
+    });
+
+    describe('componentDidUpdate', () => {
+    	it('calls fetchRepos() on componentDidUpdate when apiKey prevProp is different then apiKey prop', () => {
+		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
+			const wrapper = mount(
+				<Provider store={store}>
+					<Listing apiKey="anythingelse" />
+				</Provider>
+			);
+
+			wrapper.update();
+
+			expect(wrapper.find('Listing').props().apiKey).toEqual("anythingelse");
+			expect(fetchReposSpy).toHaveBeenCalled();
+
+			wrapper.setProps({ children: <Listing apiKey={apiKey} /> });
+
+			wrapper.update();
+
+			expect(wrapper.find('Listing').props().apiKey).toEqual(apiKey);
+			expect(fetchReposSpy).toHaveBeenCalled();
+	  	});
     });
 
 	describe('Renders', () => {
@@ -58,7 +93,7 @@ describe('Listing', () => {
 	    	expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
-	  	it('renders Listing when github responds with data', async () => {
+	  	it('renders ListingContainer when github responds with repo data', async () => {
 		  	const octokit = new Octokit({
 	            auth: apiKey
 	        });
@@ -76,9 +111,11 @@ describe('Listing', () => {
 		  	await octokit.request('/user/repos');
 			scope.done();
 
+			wrapper.update();
+
 		  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 		  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
-		  	expect(wrapper.find(SaveKey)).toHaveLength(1);
+		  	expect(wrapper.find('ListingContainer')).toHaveLength(1);
 		});
 
 		it('renders SaveKey with fieldError when github API responds with an error', async () => {
@@ -104,9 +141,13 @@ describe('Listing', () => {
 				expect(e.status).toEqual(401);
 			}
 
+			wrapper.update();
+
 		  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 		  	expect(wrapper.find('Listing').state().repos).toEqual([]);
+		  	expect(wrapper.find('Listing').state().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
 		  	expect(wrapper.find(SaveKey)).toHaveLength(1);
+		  	expect(wrapper.find(SaveKey).props().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
 		});
 	 });
 
