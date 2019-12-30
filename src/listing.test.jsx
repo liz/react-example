@@ -18,8 +18,31 @@ const store = mockStore({});
 describe('Listing', () => {
 	let apiKey = '1234567900';
 	let repos;
+	let wrapper;
+	let scope;
+	let octokit;
 
-	beforeEach(() => {
+	beforeEach(async () => {
+		nock.disableNetConnect();
+	  	scope = nock('https://api.github.com')
+	  	.persist()
+	    .get('/user/repos')
+	    .reply(200, repos);
+
+	    octokit = new Octokit({
+	        auth: apiKey
+	    });
+
+	  	wrapper = mount(
+			<Provider store={store}>
+				<Listing apiKey={apiKey} />
+			</Provider>
+		);
+
+	  	await octokit.request('/user/repos');
+		scope.done();
+		wrapper.update();
+
 	    repos = [
 	    	{
 	    		id: 332626,
@@ -110,35 +133,6 @@ describe('Listing', () => {
 	  	});
 
 	  	describe('Renders when github responds with github data', () => {
-	  		let wrapper;
-	  		let scope;
-
-	  		beforeEach(async () => {
-	  			nock.disableNetConnect();
-			  	scope = nock('https://api.github.com')
-			  	.persist()
-			    .get('/user/repos')
-			    .reply(200, repos);
-
-			    const octokit = new Octokit({
-		            auth: apiKey
-		        });
-
-			  	wrapper = mount(
-					<Provider store={store}>
-						<Listing apiKey={apiKey} />
-					</Provider>
-				);
-
-			  	await octokit.request('/user/repos');
-				scope.done();
-				wrapper.update();
-	  		});
-
-	  		afterEach(() => {
-				nock.cleanAll();
-			});
-
 			it('renders ListingContainer', async () => {
 			  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
@@ -206,41 +200,44 @@ describe('Listing', () => {
 				expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(true);
 			});
 	  	});
+	});
 
-		it('renders SaveKey with fieldError when github API responds with an error', async () => {
-			nock.disableNetConnect();
-		  	const scope = nock('https://api.github.com')
-		  	.persist()
-		    .get('/user/repos')
-		    .reply(401, {
-			  "message": "Bad credentials",
-			  "documentation_url": "https://developer.github.com/v3"
-			});
-
-		   	const octokit = new Octokit({
-		   		auth: apiKey
-		   	});
-
-		  	const wrapper = mount(
-				<Provider store={store}>
-					<Listing apiKey={apiKey} />
-				</Provider>
-			);
-
-			try {
-				await octokit.request('/user/repos');
-				scope.done();
-			} catch (e) {
-				expect(e.status).toEqual(401);
-			}
-
-			wrapper.update();
-
-		  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
-		  	expect(wrapper.find('Listing').state().repos).toEqual([]);
-		  	expect(wrapper.find('Listing').state().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
-		  	expect(wrapper.find(SaveKey)).toHaveLength(1);
-		  	expect(wrapper.find(SaveKey).props().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
+	it('renders SaveKey with fieldError when github API responds with an error', async () => {
+		nock.cleanAll();
+		nock.disableNetConnect();
+	  	scope = nock('https://api.github.com')
+	  	.persist()
+	    .get('/user/repos')
+	    .reply(401, {
+		  "message": "Bad credentials",
+		  "documentation_url": "https://developer.github.com/v3"
 		});
-	 });
+
+	   	octokit = new Octokit({
+	   		auth: apiKey
+	   	});
+
+	  	wrapper = mount(
+			<Provider store={store}>
+				<Listing apiKey={apiKey} />
+			</Provider>
+		);
+
+		try {
+			await octokit.request('/user/repos');
+			scope.done();
+		} catch (e) {
+			expect(e.status).toEqual(401);
+		}
+
+		wrapper.update();
+
+	  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+	  	expect(wrapper.find('Listing').state().repos).toEqual([]);
+	  	expect(wrapper.find('Listing').state().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
+	  	expect(wrapper.find(SaveKey)).toHaveLength(1);
+	  	expect(wrapper.find(SaveKey).props().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
+	  	nock.cleanAll();
+        jest.clearAllMocks();
+	});
 });
