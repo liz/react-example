@@ -7,7 +7,6 @@ import { act } from 'react-dom/test-utils';
 import Octokit from '@octokit/rest';
 import nock from 'nock';
 
-// import { SaveKey } from './save-key';
 import IssueListing from './issue-listing';
 import theme from './theme';
 import SmallArrow from './components/small-arrow';
@@ -42,24 +41,21 @@ describe('IssueListing', () => {
 		    	},
 		    	title: "An issue title that is more than twenty-five characters",
 		    	name: 'example-repo',
-	    		created_at: "2009-10-09T22:32:41Z",
-				updated_at: "2013-11-30T13:46:22Z"
+	    		created_at: "2017-10-09T22:32:41Z",
+				updated_at: "2019-11-30T13:46:22Z"
 			},
 			{ 
-	    		assignee: {
-		    		avatar_url: 'http://path/to/bob/avatar.png',
-		    		login: 'bob-login'
-		    	},
-		    	title: "Bob is another issue that is more than twenty-five characters",
+		    	title: "B is a 25 character title",
 		    	name: 'another example repo',
-	    		created_at: "2015-10-09T22:32:41Z",
-				updated_at: "2017-11-30T13:46:22Z"
+	    		created_at: "2009-10-09T22:32:41Z",
+				updated_at: "2010-11-30T13:46:22Z"
 			},
 	    ];
     });
 
     afterEach(() => {
 		nock.cleanAll();
+		jest.restoreAllMocks();
     });
 
     describe('componentDidUpdate', () => {
@@ -84,18 +80,12 @@ describe('IssueListing', () => {
 	  		wrapper.update();
     	});
 
-	   	afterEach(() => {
-	        jest.restoreAllMocks();
-	    });
-
     	it('calls fetchIssues() on componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
-
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
 	  	});
 
 	  	it('sets isLoaded state to false componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
-
 			expect(wrapper.find('IssueListing').state().isLoaded).toEqual(false);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
 	  	});
@@ -127,7 +117,27 @@ describe('IssueListing', () => {
 
 	    	expect(wrapper.find('IssueListing').state().isLoaded).toBe(null);
 	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
-	    	jest.restoreAllMocks();
+	  	});
+
+	  	it('renders LoadingSpinner when isLoaded state is false', () => {
+	  		const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+
+			wrapper = mount(
+				<Provider store={store}>
+					<IssueListing selectedRepo={null} />
+				</Provider>
+			);
+
+			wrapper.update();
+
+			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
+
+			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
+			
+			wrapper.update();
+
+	    	expect(wrapper.find('IssueListing').state().isLoaded).toBe(false);
+	    	expect(wrapper.find('IssueListing').find('LoadingSpinner')).toHaveLength(1);
 	  	});
 
 	  	describe('Renders when github responds with github data', () => {
@@ -167,8 +177,54 @@ describe('IssueListing', () => {
 				nock.cleanAll();
 			});
 
+			it('renders repoName', () => {
+		  		expect(wrapper.find('IssueListing').find('h2').text()).toEqual("Issues for example-repo");
+			});
+
 			it('renders Table', () => {
 		  		expect(wrapper.find('IssueListing').find('Table')).toHaveLength(1);
+			});
+
+			it('renders Asignee avatar Image when asignee is supplied', () => {
+		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(0).find('Image').props()).toEqual({
+		  				src: issues[0].assignee.avatar_url,
+		  				alt: issues[0].assignee.login,
+		  				width: "40px",
+		  				height: "40px",
+		  				horizontalAlignment: "center",
+		  				maxHeight: "100%",
+		  				maxWidth: "100%",
+		  				type: "tag",
+		  				verticalAlignment: "center"
+		  		});
+			});
+
+			it('renders Asignee avatar as "None" when asignee is not supplied', () => {
+				console.log(wrapper.find('IssueListing').find('Table').debug())
+		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(0).find('Image')).toHaveLength(0);
+		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(0).text()).toContain('None');
+			});
+
+			it('truncates title when a title longer then 25 characters is supplied', () => {
+		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(1).text()).toEqual(
+		  			'An issue title that is...');
+			});
+
+			it('does not truncate title when a title is 25 characters or less', () => {
+		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(1).text()).toEqual('B is a 25 character title');
+			});
+
+			it('renders created_at date in MM/DD/YYYY format', () => {
+		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
+			});
+
+			it('renders updated_at date in text format', () => {
+				console.log(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(3).text())
+		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(3).text()).toEqual('a month ago');
+			});
+
+			it('renders MobileSort', () => {
+		  		expect(wrapper.find('IssueListing').find('MobileSort')).toHaveLength(1);
 			});
 		});
 

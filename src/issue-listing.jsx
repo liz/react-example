@@ -26,7 +26,15 @@ const IssueListingContainer = styled(Container)`
 `;
 IssueListingContainer.displayName = 'IssueListingContainer';
 
-const NoIssuesMessage = styled.p``;
+const NoIssuesMessage = styled.p`
+	padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
+
+    @media (min-width: ${mediaQueries.min.medium}) {
+    	padding-left: 0;
+    	padding-right: 0;
+    }
+`;
 NoIssuesMessage.displayName = 'NoIssuesMessage';
 
 const NoRepoSelected = styled.p``;
@@ -101,8 +109,8 @@ const Table = styled.table`
 
     thead tr {
     	@media (max-width: ${mediaQueries.max.medium}) {
-    		display: flex;
-            flex-direction: column;
+    		position: absolute;
+    		top: -99999px;
     	}
     }
 
@@ -302,9 +310,7 @@ export default class IssueListing extends Component {
                 <div>
     				<Table>
     					<TableHeader>
-    						<tr 
-                                className={this.state.sortAccordionOpen ? 'slidedown' : 'slideup'}
-                            >
+    						<tr>
     							<th>
     								<Button 
     									handleClick={(e) => this.onSort(e, 'avatar_url')} 
