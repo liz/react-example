@@ -212,7 +212,6 @@ export default class IssueListing extends Component {
                 this.setArrow(this.state.sort.direction)
             }).catch(err => {
                 console.log("error ran:")
-            	console.log(err)
             	this.setState({
                     issues: [],
                     isLoaded: true

@@ -22,7 +22,6 @@ describe('IssueListing', () => {
 	let wrapper;
 	let scope;
 	let octokit;
-	//repos/liz/react-example/issues
 
 	beforeEach( () => {
 	    selectedRepo = {
@@ -115,9 +114,25 @@ describe('IssueListing', () => {
 	    	expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
+	  	it('renders NoRepoSelected when isLoaded state is null', () => {
+	  		const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+
+			wrapper = mount(
+				<Provider store={store}>
+					<IssueListing selectedRepo={selectedRepo} />
+				</Provider>
+			);
+			
+			wrapper.update();
+
+	    	expect(wrapper.find('IssueListing').state().isLoaded).toBe(null);
+	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
+	    	jest.restoreAllMocks();
+	  	});
+
 	  	describe('Renders when github responds with github data', () => {
-			it('renders Table', async () => {
-				nock.disableNetConnect();
+	  		beforeEach(async () => {
+	  			nock.disableNetConnect();
 			  	scope = nock('https://api.github.com')
 			  	.persist()
 			    .get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
@@ -141,32 +156,62 @@ describe('IssueListing', () => {
 
 				await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
 		  		scope.done();
-
 		  		wrapper.update();
 
-				expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
+		  		expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 		  		expect(wrapper.find('IssueListing').state().isLoaded).toBe(true);
 		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
+	  		});
+
+  			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('renders Table', () => {
 		  		expect(wrapper.find('IssueListing').find('Table')).toHaveLength(1);
-		  		nock.cleanAll();
 			});
 		});
 
-		it('renders NoRepoSelected when isLoaded state is null', () => {
-	  		const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+		it.only('renders NoIssuesMessage  when github API responds with an error', async () => {
+			nock.cleanAll();
+			nock.disableNetConnect();
+		  	scope = nock('https://api.github.com')
+		  	.persist()
+		    .get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
+		    .reply(404, {
+			  "message": "Not Found",
+			  "documentation_url": "https://developer.github.com/v3/issues/#list-issues-for-a-repository"
+			});
+
+		   	octokit = new Octokit({
+		   		auth: apiKey
+		   	});
 
 			wrapper = mount(
 				<Provider store={store}>
-					<IssueListing selectedRepo={selectedRepo} />
+					<IssueListing selectedRepo={null} />
 				</Provider>
 			);
-			
+
 			wrapper.update();
 
-	    	expect(wrapper.find('IssueListing').state().isLoaded).toBe(null);
-	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
-	    	jest.restoreAllMocks();
-	  	});
+			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
 
+			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
+
+			try {
+				await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
+				scope.done();
+			} catch (e) {
+				expect(e.status).toEqual(404);
+			}
+
+			wrapper.update();
+
+		  	expect(wrapper.find('IssueListing').state().isLoaded).toBe(true);
+		  	expect(wrapper.find('IssueListing').state().issues).toEqual([]);
+		  	expect(wrapper.find('IssueListing').find('NoIssuesMessage')).toHaveLength(1);
+		  	nock.cleanAll();
+		});
 	});
 });

@@ -159,13 +159,13 @@ describe('Listing', () => {
 	  	});
 
 	  	describe('Renders when github responds with github data', () => {
-			it('renders ListingContainer', async () => {
+			it('renders ListingContainer', () => {
 			  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('ListingContainer')).toHaveLength(1);
 			});
 
-			it('renders RepoList', async () => {
+			it('renders RepoList', () => {
 			  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('RepoList')).toHaveLength(1);
@@ -207,7 +207,7 @@ describe('Listing', () => {
 				});
 			});
 
-			it('renders RepoAccordion with expected className when repoToggle is clicked', async () => {
+			it('renders RepoAccordion with expected className when repoToggle is clicked', () => {
 				expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('RepoAccordion')).toHaveLength(1);
@@ -221,7 +221,7 @@ describe('Listing', () => {
 				expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(false);
 			});
 
-			it('renders RepoAccordion with expected className when repoToggle is clicked twice in a row', async () => {
+			it('renders RepoAccordion with expected className when repoToggle is clicked twice in a row', () => {
 				expect(wrapper.find('Listing').state().isLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('RepoAccordion')).toHaveLength(1);
