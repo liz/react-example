@@ -172,7 +172,7 @@ describe('IssueListing', () => {
 			});
 		});
 
-		it.only('renders NoIssuesMessage  when github API responds with an error', async () => {
+		it('renders NoIssuesMessage  when github API responds with an error', async () => {
 			nock.cleanAll();
 			nock.disableNetConnect();
 		  	scope = nock('https://api.github.com')
