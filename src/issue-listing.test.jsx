@@ -57,75 +57,18 @@ describe('IssueListing', () => {
 				updated_at: "2017-11-30T13:46:22Z"
 			},
 	    ];
-
-
-  //   	wrapper = mount(
-		// 	<Provider store={store}>
-		// 		<IssueListing selectedRepo={null} />
-		// 	</Provider>
-		// );
-
-		// wrapper.update();
-
-		// expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
-
-		// wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
-
-
-		// nock.disableNetConnect();
-	 //  	scope = nock('https://api.github.com')
-	 //  	.log(console.log)
-	 //  	.persist()
-	 //    .get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
-	 //    .reply(200, issues);
-
-		// octokit = new Octokit({
-  //           auth: apiKey
-  //       });
-
-  //       wrapper.update();
-
-  //       wrapper = mount(
-		// 	<Provider store={store}>
-		// 		<IssueListing selectedRepo={selectedRepo} />
-		// 	</Provider>
-		// );
-
-	  	// await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
-	  	// scope.done();
-
-	 //    nock.disableNetConnect();
-	 //  	scope = nock('https://api.github.com')
-	 //  	.log(console.log)
-	 //  	.persist()
-	 //    .get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
-	 //    .reply(200, issues);
-
-		// octokit = new Octokit({
-  //           auth: apiKey
-  //       });
-
-  // //       wrapper = mount(
-		// // 	<Provider store={store}>
-		// // 		<IssueListing selectedRepo={selectedRepo} />
-		// // 	</Provider>
-		// // );
-
-	 //  	await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
-	 //  	scope.done();
-		// scope.done();
-		// wrapper.update();
     });
 
     afterEach(() => {
-    	// scope.done();
 		nock.cleanAll();
-        jest.clearAllMocks();
     });
 
     describe('componentDidUpdate', () => {
-    	it('calls fetchIssues() on componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
-		  	const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues');
+    	let fetchIssuesSpy;
+
+    	beforeEach(() => {
+    		fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+			
 			wrapper = mount(
 				<Provider store={store}>
 					<IssueListing selectedRepo={null} />
@@ -135,31 +78,24 @@ describe('IssueListing', () => {
 			wrapper.update();
 
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
+	  		expect(wrapper.find('IssueListing').state().isLoaded).toEqual(null);
 
 			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
 
-			wrapper.update();
+	  		wrapper.update();
+    	});
+
+	   	afterEach(() => {
+	        jest.restoreAllMocks();
+	    });
+
+    	it('calls fetchIssues() on componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
 
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
 	  	});
 
 	  	it('sets isLoaded state to false componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
-		  	const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues');
-			wrapper = mount(
-				<Provider store={store}>
-					<IssueListing selectedRepo={null} />
-				</Provider>
-			);
-
-			wrapper.update();
-
-			expect(wrapper.find('IssueListing').state().isLoaded).toEqual(null);
-			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
-
-			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
-
-			wrapper.update();
 
 			expect(wrapper.find('IssueListing').state().isLoaded).toEqual(false);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
@@ -204,7 +140,7 @@ describe('IssueListing', () => {
 				wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
 
 				await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
-		  			scope.done();
+		  		scope.done();
 
 		  		wrapper.update();
 
@@ -212,11 +148,13 @@ describe('IssueListing', () => {
 		  		expect(wrapper.find('IssueListing').state().isLoaded).toBe(true);
 		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
 		  		expect(wrapper.find('IssueListing').find('Table')).toHaveLength(1);
+		  		nock.cleanAll();
 			});
 		});
 
 		it('renders NoRepoSelected when isLoaded state is null', () => {
-	  		const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues');
+	  		const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+
 			wrapper = mount(
 				<Provider store={store}>
 					<IssueListing selectedRepo={selectedRepo} />
@@ -227,6 +165,7 @@ describe('IssueListing', () => {
 
 	    	expect(wrapper.find('IssueListing').state().isLoaded).toBe(null);
 	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
+	    	jest.restoreAllMocks();
 	  	});
 
 	});

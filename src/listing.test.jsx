@@ -89,12 +89,14 @@ describe('Listing', () => {
 
 	afterEach(() => {
 		nock.cleanAll();
-        jest.clearAllMocks();
+        // jest.clearAllMocks();
+        jest.restoreAllMocks();
     });
 
     describe('componentDidMount', () => {
     	it('calls fetchRepos() on componentDidMount', () => {
-		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
+		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
+
 			wrapper = mount(
 				<Provider store={store}>
 					<Listing apiKey={apiKey} />
@@ -106,7 +108,8 @@ describe('Listing', () => {
 
     describe('componentDidUpdate', () => {
     	it('calls fetchRepos() on componentDidUpdate when apiKey prevProp is different then apiKey prop', () => {
-		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
+		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
+
 			wrapper = mount(
 				<Provider store={store}>
 					<Listing apiKey="anythingelse" />
@@ -141,7 +144,8 @@ describe('Listing', () => {
 	  	});
 
 	  	it('renders LoadingSpinner when isLoaded state is false', () => {
-	  		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
+	  		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
+
 		    wrapper = mount(
 				<Provider store={store}>
 					<Listing apiKey={apiKey} />
@@ -274,6 +278,5 @@ describe('Listing', () => {
 	  	expect(wrapper.find(SaveKey)).toHaveLength(1);
 	  	expect(wrapper.find(SaveKey).props().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
 	  	nock.cleanAll();
-        jest.clearAllMocks();
 	});
 });
