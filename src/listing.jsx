@@ -107,21 +107,21 @@ export default class Listing extends Component {
     }
 
     fetchRepos() {
-        console.log("why is this not stubbed")
+        // console.log("why is this not stubbed")
         const octokit = new Octokit({
             auth: this.props.apiKey
         });
 
         octokit.repos.list({})
             .then(({ data }) => {
-                console.log("then in oktokit")
+                // console.log("then in oktokit")
                 this.setState({
                     repos: data,
                     isLoaded: true
                 });
-                console.log(data)
+                // console.log(data)
             }).catch(err => {
-                console.log(err)
+                // console.log(err)
                 this.setState({
                     repos: [],
                     isLoaded: true,
@@ -132,16 +132,16 @@ export default class Listing extends Component {
 
     componentDidMount() {
         if (this.props.apiKey) {
-            console.log("mount going")
+            // console.log("mount going")
             this.fetchRepos();
         }
     };
 
     componentDidUpdate(prevProps) {
-        console.log(prevProps.apiKey)
-        console.log("componentDidUpdate")
+        // console.log(prevProps.apiKey)
+        // console.log("componentDidUpdate")
         if (prevProps.apiKey !== this.props.apiKey) {
-            console.log("prevProps check ran")
+            // console.log("prevProps check ran")
             if (this.props.apiKey) {
                 this.fetchRepos();
             }

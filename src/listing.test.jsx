@@ -20,10 +20,10 @@ describe('Listing', () => {
 	let repos;
 
 	beforeEach(() => {
-
 	    repos = [
 	    	{
 	    		id: 332626,
+	    		name: 'example-repo',
 	    		created_at: "2009-10-09T22:32:41Z",
 				updated_at: "2013-11-30T13:46:22Z",
 				owner: {
@@ -32,6 +32,7 @@ describe('Listing', () => {
 	    	},
 	    	{
 	    		id: 432627,
+	    		name: 'other-repo',
 	    		created_at: "2018-10-09T22:32:41Z",
 				updated_at: "2019-11-30T13:46:22Z",
 				owner: {
@@ -110,14 +111,18 @@ describe('Listing', () => {
 
 	  	describe('Renders when github responds with github data', () => {
 	  		let wrapper;
+	  		let scope;
+
 	  		beforeEach(async () => {
-		  		const octokit = new Octokit({
-		            auth: apiKey
-		        });
-			  	const scope = nock('https://api.github.com')
+	  			nock.disableNetConnect();
+			  	scope = nock('https://api.github.com')
 			  	.persist()
 			    .get('/user/repos')
 			    .reply(200, repos);
+
+			    const octokit = new Octokit({
+		            auth: apiKey
+		        });
 
 			  	wrapper = mount(
 					<Provider store={store}>
@@ -203,7 +208,7 @@ describe('Listing', () => {
 	  	});
 
 		it('renders SaveKey with fieldError when github API responds with an error', async () => {
-		  	const octokit = new Octokit({});
+			nock.disableNetConnect();
 		  	const scope = nock('https://api.github.com')
 		  	.persist()
 		    .get('/user/repos')
@@ -211,6 +216,10 @@ describe('Listing', () => {
 			  "message": "Bad credentials",
 			  "documentation_url": "https://developer.github.com/v3"
 			});
+
+		   	const octokit = new Octokit({
+		   		auth: apiKey
+		   	});
 
 		  	const wrapper = mount(
 				<Provider store={store}>

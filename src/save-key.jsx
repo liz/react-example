@@ -15,7 +15,6 @@ import { Button } from './components/button';
 import './save-key.scss';
 
 const Col = styled.div`
-    box-sizing: border-box;
     width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
@@ -23,8 +22,8 @@ const Col = styled.div`
 `;
 Col.displayName = 'Col';
 
+
 const OuterCol = styled(Col)`
-    width: 100%;
     height: 100%;
     margin: auto;
     display: flex;
@@ -57,18 +56,18 @@ export const SaveKey = (props) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(fieldValue)
+        console.log("onSubmit running")
         if (fieldValue) {
-            console.log("should dispatch")
+            console.log("if went")
             props.dispatch(saveKey(fieldValue))
             setButtonDisabled(true)
         } else {
+            console.log("else went")
             setFieldError("Please enter an API Key")
         }
     }; 
 
     const onFieldChange = (event) => {
-        console.log("onFieldChange on change ran")
         setFieldValue(event.target.value);
     }; 
 
