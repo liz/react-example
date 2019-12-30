@@ -18,11 +18,54 @@ const store = mockStore({});
 describe('Listing', () => {
 	let apiKey = '1234567900';
 	let repos;
+	let issues;
 	let wrapper;
 	let scope;
 	let octokit;
 
 	beforeEach(async () => {
+		repos = [
+	    	{
+	    		id: 332626,
+	    		name: 'example-repo',
+	    		created_at: "2009-10-09T22:32:41Z",
+				updated_at: "2013-11-30T13:46:22Z",
+				owner: {
+					login: "liz"
+				}
+	    	},
+	    	{
+	    		id: 432627,
+	    		name: 'other-repo',
+	    		created_at: "2018-10-09T22:32:41Z",
+				updated_at: "2019-11-30T13:46:22Z",
+				owner: {
+					login: "jim"
+				}
+	    	}
+	    ];
+
+	   	issues = [
+	    	{ 
+	    		assignee: {
+		    		avatar_url: 'http://path/to/avatar.png',
+		    		login: 'asignee-login'
+		    	},
+		    	title: "An issue title that is more than twenty-five characters",
+	    		created_at: "2009-10-09T22:32:41Z",
+				updated_at: "2013-11-30T13:46:22Z"
+			},
+			{ 
+	    		assignee: {
+		    		avatar_url: 'http://path/to/bob/avatar.png',
+		    		login: 'bob-login'
+		    	},
+		    	title: "Bob is another issue that is more than twenty-five characters",
+	    		created_at: "2015-10-09T22:32:41Z",
+				updated_at: "2017-11-30T13:46:22Z"
+			},
+	    ];
+
 		nock.disableNetConnect();
 	  	scope = nock('https://api.github.com')
 	  	.persist()
@@ -42,27 +85,6 @@ describe('Listing', () => {
 	  	await octokit.request('/user/repos');
 		scope.done();
 		wrapper.update();
-
-	    repos = [
-	    	{
-	    		id: 332626,
-	    		name: 'example-repo',
-	    		created_at: "2009-10-09T22:32:41Z",
-				updated_at: "2013-11-30T13:46:22Z",
-				owner: {
-					login: "bob"
-				}
-	    	},
-	    	{
-	    		id: 432627,
-	    		name: 'other-repo',
-	    		created_at: "2018-10-09T22:32:41Z",
-				updated_at: "2019-11-30T13:46:22Z",
-				owner: {
-					login: "jim"
-				}
-	    	}
-	    ];
     });
 
 	afterEach(() => {
@@ -73,7 +95,7 @@ describe('Listing', () => {
     describe('componentDidMount', () => {
     	it('calls fetchRepos() on componentDidMount', () => {
 		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
-			const wrapper = mount(
+			wrapper = mount(
 				<Provider store={store}>
 					<Listing apiKey={apiKey} />
 				</Provider>
@@ -85,7 +107,7 @@ describe('Listing', () => {
     describe('componentDidUpdate', () => {
     	it('calls fetchRepos() on componentDidUpdate when apiKey prevProp is different then apiKey prop', () => {
 		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
-			const wrapper = mount(
+			wrapper = mount(
 				<Provider store={store}>
 					<Listing apiKey="anythingelse" />
 				</Provider>
@@ -107,7 +129,7 @@ describe('Listing', () => {
 
 	describe('Renders', () => {
 		it('should match the snapshot', () => {
-			const wrapper = mount(
+			wrapper = mount(
 				<Provider store={store}>
 					<Listing apiKey={apiKey} />
 				</Provider>
@@ -120,7 +142,7 @@ describe('Listing', () => {
 
 	  	it('renders LoadingSpinner when isLoaded state is false', () => {
 	  		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos');
-			const wrapper = mount(
+		    wrapper = mount(
 				<Provider store={store}>
 					<Listing apiKey={apiKey} />
 				</Provider>
@@ -153,9 +175,23 @@ describe('Listing', () => {
 			  	expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(true);
 			  	expect(wrapper.find('SelectRepoButton')).toHaveLength(2);
 
+			  	nock.cleanAll();
+			  	nock.disableNetConnect();
+			  	scope = nock('https://api.github.com')
+			  	.persist()
+			    .get(`/repos/${repos[0].owner.login}/${repos[0].name}/issues`)
+			    .reply(200, issues);
+
+				octokit = new Octokit({
+		            auth: apiKey
+		        });
+
 				wrapper.find('SelectRepoButton').at(0).simulate('click');
 
 				wrapper.update();
+
+				await octokit.request(`/repos/${repos[0].owner.login}/${repos[0].name}/issues`);
+	  			scope.done();
 
 				expect(wrapper.find('Listing').state().selectedRepo).toEqual(0);
 				expect(wrapper.find('Listing').state().repoAccordionOpen).toBe(false);

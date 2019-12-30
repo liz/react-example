@@ -29,17 +29,17 @@ IssueListingContainer.displayName = 'IssueListingContainer';
 const NoIssuesMessage = styled.p``;
 NoIssuesMessage.displayName = 'NoIssuesMessage';
 
+const NoRepoSelected = styled.p``;
+NoRepoSelected.displayName = 'NoRepoSelected';
+
 const MobileSort = styled.div`
     display: block;
-    // padding-left: ${theme.gutter};
-    // padding-right: ${theme.gutter};
-    // margin-bottom: 0.5rem;
 
     @media (min-width: ${mediaQueries.min.medium}) {
         display: none;
     }
 `;
-NoIssuesMessage.displayName = 'NoIssuesMessage';
+MobileSort.displayName = 'MobileSort';
 
 const FullWidthCol = styled.div`
     width: 100%;
@@ -64,10 +64,6 @@ const Table = styled.table`
     margin-top: 0;
     font-size: ${theme.xxsmallBaseFont};
     font-size: ${theme.xxxxsmallBaseFont};
-
-    // @media (min-width: ${mediaQueries.min.medium}) {
-    // 	font-size: ${theme.smallBaseFont};
-    // }
 
     td {
         padding: 10px ${theme.gutter};
@@ -108,23 +104,7 @@ const Table = styled.table`
     		display: flex;
             flex-direction: column;
     	}
-
-        // &.slideup, &.slidedown {
-        //     @media (min-width: ${mediaQueries.min.medium}) {
-        //         max-height: 100%;
-        //     }
-        // }
-
-        // &.slideup {
-        //     max-height: 41px;
-        // }
     }
-
-    // thead tr th:nth-of-type(3) {
-    //     @media (max-width: ${mediaQueries.max.medium}) {
-    //         order: -1;
-    //     }
-    // }
 
     td {
     	@media (max-width: ${mediaQueries.max.medium}) {
@@ -133,11 +113,6 @@ const Table = styled.table`
     		justify-content: space-between;
             min-height: 40px;
             max-width: 100%;
-
-	  		// border: none;
-			// border-bottom: 1px solid #eee; 
-			// position: relative;
-			// padding-left: 50%; 
     	}
     }
 
@@ -175,6 +150,7 @@ const Table = styled.table`
 		}
 	}
 `;
+Table.displayName = 'Table';
 
 const TableHeader = styled.thead`
     th {
@@ -185,15 +161,8 @@ const TableHeader = styled.thead`
     button {
     	width: 100%;
     	height: 100%;
-        // padding: 5px;
         padding: 0.75rem ${theme.gutter};
         font-size: ${theme.smallBaseFont};
-    	// font-size: ${theme.xxxxsmallBaseFont};
-
-    	// @media (min-width: ${mediaQueries.min.medium}) {
-    	// 	font-size: ${theme.smallBaseFont};
-     //        padding: 0.75rem ${theme.gutter};
-    	// }
 
         *[class*='button__Icon'] {
             transform: scale(0.7);
@@ -217,9 +186,12 @@ export default class IssueListing extends Component {
             },
             isLoaded: null
         };
+
+        this.fetchIssues = this.fetchIssues.bind(this);
     }
 
-    fetchIssues = () => {
+    fetchIssues() {
+    	console.log('fetchIssues ran')
     	const octokit = new Octokit({
             auth: this.props.apiKey
         });
@@ -228,6 +200,7 @@ export default class IssueListing extends Component {
         	owner: this.props.selectedRepo.owner.login,
         	repo: this.props.selectedRepo.name
         }).then(({ data }) => {
+        		console.log("then ran")
         		console.log(data)
                 this.setState({
                     issues: data,
@@ -238,13 +211,14 @@ export default class IssueListing extends Component {
                 this.onSort(null, this.state.sort.column)
                 this.setArrow(this.state.sort.direction)
             }).catch(err => {
+                console.log("error ran:")
             	console.log(err)
             	this.setState({
                     issues: [],
                     isLoaded: true
                 });
             });
-    };
+    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.selectedRepo !== this.props.selectedRepo) {
@@ -322,6 +296,8 @@ export default class IssueListing extends Component {
 	};
 
     renderIssueTable  = () => {
+        console.log(this.state.isLoaded)
+        console.log(this.state.issues && this.state.issues.length)
     	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
 			return (
                 <div>
@@ -404,7 +380,7 @@ export default class IssueListing extends Component {
 
     renderIssues  = () => {
     	if (this.state.isLoaded === null) {
-    		return <p>Please select a repo from the lefthand column</p>;
+    		return <NoRepoSelected>Please select a repo from the lefthand column</NoRepoSelected>;
     	}
 
     	return this.renderIssueTable();
@@ -476,3 +452,7 @@ export default class IssueListing extends Component {
     	);
     }
 }
+
+IssueListing.defaultProps = {
+    selectedRepo: null
+};
