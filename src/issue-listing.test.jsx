@@ -167,9 +167,12 @@ describe('IssueListing', () => {
 
 				wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
 
+				console.log("componentDidUpdate should have gone")
+
 				console.log(wrapper.find('IssueListing').state())
 
 				await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
+				console.log("fetch should have gone")
 		  		scope.done();
 		  		wrapper.update();
 
@@ -231,18 +234,17 @@ describe('IssueListing', () => {
 				});
 			});
 
-			describe('Table sorting', () => {
+			describe.only('Table sorting', () => {
 				it('sorts table by created_at by default', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
-						console.log(wrapper.find('IssueListing').state())
-			  		// expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+					console.log(wrapper.find('IssueListing').state())
 				});
 				
 				it('sorts table by desc direction by default', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
-						console.log(wrapper.find('IssueListing').state())
-					// console.log(wrapper.find('IssueListing').state())
-			  // 		expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+					console.log(wrapper.find('IssueListing').state())
 				});
 			});
 

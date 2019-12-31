@@ -215,8 +215,8 @@ export default class IssueListing extends Component {
                     isLoaded: true
                 });
                 console.log("column in fetch", this.state.sort.column)
-                console.log(this.state.sort.direction)
-                this.onSort(null, this.state.sort.column)
+                console.log("direction in fetch", this.state.sort.direction)
+                this.onSort(null, this.state.sort.column, false)
                 this.setArrow(this.state.sort.direction)
             }).catch(err => {
                 console.log("error ran:")
@@ -236,8 +236,16 @@ export default class IssueListing extends Component {
         }
     }
 
-    onSort = (e, column) => {
-        const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+    onSort = (e, column, sortDirection = true) => {
+        console.log("at the beginning of onSort", this.state.sort.direction)
+
+        let direction = this.state.sort.direction;
+
+        if (sortDirection) {
+            direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+        }
+        
+        console.log("after direction logic in onSort", this.state.sort.direction)
         const sortedData = this.state.issues.sort((a, b) => {
         if (column === 'title') {
             const titleA = a.title.toUpperCase();
@@ -252,23 +260,27 @@ export default class IssueListing extends Component {
             return 0;
             } else if (column === 'avatar_url') {
                 const assigneeA = a.assignee && a.assignee.login.toUpperCase();
-	            const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
-	            if (assigneeA < assigneeB) {
-	                return -1;
-	            }
-	            if (assigneeA > assigneeB) {
-	                return 1;
-	            }
-	            return 0;
+                const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
+                if (assigneeA < assigneeB) {
+                    return -1;
+                }
+                if (assigneeA > assigneeB) {
+                    return 1;
+                }
+                return 0;
             } else if (column === 'updated_at') {
                 return new Date(b.updated_at) - new Date(a.updated_at);
             } else {
                 return new Date(b.created_at) - new Date(a.created_at);
             }
         });
+
+        console.log("sortedData: ", sortedData)
           
-        if (direction === 'desc') {
-            sortedData.reverse();
+        if (sortDirection) {
+            if (direction === 'desc') {
+                sortedData.reverse();
+            }
         }
         
         this.setState({
@@ -278,7 +290,154 @@ export default class IssueListing extends Component {
             direction,
           }
         });
+
+        console.log("at the end of onSort", this.state.sort.direction)
     };
+
+    // sortContents = (e, column) => {
+    //     console.log("at the beginning of onSort", this.state.sort.direction)
+    //     const sortedData = this.state.issues.sort((a, b) => {
+    //     if (column === 'title') {
+    //         const titleA = a.title.toUpperCase();
+    //         const titleB = b.title.toUpperCase(); 
+
+    //         if (titleA < titleB) {
+    //             return -1;
+    //         }
+    //         if (titleA > titleB) {
+    //             return 1;
+    //         }
+    //         return 0;
+    //         } else if (column === 'avatar_url') {
+    //             const assigneeA = a.assignee && a.assignee.login.toUpperCase();
+    //             const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
+    //             if (assigneeA < assigneeB) {
+    //                 return -1;
+    //             }
+    //             if (assigneeA > assigneeB) {
+    //                 return 1;
+    //             }
+    //             return 0;
+    //         } else if (column === 'updated_at') {
+    //             return new Date(b.updated_at) - new Date(a.updated_at);
+    //         } else {
+    //             return new Date(b.created_at) - new Date(a.created_at);
+    //         }
+    //     });
+
+    //     console.log("sortedData: ", sortedData)
+        
+    //     this.setState({
+    //       issues: sortedData,
+    //       sort: {
+    //         column
+    //       }
+    //     });
+
+    //     console.log("at the end of onSort", this.state.sort.direction)
+    // };
+
+    // onSort = (e, column) => {
+    //     console.log("at the beginning of onSort", this.state.sort.direction)
+    //     const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+    //     console.log("after direction logic in onSort", this.state.sort.direction)
+    //     // const sortedData = this.state.issues.sort((a, b) => {
+    //     // if (column === 'title') {
+    //     //     const titleA = a.title.toUpperCase();
+    //     //     const titleB = b.title.toUpperCase(); 
+
+    //     //     if (titleA < titleB) {
+    //     //         return -1;
+    //     //     }
+    //     //     if (titleA > titleB) {
+    //     //         return 1;
+    //     //     }
+    //     //     return 0;
+    //     //     } else if (column === 'avatar_url') {
+    //     //         const assigneeA = a.assignee && a.assignee.login.toUpperCase();
+    //     //         const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
+    //     //         if (assigneeA < assigneeB) {
+    //     //             return -1;
+    //     //         }
+    //     //         if (assigneeA > assigneeB) {
+    //     //             return 1;
+    //     //         }
+    //     //         return 0;
+    //     //     } else if (column === 'updated_at') {
+    //     //         return new Date(b.updated_at) - new Date(a.updated_at);
+    //     //     } else {
+    //     //         return new Date(b.created_at) - new Date(a.created_at);
+    //     //     }
+    //     // });
+
+    //     const sortedData  = this.sortContents(e, column);
+
+    //     console.log("sortedData: ", sortedData)
+          
+    //     if (direction === 'desc') {
+    //         sortedData.reverse();
+    //     }
+        
+    //     this.setState({
+    //       issues: sortedData,
+    //       sort: {
+    //         column,
+    //         direction,
+    //       }
+    //     });
+
+    //     console.log("at the end of onSort", this.state.sort.direction)
+    // };
+
+    // onSort = (e, column) => {
+    //     console.log("at the beginning of onSort", this.state.sort.direction)
+    //     const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+    //     console.log("after direction logic in onSort", this.state.sort.direction)
+    //     const sortedData = this.state.issues.sort((a, b) => {
+    //     if (column === 'title') {
+    //         const titleA = a.title.toUpperCase();
+    //         const titleB = b.title.toUpperCase(); 
+
+    //         if (titleA < titleB) {
+    //             return -1;
+    //         }
+    //         if (titleA > titleB) {
+    //             return 1;
+    //         }
+    //         return 0;
+    //         } else if (column === 'avatar_url') {
+    //             const assigneeA = a.assignee && a.assignee.login.toUpperCase();
+	   //          const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
+	   //          if (assigneeA < assigneeB) {
+	   //              return -1;
+	   //          }
+	   //          if (assigneeA > assigneeB) {
+	   //              return 1;
+	   //          }
+	   //          return 0;
+    //         } else if (column === 'updated_at') {
+    //             return new Date(b.updated_at) - new Date(a.updated_at);
+    //         } else {
+    //             return new Date(b.created_at) - new Date(a.created_at);
+    //         }
+    //     });
+
+    //     console.log("sortedData: ", sortedData)
+          
+    //     if (direction === 'desc') {
+    //         sortedData.reverse();
+    //     }
+        
+    //     this.setState({
+    //       issues: sortedData,
+    //       sort: {
+    //         column,
+    //         direction,
+    //       }
+    //     });
+
+    //     console.log("at the end of onSort", this.state.sort.direction)
+    // };
 
     setArrow = (column) => {
         let className = 'sort-direction';
