@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { act } from 'react-dom/test-utils';
+import { clearStorage } from "react-simple-storage";
 
 import Octokit from '@octokit/rest';
 import nock from 'nock';
@@ -23,6 +24,8 @@ describe('IssueListing', () => {
 	let octokit;
 
 	beforeEach( () => {
+		clearStorage();
+
 	    selectedRepo = {
     		id: 332626,
     		name: 'example-repo',
@@ -39,14 +42,12 @@ describe('IssueListing', () => {
 		    		avatar_url: 'http://path/to/avatar.png',
 		    		login: 'asignee-login'
 		    	},
-		    	title: "An issue title that is more than twenty-five characters",
-		    	name: 'example-repo',
+		    	title: "An issue title that is more than twenty-five characters, this issue was created more recently",
 	    		created_at: "2017-10-09T22:32:41Z",
 				updated_at: "2019-11-30T13:46:22Z"
 			},
 			{ 
 		    	title: "B is a 25 character title",
-		    	name: 'another example repo',
 	    		created_at: "2009-10-09T22:32:41Z",
 				updated_at: "2010-11-30T13:46:22Z"
 			},
@@ -160,17 +161,24 @@ describe('IssueListing', () => {
 
 				wrapper.update();
 
+				console.log(wrapper.find('IssueListing').state())
+
 				expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
 
 				wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
+
+				console.log(wrapper.find('IssueListing').state())
 
 				await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
 		  		scope.done();
 		  		wrapper.update();
 
+		  		console.log(wrapper.find('IssueListing').state())
+
 		  		expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 		  		expect(wrapper.find('IssueListing').state().isLoaded).toBe(true);
 		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
+		  		console.log(wrapper.find('IssueListing').state())
 	  		});
 
   			afterEach(() => {
@@ -181,46 +189,61 @@ describe('IssueListing', () => {
 		  		expect(wrapper.find('IssueListing').find('h2').text()).toEqual("Issues for example-repo");
 			});
 
-			it('renders Table', () => {
-		  		expect(wrapper.find('IssueListing').find('Table')).toHaveLength(1);
+			describe('Renders table contents', () => {
+				it('renders Table', () => {
+			  		expect(wrapper.find('IssueListing').find('Table')).toHaveLength(1);
+				});
+
+				it('renders Asignee avatar Image when asignee is supplied', () => {
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(0).find('Image').props()).toEqual({
+			  				src: issues[0].assignee.avatar_url,
+			  				alt: issues[0].assignee.login,
+			  				width: "40px",
+			  				height: "40px",
+			  				horizontalAlignment: "center",
+			  				maxHeight: "100%",
+			  				maxWidth: "100%",
+			  				type: "tag",
+			  				verticalAlignment: "center"
+			  		});
+				});
+
+				it('renders Asignee avatar as "None" when asignee is not supplied', () => {
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(0).find('Image')).toHaveLength(0);
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(0).text()).toContain('None');
+				});
+
+				it('truncates title when a title longer then 25 characters is supplied', () => {
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(1).text()).toEqual(
+			  			'An issue title that is...');
+				});
+
+				it('does not truncate title when a title is 25 characters or less', () => {
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(1).text()).toEqual('B is a 25 character title');
+				});
+
+				it('renders created_at date in MM/DD/YYYY format', () => {
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
+				});
+
+				it('renders updated_at date in text format', () => {
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(3).text()).toEqual('a month ago');
+				});
 			});
 
-			it('renders Asignee avatar Image when asignee is supplied', () => {
-		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(0).find('Image').props()).toEqual({
-		  				src: issues[0].assignee.avatar_url,
-		  				alt: issues[0].assignee.login,
-		  				width: "40px",
-		  				height: "40px",
-		  				horizontalAlignment: "center",
-		  				maxHeight: "100%",
-		  				maxWidth: "100%",
-		  				type: "tag",
-		  				verticalAlignment: "center"
-		  		});
-			});
-
-			it('renders Asignee avatar as "None" when asignee is not supplied', () => {
-				console.log(wrapper.find('IssueListing').find('Table').debug())
-		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(0).find('Image')).toHaveLength(0);
-		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(0).text()).toContain('None');
-			});
-
-			it('truncates title when a title longer then 25 characters is supplied', () => {
-		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(1).text()).toEqual(
-		  			'An issue title that is...');
-			});
-
-			it('does not truncate title when a title is 25 characters or less', () => {
-		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(1).text()).toEqual('B is a 25 character title');
-			});
-
-			it('renders created_at date in MM/DD/YYYY format', () => {
-		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
-			});
-
-			it('renders updated_at date in text format', () => {
-				console.log(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(3).text())
-		  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(3).text()).toEqual('a month ago');
+			describe('Table sorting', () => {
+				it('sorts table by created_at by default', () => {
+					expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
+						console.log(wrapper.find('IssueListing').state())
+			  		// expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+				});
+				
+				it('sorts table by desc direction by default', () => {
+					expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
+						console.log(wrapper.find('IssueListing').state())
+					// console.log(wrapper.find('IssueListing').state())
+			  // 		expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+				});
 			});
 
 			it('renders MobileSort', () => {

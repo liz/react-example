@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/macro';
 import Octokit from '@octokit/rest';
+import SimpleStorage from "react-simple-storage";
 
 import theme from './theme';
 import mediaQueries from './media-queries';
@@ -141,7 +142,7 @@ export default class Listing extends Component {
         // console.log(prevProps.apiKey)
         // console.log("componentDidUpdate")
         if (prevProps.apiKey !== this.props.apiKey) {
-            // console.log("prevProps check ran")
+            console.log("prevProps check ran")
             if (this.props.apiKey) {
                 this.fetchRepos();
             }
@@ -187,6 +188,7 @@ export default class Listing extends Component {
 		if (this.state.isLoaded && this.state.repos && this.state.repos.length) {
             return (
                 <ListingContainer>
+                    <SimpleStorage parent={this} />
                     <Row>
                         <ColA>
                             <Row>
