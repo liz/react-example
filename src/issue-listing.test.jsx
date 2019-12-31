@@ -44,13 +44,22 @@ describe('IssueListing', () => {
 		    	},
 		    	title: "An issue title that is more than twenty-five characters, this issue was created more recently",
 	    		created_at: "2017-10-09T22:32:41Z",
-				updated_at: "2019-11-30T13:46:22Z"
+				updated_at: "2018-11-30T13:46:22Z"
 			},
 			{ 
 		    	title: "B is a 25 character title",
 	    		created_at: "2009-10-09T22:32:41Z",
 				updated_at: "2010-11-30T13:46:22Z"
 			},
+			{ 
+		    	title: "C has a zzzz login",
+	    		created_at: "2005-10-09T22:32:41Z",
+				updated_at: "2019-11-30T13:46:22Z",
+				assignee: {
+		    		avatar_url: 'http://path/to/avatar.png',
+		    		login: 'ziggee-login'
+		    	},
+			}
 	    ];
     });
 
@@ -161,27 +170,27 @@ describe('IssueListing', () => {
 
 				wrapper.update();
 
-				console.log(wrapper.find('IssueListing').state())
+				// console.log(wrapper.find('IssueListing').state())
 
 				expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
 
 				wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
 
-				console.log("componentDidUpdate should have gone")
+				// console.log("componentDidUpdate should have gone")
 
-				console.log(wrapper.find('IssueListing').state())
+				// console.log(wrapper.find('IssueListing').state())
 
 				await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
-				console.log("fetch should have gone")
+				// console.log("fetch should have gone")
 		  		scope.done();
 		  		wrapper.update();
 
-		  		console.log(wrapper.find('IssueListing').state())
+		  		// console.log(wrapper.find('IssueListing').state())
 
 		  		expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 		  		expect(wrapper.find('IssueListing').state().isLoaded).toBe(true);
 		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
-		  		console.log(wrapper.find('IssueListing').state())
+		  		// console.log(wrapper.find('IssueListing').state())
 	  		});
 
   			afterEach(() => {
@@ -198,7 +207,7 @@ describe('IssueListing', () => {
 				});
 
 				it('renders Asignee avatar Image when asignee is supplied', () => {
-			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(0).find('Image').props()).toEqual({
+			  		expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props()).toEqual({
 			  				src: issues[0].assignee.avatar_url,
 			  				alt: issues[0].assignee.login,
 			  				width: "40px",
@@ -212,39 +221,68 @@ describe('IssueListing', () => {
 				});
 
 				it('renders Asignee avatar as "None" when asignee is not supplied', () => {
-			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(0).find('Image')).toHaveLength(0);
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('AssigneeCell').find('Image')).toHaveLength(0);
 			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(0).text()).toContain('None');
 				});
 
 				it('truncates title when a title longer then 25 characters is supplied', () => {
-			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(1).text()).toEqual(
+			  		expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual(
 			  			'An issue title that is...');
 				});
 
 				it('does not truncate title when a title is 25 characters or less', () => {
-			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('td').at(1).text()).toEqual('B is a 25 character title');
+			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(2).find('TitleCell').text()).toEqual('B is a 25 character title');
 				});
 
 				it('renders created_at date in MM/DD/YYYY format', () => {
-			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
+			  		expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 				});
 
 				it('renders updated_at date in text format', () => {
-			  		expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(3).text()).toEqual('a month ago');
+			  		expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('a year ago');
 				});
 			});
 
 			describe('Table sorting', () => {
 				it('sorts table by created_at by default', () => {
-					expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
-					console.log(wrapper.find('IssueListing').state())
 				});
 				
 				it('sorts table by desc direction by default', () => {
-					expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
-					console.log(wrapper.find('IssueListing').state())
+				});
+
+				it('sorts table by avatar_url by when AssigneeButton is clicked in desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('AssigneeButton').simulate('click')
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual(issues[0].assignee.avatar_url);
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
+				});
+
+				it('sorts table by title by when TitleButton is clicked in desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('TitleButton').simulate('click');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual('An issue title that is...');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
+				});
+
+
+				it('sorts table by created_at by when CreatedAtButton is clicked in desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('CreatedAtButton').simulate('click')
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+				});
+
+				it.only('sorts table by updated_at by when UpdatedAtButton is clicked in desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click')
+
+					console.log(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtButton').debug())
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 				});
 			});
 

@@ -40,6 +40,30 @@ NoIssuesMessage.displayName = 'NoIssuesMessage';
 const NoRepoSelected = styled.p``;
 NoRepoSelected.displayName = 'NoRepoSelected';
 
+const AssigneeButton = styled(Button)``;
+AssigneeButton.displayName = 'AssigneeButton';
+
+const TitleButton = styled(Button)``;
+TitleButton.displayName = 'TitleButton';
+
+const CreatedAtButton = styled(Button)``;
+CreatedAtButton.displayName = 'CreatedAtButton';
+
+const UpdatedAtButton = styled(Button)``;
+UpdatedAtButton.displayName = 'UpdatedAtButton';
+
+const AssigneeCell= styled.td``;
+AssigneeCell.displayName = 'AssigneeCell';
+
+const TitleCell= styled.td``;
+TitleCell.displayName = 'TitleCell';
+
+const CreatedAtCell= styled.td``;
+CreatedAtCell.displayName = 'CreatedAtCell';
+
+const UpdatedAtCell= styled.td``;
+UpdatedAtCell.displayName = 'UpdatedAtCell';
+
 const MobileSort = styled.div`
     display: block;
 
@@ -196,10 +220,11 @@ export default class IssueListing extends Component {
         };
 
         this.fetchIssues = this.fetchIssues.bind(this);
+        this.truncateByWord = this.truncateByWord.bind(this);
     }
 
     fetchIssues() {
-    	console.log('fetchIssues ran')
+    	// console.log('fetchIssues ran')
     	const octokit = new Octokit({
             auth: this.props.apiKey
         });
@@ -208,8 +233,8 @@ export default class IssueListing extends Component {
         	owner: this.props.selectedRepo.owner.login,
         	repo: this.props.selectedRepo.name
         }).then(({ data }) => {
-        		console.log("then ran")
-        		console.log(data)
+        		// console.log("then ran")
+        		// console.log(data)
                 this.setState({
                     issues: data,
                     isLoaded: true
@@ -245,7 +270,7 @@ export default class IssueListing extends Component {
             direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
         }
         
-        console.log("after direction logic in onSort", this.state.sort.direction)
+        // console.log("after direction logic in onSort", this.state.sort.direction)
         const sortedData = this.state.issues.sort((a, b) => {
         if (column === 'title') {
             const titleA = a.title.toUpperCase();
@@ -275,7 +300,7 @@ export default class IssueListing extends Component {
             }
         });
 
-        console.log("sortedData: ", sortedData)
+        // console.log("sortedData: ", sortedData)
           
         if (sortDirection) {
             if (direction === 'desc') {
@@ -291,7 +316,7 @@ export default class IssueListing extends Component {
           }
         });
 
-        console.log("at the end of onSort", this.state.sort.direction)
+        // console.log("at the end of onSort", this.state.sort.direction)
     };
 
     setArrow = (column) => {
@@ -301,11 +326,11 @@ export default class IssueListing extends Component {
         	className += this.state.sort.direction === 'asc' ? ' asc' : ' desc';
         }
         
-        console.log("setArrow ran:", className)
+        // console.log("setArrow ran:", className)
         return className;
     };
 
-    truncateByWord  = (text, length) => {
+    truncateByWord(text, length) {
 		if (text === undefined) {
 			return '';
 		}
@@ -315,11 +340,11 @@ export default class IssueListing extends Component {
 			return `${tokens.slice(0, -1).join(' ')}...`;
 		}
 			return text;
-	};
+	}
 
     renderIssueTable  = () => {
-        console.log(this.state.isLoaded)
-        console.log(this.state.issues && this.state.issues.length)
+        // console.log(this.state.isLoaded)
+        // console.log(this.state.issues && this.state.issues.length)
     	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
 			return (
                 <div>
@@ -327,7 +352,7 @@ export default class IssueListing extends Component {
     					<TableHeader>
     						<tr>
     							<th>
-    								<Button 
+    								<AssigneeButton 
     									handleClick={(e) => this.onSort(e, 'avatar_url')} 
     									buttonText="Assignee"
     									icon={<SmallArrow className={this.setArrow('avatar_url')}></SmallArrow>}
@@ -336,7 +361,7 @@ export default class IssueListing extends Component {
     								/>
     							</th>
     							<th>
-    								<Button 
+    								<TitleButton 
     									handleClick={(e) => this.onSort(e, 'title')}  
     									buttonText="Title"
     									icon={<SmallArrow className={this.setArrow('title')}></SmallArrow>}
@@ -345,7 +370,7 @@ export default class IssueListing extends Component {
     								/>
     							</th>
     							<th>
-    								<Button 
+    								<CreatedAtButton 
     									handleClick={(e) => this.onSort(e, 'created_at')}
     									buttonText="Time Created"
     									icon={<SmallArrow className={this.setArrow('created_at')}></SmallArrow>}
@@ -354,7 +379,7 @@ export default class IssueListing extends Component {
     								/>
     							</th>
     							<th>
-    								<Button 
+    								<UpdatedAtButton 
     									handleClick={(e) => this.onSort(e, 'updated_at')}  
     									buttonText="Last Updated"
     									icon={<SmallArrow className={this.setArrow('updated_at')}></SmallArrow>}
@@ -368,20 +393,22 @@ export default class IssueListing extends Component {
     						{this.state.issues && this.state.issues.map((issue, index) => {
     							return (
     								<tr key={index}>
-    									<td>
+    									<AssigneeCell>
     										{(issue.assignee && issue.assignee.avatar_url) ? <Image src={issue.assignee.avatar_url} alt={issue.assignee.login} width="40px" height="40px" /> : "None"}
-    									</td>
-    									<td>{this.truncateByWord(issue.title, 25)}</td>
-    									<td>
+    									</AssigneeCell>
+    									<TitleCell>
+                                            {this.truncateByWord(issue.title, 25)}
+                                        </TitleCell>
+    									<CreatedAtCell>
     										<Moment format="MM/DD/YYYY">
     							                {issue.created_at}
     							            </Moment>
-    									</td>
-    									<td>
+    									</CreatedAtCell>
+    									<UpdatedAtCell>
     										<Moment fromNow>
     											{issue.updated_at}
     										</Moment>
-    									</td>
+    									</UpdatedAtCell>
     								</tr>
     							);
     						})}
