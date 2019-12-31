@@ -217,7 +217,7 @@ export default class IssueListing extends Component {
                 console.log("column in fetch", this.state.sort.column)
                 console.log("direction in fetch", this.state.sort.direction)
                 this.onSort(null, this.state.sort.column, false)
-                this.setArrow(this.state.sort.direction)
+                this.setArrow(this.state.sort.column)
             }).catch(err => {
                 console.log("error ran:")
             	this.setState({
@@ -294,151 +294,6 @@ export default class IssueListing extends Component {
         console.log("at the end of onSort", this.state.sort.direction)
     };
 
-    // sortContents = (e, column) => {
-    //     console.log("at the beginning of onSort", this.state.sort.direction)
-    //     const sortedData = this.state.issues.sort((a, b) => {
-    //     if (column === 'title') {
-    //         const titleA = a.title.toUpperCase();
-    //         const titleB = b.title.toUpperCase(); 
-
-    //         if (titleA < titleB) {
-    //             return -1;
-    //         }
-    //         if (titleA > titleB) {
-    //             return 1;
-    //         }
-    //         return 0;
-    //         } else if (column === 'avatar_url') {
-    //             const assigneeA = a.assignee && a.assignee.login.toUpperCase();
-    //             const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
-    //             if (assigneeA < assigneeB) {
-    //                 return -1;
-    //             }
-    //             if (assigneeA > assigneeB) {
-    //                 return 1;
-    //             }
-    //             return 0;
-    //         } else if (column === 'updated_at') {
-    //             return new Date(b.updated_at) - new Date(a.updated_at);
-    //         } else {
-    //             return new Date(b.created_at) - new Date(a.created_at);
-    //         }
-    //     });
-
-    //     console.log("sortedData: ", sortedData)
-        
-    //     this.setState({
-    //       issues: sortedData,
-    //       sort: {
-    //         column
-    //       }
-    //     });
-
-    //     console.log("at the end of onSort", this.state.sort.direction)
-    // };
-
-    // onSort = (e, column) => {
-    //     console.log("at the beginning of onSort", this.state.sort.direction)
-    //     const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-    //     console.log("after direction logic in onSort", this.state.sort.direction)
-    //     // const sortedData = this.state.issues.sort((a, b) => {
-    //     // if (column === 'title') {
-    //     //     const titleA = a.title.toUpperCase();
-    //     //     const titleB = b.title.toUpperCase(); 
-
-    //     //     if (titleA < titleB) {
-    //     //         return -1;
-    //     //     }
-    //     //     if (titleA > titleB) {
-    //     //         return 1;
-    //     //     }
-    //     //     return 0;
-    //     //     } else if (column === 'avatar_url') {
-    //     //         const assigneeA = a.assignee && a.assignee.login.toUpperCase();
-    //     //         const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
-    //     //         if (assigneeA < assigneeB) {
-    //     //             return -1;
-    //     //         }
-    //     //         if (assigneeA > assigneeB) {
-    //     //             return 1;
-    //     //         }
-    //     //         return 0;
-    //     //     } else if (column === 'updated_at') {
-    //     //         return new Date(b.updated_at) - new Date(a.updated_at);
-    //     //     } else {
-    //     //         return new Date(b.created_at) - new Date(a.created_at);
-    //     //     }
-    //     // });
-
-    //     const sortedData  = this.sortContents(e, column);
-
-    //     console.log("sortedData: ", sortedData)
-          
-    //     if (direction === 'desc') {
-    //         sortedData.reverse();
-    //     }
-        
-    //     this.setState({
-    //       issues: sortedData,
-    //       sort: {
-    //         column,
-    //         direction,
-    //       }
-    //     });
-
-    //     console.log("at the end of onSort", this.state.sort.direction)
-    // };
-
-    // onSort = (e, column) => {
-    //     console.log("at the beginning of onSort", this.state.sort.direction)
-    //     const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-    //     console.log("after direction logic in onSort", this.state.sort.direction)
-    //     const sortedData = this.state.issues.sort((a, b) => {
-    //     if (column === 'title') {
-    //         const titleA = a.title.toUpperCase();
-    //         const titleB = b.title.toUpperCase(); 
-
-    //         if (titleA < titleB) {
-    //             return -1;
-    //         }
-    //         if (titleA > titleB) {
-    //             return 1;
-    //         }
-    //         return 0;
-    //         } else if (column === 'avatar_url') {
-    //             const assigneeA = a.assignee && a.assignee.login.toUpperCase();
-	   //          const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
-	   //          if (assigneeA < assigneeB) {
-	   //              return -1;
-	   //          }
-	   //          if (assigneeA > assigneeB) {
-	   //              return 1;
-	   //          }
-	   //          return 0;
-    //         } else if (column === 'updated_at') {
-    //             return new Date(b.updated_at) - new Date(a.updated_at);
-    //         } else {
-    //             return new Date(b.created_at) - new Date(a.created_at);
-    //         }
-    //     });
-
-    //     console.log("sortedData: ", sortedData)
-          
-    //     if (direction === 'desc') {
-    //         sortedData.reverse();
-    //     }
-        
-    //     this.setState({
-    //       issues: sortedData,
-    //       sort: {
-    //         column,
-    //         direction,
-    //       }
-    //     });
-
-    //     console.log("at the end of onSort", this.state.sort.direction)
-    // };
-
     setArrow = (column) => {
         let className = 'sort-direction';
         
@@ -446,6 +301,7 @@ export default class IssueListing extends Component {
         	className += this.state.sort.direction === 'asc' ? ' asc' : ' desc';
         }
         
+        console.log("setArrow ran:", className)
         return className;
     };
 
@@ -499,9 +355,9 @@ export default class IssueListing extends Component {
     							</th>
     							<th>
     								<Button 
-    									handleClick={(e) => this.onSort(e, 'last_updated')}  
+    									handleClick={(e) => this.onSort(e, 'updated_at')}  
     									buttonText="Last Updated"
-    									icon={<SmallArrow className={this.setArrow('last_updated')}></SmallArrow>}
+    									icon={<SmallArrow className={this.setArrow('updated_at')}></SmallArrow>}
     									iconOnRight
     									className="btn btn--link"
     								/>
@@ -566,8 +422,9 @@ export default class IssueListing extends Component {
                 <form>
                 	<fieldset>
                         <FormInput
-                            fieldChange={(e) => this.onSort(e, e.target.value)}
+                            fieldChange={(e) => { this.onSort(e, e.target.value); this.setArrow(e.target.value);}}
                             value={this.state.sort.column}
+                            onBlur={this.state.sort.column}
                             fieldType="select"
                             fieldId="sort-by"
                             fieldLable="Sort by:"

@@ -234,7 +234,7 @@ describe('IssueListing', () => {
 				});
 			});
 
-			describe.only('Table sorting', () => {
+			describe('Table sorting', () => {
 				it('sorts table by created_at by default', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tr').at(1).find('td').at(2).text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
