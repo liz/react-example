@@ -243,7 +243,13 @@ describe('IssueListing', () => {
 				});
 			});
 
-			describe('Table sorting', () => {
+			describe('Table sorting in mobile', () => {
+				beforeEach(() => {
+					global.innerWidth = 599;
+			        global.dispatchEvent(new Event('resize'));
+			        wrapper.update();
+				});
+
 				it('sorts table by created_at by default', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
@@ -254,46 +260,265 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 				});
 
-				it('sorts table by avatar_url by when AssigneeButton is clicked in desktop', () => {
-					wrapper.find('IssueListing').find('Table').find('AssigneeButton').simulate('click')
+				it('sorts table by avatar_url in decending order when "Assignee" option is selected in MobileSort', () => {
+					wrapper.find('MobileSort').find('#sort-by').instance().value = 'avatar_url';
+					wrapper.find('MobileSort').find('#sort-by').simulate('change');
+
+					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+				});
+
+				it('sorts table by avatar_url in ascending order when "Asignee" and "Ascending" options are selected in MobileSort', () => {
+					wrapper.find('MobileSort').find('#sort-by').instance().value = 'avatar_url';
+					wrapper.find('MobileSort').find('#sort-by').simulate('change');
 
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
+					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					wrapper.find('MobileSort').find('#sort-direction').instance().value = 'asc';
+					wrapper.find('MobileSort').find('#sort-direction').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 				});
 
-				it('sorts table by title by when TitleButton is clicked in desktop', () => {
+				it('sorts table by title when "Title" option is selected in MobileSort', () => {
+					wrapper.find('MobileSort').find('#sort-by').instance().value = 'title';
+					wrapper.find('MobileSort').find('#sort-by').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual('An issue title that is...');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('TitleCell').text()).toEqual('B is a 25 character title');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('C has a zzzz login');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+				});
+
+				it('sorts table by title in ascending order when "Title" and "Ascending" options are selected in MobileSort', () => {
+					wrapper.find('MobileSort').find('#sort-by').instance().value = 'title';
+					wrapper.find('MobileSort').find('#sort-by').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual('An issue title that is...');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('TitleCell').text()).toEqual('B is a 25 character title');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('C has a zzzz login');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
+					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					wrapper.find('MobileSort').find('#sort-direction').instance().value = 'asc';
+					wrapper.find('MobileSort').find('#sort-direction').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual('C has a zzzz login');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('TitleCell').text()).toEqual('B is a 25 character title');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('An issue title that is...');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+				});
+
+				it('sorts table by created_at when "Created Time" option is selected in MobileSort', () => {
+					wrapper.find('MobileSort').find('#sort-by').instance().value = 'created_at';
+					wrapper.find('MobileSort').find('#sort-by').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2005');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+				});
+
+				it('sorts table by created_at in ascending order when "Created Time" and "Ascending" options are selected in MobileSort', () => {
+					wrapper.find('MobileSort').find('#sort-by').instance().value = 'created_at';
+					wrapper.find('MobileSort').find('#sort-by').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2005');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					wrapper.find('MobileSort').find('#sort-direction').instance().value = 'asc';
+					wrapper.find('MobileSort').find('#sort-direction').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2005');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+				});
+
+				it('sorts table by updated_at in decending order when "Last updated" option is selected in MobileSort', () => {
+					wrapper.find('MobileSort').find('#sort-by').instance().value = 'updated_at';
+					wrapper.find('MobileSort').find('#sort-by').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('a month ago');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('9 years ago');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+				});
+
+				it('sorts table by updated_at in ascending order when "Last Updated" and "Ascending" options are selected in MobileSort', () => {
+					wrapper.find('MobileSort').find('#sort-by').instance().value = 'updated_at';
+					wrapper.find('MobileSort').find('#sort-by').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('a month ago');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('9 years ago');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
+					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					wrapper.find('MobileSort').find('#sort-direction').instance().value = 'asc';
+					wrapper.find('MobileSort').find('#sort-direction').simulate('change');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('9 years ago');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('a month ago');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+				});
+
+				// it('sorts table by updated_at and reverses sort order when UpdatedAtButton is clicked twice in a row in desktop', () => {
+				// 	wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click');
+				// 	wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click');
+
+				// 	expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('9 years ago');
+				// 	expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
+				// 	expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('a month ago');
+				// 	expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
+				// });
+			});
+
+			describe('Table sorting in desktop', () => {
+				beforeEach(() => {
+					global.innerWidth = 1024;
+			        global.dispatchEvent(new Event('resize'));
+			        wrapper.update();
+
+				});
+
+				it('sorts table by created_at by default', () => {
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+				});
+				
+				it('sorts table by desc direction by default', () => {
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+				});
+
+				it('sorts table by avatar_url and sets sort direction to desc when AssigneeButton is clicked in desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('AssigneeButton').simulate('click');
+
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+					
+				});
+
+				it('sorts table by avatar_url and and sets sort direction to asc when AssigneeButton is clicked twice in a row in desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('AssigneeButton').simulate('click');
+					wrapper.find('IssueListing').find('Table').find('AssigneeButton').simulate('click');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+				});
+
+				it('sorts table by title and sets sort direction to desc when TitleButton is clicked in desktop', () => {
 					wrapper.find('IssueListing').find('Table').find('TitleButton').simulate('click');
 
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual('An issue title that is...');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('TitleCell').text()).toEqual('B is a 25 character title');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('C has a zzzz login');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 				});
 
+				it('sorts table by title and sets sort direction to asc when TitleButton is clicked in a row on desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('TitleButton').simulate('click');
+					wrapper.find('IssueListing').find('Table').find('TitleButton').simulate('click');
 
-				it('sorts table by created_at by when CreatedAtButton is clicked in desktop', () => {
-					wrapper.find('IssueListing').find('Table').find('CreatedAtButton').simulate('click')
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual('C has a zzzz login');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('TitleCell').text()).toEqual('B is a 25 character title');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('An issue title that is...');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+				});
 
+				it('sorts table by created_at and sets sort direction to asc when CreatedAtButton is clicked in desktop (since it is ordered by desc on load)', () => {
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2005');
+
+					wrapper.find('IssueListing').find('Table').find('CreatedAtButton').simulate('click');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2005');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at'); 
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+				});
+
+				it('sorts table by created_at and and sets sort direction to desc when CreatedAtButton is clicked twice in a row in desktop (since it is ordered by desc on load)', () => {
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					wrapper.find('IssueListing').find('Table').find('CreatedAtButton').simulate('click');
+
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2005');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2017');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at'); 
+
+					wrapper.find('IssueListing').find('Table').find('CreatedAtButton').simulate('click');
+
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2005');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+
 				});
 
-				it('sorts table by updated_at by when UpdatedAtButton is clicked in desktop', () => {
-					wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click')
+				it('sorts table by updated_at and sets sort direction to desc when UpdatedAtButton is clicked in desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click');
 
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('a month ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('9 years ago');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 				});
-			});
 
-			it('renders MobileSort', () => {
-		  		expect(wrapper.find('IssueListing').find('MobileSort')).toHaveLength(1);
+				it('sorts table by updated_at and and sets sort direction to asc when UpdatedAtButton is clicked twice in a row in desktop', () => {
+					wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click');
+					wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click');
+
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('9 years ago');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
+					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('a month ago');
+					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
+					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+				});
 			});
 		});
 

@@ -266,8 +266,14 @@ export default class IssueListing extends Component {
 
         let direction = this.state.sort.direction;
 
+        // if (sortDirection) {
+        //     direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+        // }
+
         if (sortDirection) {
-            direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+            if (this.state.sort.column === column) {
+                direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+            }
         }
         
         // console.log("after direction logic in onSort", this.state.sort.direction)
@@ -296,16 +302,25 @@ export default class IssueListing extends Component {
             } else if (column === 'updated_at') {
                 return new Date(b.updated_at) - new Date(a.updated_at);
             } else {
+                console.log("sortedData ran:", new Date(b.created_at) - new Date(a.created_at))
                 return new Date(b.created_at) - new Date(a.created_at);
             }
         });
 
         // console.log("sortedData: ", sortedData)
           
-        if (sortDirection) {
-            if (direction === 'desc') {
-                sortedData.reverse();
-            }
+        // if (sortDirection) {
+        //     if (direction === 'desc') {
+        //         sortedData.reverse();
+        //     }
+        // }
+
+        // if (direction === 'desc') {
+        //     sortedData.reverse();
+        // }
+
+        if (direction === 'asc') {
+            sortedData.reverse();
         }
         
         this.setState({
@@ -316,8 +331,66 @@ export default class IssueListing extends Component {
           }
         });
 
-        // console.log("at the end of onSort", this.state.sort.direction)
+        console.log("at the end of onSort", this.state.sort.direction)
     };
+
+    // onSort = (e, column, sortDirection = true) => {
+    //     console.log("at the beginning of onSort", this.state.sort.direction)
+
+    //     let direction = this.state.sort.direction;
+
+    //     if (sortDirection) {
+    //         direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+    //     }
+        
+    //     // console.log("after direction logic in onSort", this.state.sort.direction)
+    //     const sortedData = this.state.issues.sort((a, b) => {
+    //     if (column === 'title') {
+    //         const titleA = a.title.toUpperCase();
+    //         const titleB = b.title.toUpperCase(); 
+
+    //         if (titleA < titleB) {
+    //             return -1;
+    //         }
+    //         if (titleA > titleB) {
+    //             return 1;
+    //         }
+    //         return 0;
+    //         } else if (column === 'avatar_url') {
+    //             const assigneeA = a.assignee && a.assignee.login.toUpperCase();
+    //             const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
+    //             if (assigneeA < assigneeB) {
+    //                 return -1;
+    //             }
+    //             if (assigneeA > assigneeB) {
+    //                 return 1;
+    //             }
+    //             return 0;
+    //         } else if (column === 'updated_at') {
+    //             return new Date(b.updated_at) - new Date(a.updated_at);
+    //         } else {
+    //             return new Date(b.created_at) - new Date(a.created_at);
+    //         }
+    //     });
+
+    //     // console.log("sortedData: ", sortedData)
+          
+    //     if (sortDirection) {
+    //         if (direction === 'desc') {
+    //             sortedData.reverse();
+    //         }
+    //     }
+        
+    //     this.setState({
+    //       issues: sortedData,
+    //       sort: {
+    //         column,
+    //         direction,
+    //       }
+    //     });
+
+    //     console.log("at the end of onSort", this.state.sort.direction)
+    // };
 
     setArrow = (column) => {
         let className = 'sort-direction';
@@ -449,7 +522,7 @@ export default class IssueListing extends Component {
                 <form>
                 	<fieldset>
                         <FormInput
-                            fieldChange={(e) => { this.onSort(e, e.target.value); this.setArrow(e.target.value);}}
+                            fieldChange={(e) => { this.onSort(e, e.target.value, false); this.setArrow(e.target.value);}}
                             value={this.state.sort.column}
                             onBlur={this.state.sort.column}
                             fieldType="select"
@@ -457,16 +530,17 @@ export default class IssueListing extends Component {
                             fieldLable="Sort by:"
                         >
                              <option value="created_at">Created Time</option>
-                             <option value="avatar_url">Asignee</option>
+                             <option value="avatar_url">Assignee</option>
                              <option value="title">Title</option>
                              <option value="updated_at">Last Updated</option>
                         </FormInput>
                         <FormInput
                             fieldChange={(e) => this.onSort(e, this.state.sort.column)}
                             value={this.state.sort.direction}
+                            onBlur={this.state.sort.direction}
                             fieldType="select"
-                            fieldId="sort-order"
-                            fieldLable="Sort order:"
+                            fieldId="sort-direction"
+                            fieldLable="Sort direction:"
                         >
                              <option value="asc">Ascending</option>
                              <option value="desc">Descending</option>
