@@ -266,17 +266,12 @@ export default class IssueListing extends Component {
 
         let direction = this.state.sort.direction;
 
-        // if (sortDirection) {
-        //     direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-        // }
-
         if (sortDirection) {
             if (this.state.sort.column === column) {
                 direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
             }
         }
         
-        // console.log("after direction logic in onSort", this.state.sort.direction)
         const sortedData = this.state.issues.sort((a, b) => {
         if (column === 'title') {
             const titleA = a.title.toUpperCase();
@@ -307,18 +302,6 @@ export default class IssueListing extends Component {
             }
         });
 
-        // console.log("sortedData: ", sortedData)
-          
-        // if (sortDirection) {
-        //     if (direction === 'desc') {
-        //         sortedData.reverse();
-        //     }
-        // }
-
-        // if (direction === 'desc') {
-        //     sortedData.reverse();
-        // }
-
         if (direction === 'asc') {
             sortedData.reverse();
         }
@@ -330,8 +313,6 @@ export default class IssueListing extends Component {
             direction,
           }
         });
-
-        console.log("at the end of onSort", this.state.sort.direction)
     };
 
     // onSort = (e, column, sortDirection = true) => {
