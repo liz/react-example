@@ -11,7 +11,6 @@ FieldContainer.displayName = 'FieldContainer';
 export const FormInput = (props) => {
 	const onChange = (event) => {
         if (props.fieldChange) {
-        	console.log("FormInput on change ran")
             props.fieldChange(event);
         }
     };
