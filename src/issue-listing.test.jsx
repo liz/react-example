@@ -2,8 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { act } from 'react-dom/test-utils';
-import { clearStorage } from "react-simple-storage";
 
 import Octokit from '@octokit/rest';
 import nock from 'nock';
@@ -24,8 +22,6 @@ describe('IssueListing', () => {
 	let octokit;
 
 	beforeEach( () => {
-		clearStorage();
-
 	    selectedRepo = {
     		id: 332626,
     		name: 'example-repo',
@@ -389,16 +385,6 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 				});
-
-				// it('sorts table by updated_at and reverses sort order when UpdatedAtButton is clicked twice in a row in desktop', () => {
-				// 	wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click');
-				// 	wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').simulate('click');
-
-				// 	expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('9 years ago');
-				// 	expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
-				// 	expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('a month ago');
-				// 	expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
-				// });
 			});
 
 			describe('Table sorting in desktop', () => {
