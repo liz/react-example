@@ -5,6 +5,29 @@ import { Button } from './';
 import theme from '../../theme';
 
 describe('Button', () => {
+    it('should match the snapshot', () => {
+        const wrapper = mount(<Button buttonText="Hello" />);
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
+    it('renders FormInput with expected props', () => {
+        const wrapper = mount(<Button buttonText="Hello" />);
+
+        expect(wrapper.find('Button')).toHaveLength(1);
+        expect(wrapper.find('Button').props()).toEqual({
+            color: theme.primaryColor,
+            colorAlt: null,
+            buttonText: 'Hello',
+            iconOnRight: false,
+            type: 'button',
+            className: 'btn',
+            disabled: false,
+            hidden: false,
+            minWidth: theme.buttonMinWidth
+        });
+    });
+
     describe('renders icon', () => {
         it('does not render an icon when the icon prop is absent', () => {
             const wrapper = mount(<Button buttonText="Hello" />);
