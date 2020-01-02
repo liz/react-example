@@ -103,5 +103,6 @@ Image.defaultProps = {
     maxHeight: '100%',
     horizontalAlignment: 'center',
     verticalAlignment: 'center',
-    type: 'tag'
+    type: 'tag',
+    alt: "Default image alt text"
 };

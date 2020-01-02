@@ -5,6 +5,21 @@ import { Image } from './';
 import theme from '../../theme';
 
 describe('Image', () => {
+	it('renders Image with expected props', () => {
+        const wrapper = mount(<Image />);
+
+        expect(wrapper.props()).toEqual({
+            alt: "Default image alt text",
+            width: "100%",
+            height: "auto",
+            horizontalAlignment: "center",
+            verticalAlignment: "center",
+            maxHeight: "100%",
+            maxWidth: "100%",
+            type: "tag"
+        });
+    });
+
     it('renders wrapper css when type prop equals "css"', () => {
         const wrapper = mount(<Image type="css" />);
         expect(wrapper.find('Container').exists()).toBe(true);

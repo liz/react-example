@@ -11,7 +11,7 @@ describe('Button', () => {
         expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it('renders FormInput with expected props', () => {
+    it('renders Button with expected props', () => {
         const wrapper = mount(<Button buttonText="Hello" />);
 
         expect(wrapper.find('Button')).toHaveLength(1);
