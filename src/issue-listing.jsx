@@ -64,21 +64,22 @@ CreatedAtCell.displayName = 'CreatedAtCell';
 const UpdatedAtCell= styled.td``;
 UpdatedAtCell.displayName = 'UpdatedAtCell';
 
-const MobileSort = styled.div`
-    display: block;
-
-    @media (min-width: ${mediaQueries.min.medium}) {
-        display: none;
-    }
-`;
-MobileSort.displayName = 'MobileSort';
-
 const FullWidthCol = styled.div`
     width: 100%;
     padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
 `;
 FullWidthCol.displayName = 'FullWidthCol';
+
+const MobileSort = styled(FullWidthCol)`
+    padding-left: ${theme.gutter};
+    padding-right: ${theme.gutter};
+
+    @media (min-width: ${mediaQueries.min.medium}) {
+        display: none;
+    }
+`;
+MobileSort.displayName = 'MobileSort';
 
 const FullWidthColNoPaddingMobile = styled.div`
     width: 100%;
@@ -402,6 +403,7 @@ export default class IssueListing extends Component {
     	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
 			return (
                 <div>
+                    {this.renderMobileSort()}
     				<Table>
     					<TableHeader>
     						<tr>
@@ -542,7 +544,6 @@ export default class IssueListing extends Component {
                     <Row>
             			<FullWidthCol>
                             <h2>Issues {this.renderRepoName()}</h2>
-		                    {this.renderMobileSort()}
                         </FullWidthCol>
                     </Row>
                     <Row>
