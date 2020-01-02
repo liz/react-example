@@ -35,6 +35,7 @@ const ColoredButton = styled.button`
             background: ${theme.alto};
             border-color: ${theme.alto};
             color: ${theme.black};
+            font-weight: normal;
 
             &:hover,
             &:active {
