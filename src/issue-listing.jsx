@@ -217,7 +217,7 @@ export default class IssueListing extends Component {
            		column: 'created_at',
            		direction: 'desc'
             },
-            isLoaded: null
+            isIssuesLoaded: null
         };
 
         this.fetchIssues = this.fetchIssues.bind(this);
@@ -238,7 +238,7 @@ export default class IssueListing extends Component {
         		// console.log(data)
                 this.setState({
                     issues: data,
-                    isLoaded: true
+                    isIssuesLoaded: true
                 });
                 console.log("column in fetch", this.state.sort.column)
                 console.log("direction in fetch", this.state.sort.direction)
@@ -248,7 +248,7 @@ export default class IssueListing extends Component {
                 console.log("error ran:")
             	this.setState({
                     issues: [],
-                    isLoaded: true
+                    isIssuesLoaded: true
                 });
             });
     }
@@ -256,7 +256,7 @@ export default class IssueListing extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.selectedRepo !== this.props.selectedRepo) {
         	if (this.props.selectedRepo) {
-        		this.setState({ isLoaded: false });
+        		this.setState({ isIssuesLoaded: false });
             	this.fetchIssues();
         	}
         }
@@ -398,9 +398,9 @@ export default class IssueListing extends Component {
 	}
 
     renderIssueTable  = () => {
-        // console.log(this.state.isLoaded)
+        // console.log(this.state.isIssuesLoaded)
         // console.log(this.state.issues && this.state.issues.length)
-    	if (this.state.isLoaded && this.state.issues && this.state.issues.length) {
+    	if (this.state.isIssuesLoaded && this.state.issues && this.state.issues.length) {
 			return (
                 <div>
                     {this.renderMobileSort()}
@@ -474,7 +474,7 @@ export default class IssueListing extends Component {
 		    );
     	}
 
-    	if (this.state.isLoaded && this.state.issues && !this.state.issues.length) {
+    	if (this.state.isIssuesLoaded && this.state.issues && !this.state.issues.length) {
     		return <NoIssuesMessage>This repo has no issues.</NoIssuesMessage>;
     	}
     	
@@ -482,7 +482,7 @@ export default class IssueListing extends Component {
     };
 
     renderIssues  = () => {
-    	if (this.state.isLoaded === null) {
+    	if (this.state.isIssuesLoaded === null) {
     		return <NoRepoSelected>Please select a repo from the lefthand column</NoRepoSelected>;
     	}
 
