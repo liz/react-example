@@ -225,7 +225,6 @@ export default class IssueListing extends Component {
     }
 
     fetchIssues() {
-    	// console.log('fetchIssues ran')
     	const octokit = new Octokit({
             auth: this.props.apiKey
         });
@@ -234,18 +233,13 @@ export default class IssueListing extends Component {
         	owner: this.props.selectedRepo.owner.login,
         	repo: this.props.selectedRepo.name
         }).then(({ data }) => {
-        		// console.log("then ran")
-        		// console.log(data)
                 this.setState({
                     issues: data,
                     issuesLoaded: true
                 });
-                console.log("column in fetch", this.state.sort.column)
-                console.log("direction in fetch", this.state.sort.direction)
                 this.onSort(null, this.state.sort.column, false)
                 this.setArrow(this.state.sort.column)
             }).catch(err => {
-                console.log("error ran:")
             	this.setState({
                     issues: [],
                     issuesLoaded: true
@@ -263,8 +257,6 @@ export default class IssueListing extends Component {
     }
 
     onSort = (e, column, sortDirection = true) => {
-        console.log("at the beginning of onSort", this.state.sort.direction)
-
         let direction = this.state.sort.direction;
 
         if (sortDirection) {
@@ -298,7 +290,6 @@ export default class IssueListing extends Component {
             } else if (column === 'updated_at') {
                 return new Date(b.updated_at) - new Date(a.updated_at);
             } else {
-                console.log("sortedData ran:", new Date(b.created_at) - new Date(a.created_at))
                 return new Date(b.created_at) - new Date(a.created_at);
             }
         });
@@ -316,64 +307,6 @@ export default class IssueListing extends Component {
         });
     };
 
-    // onSort = (e, column, sortDirection = true) => {
-    //     console.log("at the beginning of onSort", this.state.sort.direction)
-
-    //     let direction = this.state.sort.direction;
-
-    //     if (sortDirection) {
-    //         direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
-    //     }
-        
-    //     // console.log("after direction logic in onSort", this.state.sort.direction)
-    //     const sortedData = this.state.issues.sort((a, b) => {
-    //     if (column === 'title') {
-    //         const titleA = a.title.toUpperCase();
-    //         const titleB = b.title.toUpperCase(); 
-
-    //         if (titleA < titleB) {
-    //             return -1;
-    //         }
-    //         if (titleA > titleB) {
-    //             return 1;
-    //         }
-    //         return 0;
-    //         } else if (column === 'avatar_url') {
-    //             const assigneeA = a.assignee && a.assignee.login.toUpperCase();
-    //             const assigneeB = b.assignee && b.assignee.login.toUpperCase(); 
-    //             if (assigneeA < assigneeB) {
-    //                 return -1;
-    //             }
-    //             if (assigneeA > assigneeB) {
-    //                 return 1;
-    //             }
-    //             return 0;
-    //         } else if (column === 'updated_at') {
-    //             return new Date(b.updated_at) - new Date(a.updated_at);
-    //         } else {
-    //             return new Date(b.created_at) - new Date(a.created_at);
-    //         }
-    //     });
-
-    //     // console.log("sortedData: ", sortedData)
-          
-    //     if (sortDirection) {
-    //         if (direction === 'desc') {
-    //             sortedData.reverse();
-    //         }
-    //     }
-        
-    //     this.setState({
-    //       issues: sortedData,
-    //       sort: {
-    //         column,
-    //         direction,
-    //       }
-    //     });
-
-    //     console.log("at the end of onSort", this.state.sort.direction)
-    // };
-
     setArrow = (column) => {
         let className = 'sort-direction';
         
@@ -381,7 +314,6 @@ export default class IssueListing extends Component {
         	className += this.state.sort.direction === 'asc' ? ' asc' : ' desc';
         }
         
-        // console.log("setArrow ran:", className)
         return className;
     };
 
@@ -398,8 +330,6 @@ export default class IssueListing extends Component {
 	}
 
     renderIssueTable  = () => {
-        // console.log(this.state.issuesLoaded)
-        // console.log(this.state.issues && this.state.issues.length)
     	if (this.state.issuesLoaded && this.state.issues && this.state.issues.length) {
 			return (
                 <div>

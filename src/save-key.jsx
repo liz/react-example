@@ -56,13 +56,10 @@ export const SaveKey = (props) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log("onSubmit running")
         if (fieldValue) {
-            console.log("if went")
             props.dispatch(saveKey(fieldValue))
             setButtonDisabled(true)
         } else {
-            console.log("else went")
             setFieldError("Please enter an API Key")
         }
     }; 
