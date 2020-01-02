@@ -143,7 +143,7 @@ describe('Listing', () => {
 	    	expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
-	  	it('renders LoadingSpinner when isLoaded state is false', () => {
+	  	it('renders LoadingSpinner when isReposLoaded state is false', () => {
 	  		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
 
 		    wrapper = mount(
@@ -154,25 +154,25 @@ describe('Listing', () => {
 
 			wrapper.update();
 
-	    	expect(wrapper.find('Listing').state().isLoaded).toBe(false);
+	    	expect(wrapper.find('Listing').state().isReposLoaded).toBe(false);
 	    	expect(wrapper.find('Listing').find('LoadingSpinner')).toHaveLength(1);
 	  	});
 
 	  	describe('Renders when github responds with github data', () => {
 			it('renders ListingContainer', () => {
-			  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+			  	expect(wrapper.find('Listing').state().isReposLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('ListingContainer')).toHaveLength(1);
 			});
 
 			it('renders RepoList', () => {
-			  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+			  	expect(wrapper.find('Listing').state().isReposLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('RepoList')).toHaveLength(1);
 			});
 
 			it('renders IssueListing with expected props when repo is selected and sets the repoAccordionOpen state to false', async () => {
-				expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+				expect(wrapper.find('Listing').state().isReposLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('Listing').state().selectedRepo).toEqual(null);
 			  	expect(wrapper.find('Listing').state().repoAccordionOpen).toBe(true);
@@ -208,7 +208,7 @@ describe('Listing', () => {
 			});
 
 			it('renders RepoAccordion with expected className when repoToggle is clicked', () => {
-				expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+				expect(wrapper.find('Listing').state().isReposLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('RepoAccordion')).toHaveLength(1);
 
@@ -222,7 +222,7 @@ describe('Listing', () => {
 			});
 
 			it('renders RepoAccordion with expected className when repoToggle is clicked twice in a row', () => {
-				expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+				expect(wrapper.find('Listing').state().isReposLoaded).toBe(true);
 			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
 			  	expect(wrapper.find('RepoAccordion')).toHaveLength(1);
 
@@ -272,7 +272,7 @@ describe('Listing', () => {
 
 		wrapper.update();
 
-	  	expect(wrapper.find('Listing').state().isLoaded).toBe(true);
+	  	expect(wrapper.find('Listing').state().isReposLoaded).toBe(true);
 	  	expect(wrapper.find('Listing').state().repos).toEqual([]);
 	  	expect(wrapper.find('Listing').state().fieldError).toEqual("Github does not recognize this API Key, please try a different API Key.");
 	  	expect(wrapper.find(SaveKey)).toHaveLength(1);
