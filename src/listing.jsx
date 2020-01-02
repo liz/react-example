@@ -100,7 +100,7 @@ export default class Listing extends Component {
         this.state = {
             selectedRepo: null,
             repos: '',
-            isReposLoaded: false,
+            reposLoaded: false,
             repoAccordionOpen: true
         };
 
@@ -118,14 +118,14 @@ export default class Listing extends Component {
                 // console.log("then in oktokit")
                 this.setState({
                     repos: data,
-                    isReposLoaded: true
+                    reposLoaded: true
                 });
                 // console.log(data)
             }).catch(err => {
                 // console.log(err)
                 this.setState({
                     repos: [],
-                    isReposLoaded: true,
+                    reposLoaded: true,
                     fieldError: "Github does not recognize this API Key, please try a different API Key."
                 });
             });
@@ -181,11 +181,11 @@ export default class Listing extends Component {
     };
 
 	render() {
-        if (!this.state.isReposLoaded) {
+        if (!this.state.reposLoaded) {
             return <LoadingSpinner />;
         }
 
-		if (this.state.isReposLoaded && this.state.repos && this.state.repos.length) {
+		if (this.state.reposLoaded && this.state.repos && this.state.repos.length) {
             return (
                 <ListingContainer>
                     <SimpleStorage parent={this} />

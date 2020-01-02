@@ -79,7 +79,7 @@ describe('IssueListing', () => {
 			wrapper.update();
 
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
-	  		expect(wrapper.find('IssueListing').state().isIssuesLoaded).toEqual(null);
+	  		expect(wrapper.find('IssueListing').state().issuesLoaded).toEqual(null);
 
 			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
 
@@ -91,8 +91,8 @@ describe('IssueListing', () => {
 			expect(fetchIssuesSpy).toHaveBeenCalled();
 	  	});
 
-	  	it('sets isIssuesLoaded state to false componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
-			expect(wrapper.find('IssueListing').state().isIssuesLoaded).toEqual(false);
+	  	it('sets issuesLoaded state to false componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
+			expect(wrapper.find('IssueListing').state().issuesLoaded).toEqual(false);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
 	  	});
     });
@@ -110,7 +110,7 @@ describe('IssueListing', () => {
 	    	expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
-	  	it('renders NoRepoSelected when isIssuesLoaded state is null', () => {
+	  	it('renders NoRepoSelected when issuesLoaded state is null', () => {
 	  		const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
 
 			wrapper = mount(
@@ -121,11 +121,11 @@ describe('IssueListing', () => {
 			
 			wrapper.update();
 
-	    	expect(wrapper.find('IssueListing').state().isIssuesLoaded).toBe(null);
+	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(null);
 	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
 	  	});
 
-	  	it('renders LoadingSpinner when isIssuesLoaded state is false', () => {
+	  	it('renders LoadingSpinner when issuesLoaded state is false', () => {
 	  		const fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
 
 			wrapper = mount(
@@ -142,7 +142,7 @@ describe('IssueListing', () => {
 			
 			wrapper.update();
 
-	    	expect(wrapper.find('IssueListing').state().isIssuesLoaded).toBe(false);
+	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(false);
 	    	expect(wrapper.find('IssueListing').find('LoadingSpinner')).toHaveLength(1);
 	  	});
 
@@ -184,7 +184,7 @@ describe('IssueListing', () => {
 		  		// console.log(wrapper.find('IssueListing').state())
 
 		  		expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
-		  		expect(wrapper.find('IssueListing').state().isIssuesLoaded).toBe(true);
+		  		expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
 		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
 		  		// console.log(wrapper.find('IssueListing').state())
 	  		});
@@ -544,7 +544,7 @@ describe('IssueListing', () => {
 
 			wrapper.update();
 
-		  	expect(wrapper.find('IssueListing').state().isIssuesLoaded).toBe(true);
+		  	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
 		  	expect(wrapper.find('IssueListing').state().issues).toEqual([]);
 		  	expect(wrapper.find('IssueListing').find('NoIssuesMessage')).toHaveLength(1);
 		  	nock.cleanAll();
