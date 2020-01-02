@@ -5,6 +5,12 @@ import { Image } from './';
 import theme from '../../theme';
 
 describe('Image', () => {
+    it('should match the snapshot', () => {
+        const wrapper = mount(<Image />);
+
+        expect(wrapper.html()).toMatchSnapshot();
+    });
+
 	it('renders Image with expected props', () => {
         const wrapper = mount(<Image />);
 
