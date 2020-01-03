@@ -287,11 +287,13 @@ describe('IssueListing', () => {
 				it('sorts table by created_at by default', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+ 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
 				});
 				
 				it('sorts table by desc direction by default', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
 				});
 
 				it('sorts table by avatar_url in decending order when "Assignee" option is selected in MobileSort', () => {
@@ -307,6 +309,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('desc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('asc')).toBe(false);
 
  					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -333,6 +336,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('asc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('desc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -349,6 +353,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('desc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('asc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -375,6 +380,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('asc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('desc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -391,6 +397,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('desc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('asc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -417,6 +424,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('asc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('desc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -433,6 +441,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('desc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('asc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -459,6 +468,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('asc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('desc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -476,11 +486,13 @@ describe('IssueListing', () => {
 				it('sorts table by created_at by default', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
 				});
 				
 				it('sorts table by desc direction by default', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
 				});
 
 				it
@@ -496,6 +508,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('desc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('asc')).toBe(false);
 					
 					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -513,6 +526,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('asc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('desc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -528,6 +542,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('desc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('asc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -544,6 +559,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('asc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('desc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -564,6 +580,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('asc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('desc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -589,6 +606,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
 
 					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('desc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('asc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -604,6 +622,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('desc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('asc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -620,6 +639,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
 					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('asc')).toBe(true);
+					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('desc')).toBe(false);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
