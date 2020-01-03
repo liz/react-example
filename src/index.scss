@@ -63,6 +63,11 @@ button {
 	cursor: pointer;
 	display: flex;
 	justify-content: center;
+	outline: none;
+
+	&:focus {
+		outline: none;
+	}
 
 	&.btn--link {
 		background: transparent;
@@ -70,6 +75,7 @@ button {
 		border-radius: 0;
 		padding: 0;
 		min-width: 0;
+		outline: none;
 	}
 } // end button
 
