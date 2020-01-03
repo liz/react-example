@@ -206,6 +206,9 @@ describe('IssueListing', () => {
 
 	  	describe('Renders when github responds with github data', () => {
 	  		beforeEach(async () => {
+	  			const onSortSpy = jest.spyOn(IssueListing.prototype, 'onSort');
+	  			const setArrowSpy = jest.spyOn(IssueListing.prototype, 'setArrow');
+
 	  			nock.disableNetConnect();
 			  	scope = nock('https://api.github.com')
 			  	.persist()
@@ -235,10 +238,14 @@ describe('IssueListing', () => {
 		  		expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 		  		expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
 		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
+		  		expect(onSortSpy).toHaveBeenCalledWith(null, wrapper.find('IssueListing').state().sort.column, false);
+		  		expect(setArrowSpy).toHaveBeenCalledWith(wrapper.find('IssueListing').state().sort.column);
+
 	  		});
 
   			afterEach(() => {
 				nock.cleanAll();
+				jest.restoreAllMocks();
 			});
 
 			it('renders repoName', () => {

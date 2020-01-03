@@ -205,6 +205,7 @@ const TableHeader = styled.thead`
         }
     }
 `;
+TableHeader.displayName = 'TableHeader';
 
 export default class IssueListing extends Component {
 	   constructor(props) {
@@ -221,6 +222,13 @@ export default class IssueListing extends Component {
 
         this.fetchIssues = this.fetchIssues.bind(this);
         this.truncateByWord = this.truncateByWord.bind(this);
+        this.onSort = this.onSort.bind(this);
+        this.setArrow = this.setArrow.bind(this);
+        this.renderIssueTable = this.renderIssueTable.bind(this);
+        this.renderIssues = this.renderIssues.bind(this);
+        this.renderRepoName = this.renderRepoName.bind(this);
+        this.renderMobileSort = this.renderMobileSort.bind(this);
+        
     }
 
     fetchIssues() {
@@ -267,7 +275,7 @@ export default class IssueListing extends Component {
         }
     }
 
-    onSort = (e, column, sortDirection = true) => {
+    onSort(e, column, sortDirection = true) {
         let direction = this.state.sort.direction;
 
         if (sortDirection) {
@@ -319,9 +327,9 @@ export default class IssueListing extends Component {
 
         window.sessionStorage.setItem("sort_column", column);
         window.sessionStorage.setItem("sort_direction", direction);
-    };
+    }
 
-    setArrow = (column) => {
+    setArrow(column) {
         let className = 'sort-direction';
         
         if (this.state.sort.column === column) {
@@ -329,7 +337,7 @@ export default class IssueListing extends Component {
         }
         
         return className;
-    };
+    }
 
     truncateByWord(text, length) {
 		if (text === undefined) {
@@ -343,7 +351,7 @@ export default class IssueListing extends Component {
 			return text;
 	}
 
-    renderIssueTable  = () => {
+    renderIssueTable() {
     	if (this.state.issuesLoaded && this.state.issues && this.state.issues.length) {
 			return (
                 <div>
@@ -423,17 +431,17 @@ export default class IssueListing extends Component {
     	}
     	
     	return <LoadingSpinner />;
-    };
+    }
 
-    renderIssues  = () => {
+    renderIssues() {
     	if (this.state.issuesLoaded === null) {
     		return <NoRepoSelected>Please select a repo from the lefthand column</NoRepoSelected>;
     	}
 
     	return this.renderIssueTable();
-    };
+    }
 
-    renderRepoName  = () => {
+    renderRepoName() {
         if (this.props.selectedRepo &&this.props.selectedRepo.name ) {
             return (
                 <span>for <span className="highlight">{this.props.selectedRepo.name}</span></span>
@@ -441,9 +449,9 @@ export default class IssueListing extends Component {
         }
 
         return null;
-    };
+    }
 
-    renderMobileSort  = () => {
+    renderMobileSort() {
     	return (
     		<MobileSort>
                 <form>
