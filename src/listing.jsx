@@ -181,7 +181,7 @@ export default class Listing extends Component {
             return <LoadingSpinner />;
         }
 
-		if (this.state.reposLoaded && this.state.repos && this.state.repos.length) {
+        if (this.state.reposLoaded && this.state.repos && this.state.repos.length) {
             return (
                 <ListingContainer>
                     <Row>
