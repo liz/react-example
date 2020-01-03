@@ -214,27 +214,17 @@ describe('IssueListing', () => {
 
 				wrapper.update();
 
-				// console.log(wrapper.find('IssueListing').state())
-
 				expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
 
 				wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
 
-				// console.log("componentDidUpdate should have gone")
-
-				// console.log(wrapper.find('IssueListing').state())
-
 				await octokit.request(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`);
-				// console.log("fetch should have gone")
 		  		scope.done();
 		  		wrapper.update();
-
-		  		// console.log(wrapper.find('IssueListing').state())
 
 		  		expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 		  		expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
 		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
-		  		// console.log(wrapper.find('IssueListing').state())
 	  		});
 
   			afterEach(() => {
