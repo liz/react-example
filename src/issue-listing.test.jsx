@@ -495,8 +495,7 @@ describe('IssueListing', () => {
 					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
 				});
 
-				it
-				('sorts table by avatar_url and sets sort direction to desc when AssigneeButton is clicked in desktop', () => {
+				it('sorts table by avatar_url and sets sort direction to desc when AssigneeButton is clicked in desktop', () => {
 					wrapper.find('IssueListing').find('Table').find('AssigneeButton').simulate('click');
 
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
