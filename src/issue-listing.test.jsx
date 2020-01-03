@@ -304,6 +304,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
@@ -321,6 +322,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
@@ -331,6 +333,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
@@ -348,6 +351,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual('An issue title that is...');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('TitleCell').text()).toEqual('B is a 25 character title');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('C has a zzzz login');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
@@ -365,6 +369,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('TitleCell').text()).toEqual('An issue title that is...');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('TitleCell').text()).toEqual('B is a 25 character title');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('C has a zzzz login');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
@@ -392,6 +397,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2005');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
@@ -409,6 +415,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2005');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
@@ -419,6 +426,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('CreatedAtCell').text()).toEqual('10/09/2005');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('CreatedAtCell').text()).toEqual('10/09/2009');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2017');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
@@ -436,6 +444,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('a month ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('9 years ago');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
@@ -453,6 +462,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('a month ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('9 years ago');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
@@ -463,6 +473,7 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('9 years ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('a month ago');
+					
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
