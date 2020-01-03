@@ -197,6 +197,7 @@ const TableHeader = styled.thead`
     th {
         border-bottom: 0;
         background: ${theme.backgroundAlt};
+        vertical-align: middle;
     }
 
     button {
