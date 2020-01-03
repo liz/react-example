@@ -139,36 +139,36 @@ describe('Listing', () => {
 
 			wrapper.update();
 
-	    	expect(wrapper.html()).toMatchSnapshot();
-	  	});
+			expect(wrapper.html()).toMatchSnapshot();
+		});
 
-	  	it('renders LoadingSpinner when reposLoaded state is false', () => {
-	  		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
+		it('renders LoadingSpinner when reposLoaded state is false', () => {
+			const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
 
-	  		wrapper = mount(
-	  			<Provider store={store}>
-	  				<Listing apiKey={apiKey} />
-	  			</Provider>
-	  		);
+			wrapper = mount(
+				<Provider store={store}>
+					<Listing apiKey={apiKey} />
+				</Provider>
+			);
 
-	  		wrapper.update();
+			wrapper.update();
 
-	  		expect(wrapper.find('Listing').state().reposLoaded).toBe(false);
-	  		expect(wrapper.find('Listing').find('LoadingSpinner')).toHaveLength(1);
-	  	});
+			expect(wrapper.find('Listing').state().reposLoaded).toBe(false);
+			expect(wrapper.find('Listing').find('LoadingSpinner')).toHaveLength(1);
+		});
 
 	  	describe('Renders when github responds with github data', () => {
-			it('renders ListingContainer', () => {
-			  	expect(wrapper.find('Listing').state().reposLoaded).toBe(true);
-			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
-			  	expect(wrapper.find('ListingContainer')).toHaveLength(1);
-			});
+	  		it('renders ListingContainer', () => {
+	  			expect(wrapper.find('Listing').state().reposLoaded).toBe(true);
+	  			expect(wrapper.find('Listing').state().repos).toEqual(repos);
+	  			expect(wrapper.find('ListingContainer')).toHaveLength(1);
+	  		});
 
-			it('renders RepoList', () => {
-			  	expect(wrapper.find('Listing').state().reposLoaded).toBe(true);
-			  	expect(wrapper.find('Listing').state().repos).toEqual(repos);
-			  	expect(wrapper.find('RepoList')).toHaveLength(1);
-			});
+	  		it('renders RepoList', () => {
+	  			expect(wrapper.find('Listing').state().reposLoaded).toBe(true);
+	  			expect(wrapper.find('Listing').state().repos).toEqual(repos);
+	  			expect(wrapper.find('RepoList')).toHaveLength(1);
+	  		});
 
 			it('renders IssueListing with expected props when repo is selected and sets the repoAccordionOpen state to false', async () => {
 				expect(wrapper.find('Listing').state().reposLoaded).toBe(true);
