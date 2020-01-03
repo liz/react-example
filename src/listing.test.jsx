@@ -179,16 +179,16 @@ describe('Listing', () => {
 			  	expect(wrapper.find('RepoAccordion').hasClass('slidedown')).toBe(true);
 			  	expect(wrapper.find('SelectRepoButton')).toHaveLength(2);
 
-			  	nock.cleanAll();
-			  	nock.disableNetConnect();
-			  	scope = nock('https://api.github.com')
-			  	.persist()
-			    .get(`/repos/${repos[0].owner.login}/${repos[0].name}/issues`)
-			    .reply(200, issues);
+				nock.cleanAll();
+				nock.disableNetConnect();
+				scope = nock('https://api.github.com')
+				.persist()
+				.get(`/repos/${repos[0].owner.login}/${repos[0].name}/issues`)
+				.reply(200, issues);
 
 				octokit = new Octokit({
-		            auth: apiKey
-		        });
+					auth: apiKey
+				});
 
 				wrapper.find('SelectRepoButton').at(0).simulate('click');
 
