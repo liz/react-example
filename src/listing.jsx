@@ -104,6 +104,11 @@ export default class Listing extends Component {
         };
 
         this.fetchRepos = this.fetchRepos.bind(this);
+        this.selectRepo = this.selectRepo.bind(this);
+        this.setRepoAccordion = this.setRepoAccordion.bind(this);
+        this.toggleRepoAccordion = this.toggleRepoAccordion.bind(this);
+        this.renderRepoList = this.renderRepoList.bind(this);
+        
     }
 
     fetchRepos() {
@@ -140,20 +145,20 @@ export default class Listing extends Component {
         }
     }
 
-    selectRepo = (index) => {
+    selectRepo(index) {
         this.setState({ selectedRepo: index });
         this.setRepoAccordion(false);
-    };
+    }
 
-    setRepoAccordion = (state) => {
+    setRepoAccordion(state) {
         this.setState({ repoAccordionOpen: state });
-    };
+    }
 
-    toggleRepoAccordion = () => {
+    toggleRepoAccordion() {
         this.setState({ repoAccordionOpen: !this.state.repoAccordionOpen });
-    };
+    }
 
-    renderRepoList = () => {
+    renderRepoList() {
         const repoList = this.state.repos.map((repo, index) => (
             <li key={index}>
                 <p>
@@ -169,7 +174,7 @@ export default class Listing extends Component {
         ));
 
         return <RepoList>{repoList}</RepoList>;
-    };
+    }
 
 	render() {
         if (!this.state.reposLoaded) {
