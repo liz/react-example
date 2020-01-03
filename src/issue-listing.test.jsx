@@ -14,9 +14,9 @@ const mockStore = configureMockStore();
 const store = mockStore({});
 
 describe('IssueListing', () => {
+	let apiKey = '1234567900';
 	let selectedRepo;
 	let issues;
-	let apiKey = '1234567900';
 	let wrapper;
 	let scope;
 	let octokit;
