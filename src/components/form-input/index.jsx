@@ -30,19 +30,19 @@ export const FormInput = (props) => {
     		className={props.className}
     		bottomSpacing={props.bottomSpacing}
     	>
-    		<label htmlFor={props.fieldId}>
-    			{props.fieldLabel}
-    		</label>
-		   	<Field
+			<label htmlFor={props.fieldId}>
+				{props.fieldLabel}
+			</label>
+			<Field
 				id={props.fieldId}
 				type={props.fieldType}
 				name={props.fieldId}
 				value={props.value}	
 				placeholder={props.placeHolder}
-		        onChange={(event) => onChange(event)}
-		        required={props.required}
-		        disabled={props.disabled}
-		        rows={props.rows}
+			    onChange={(event) => onChange(event)}
+			    required={props.required}
+			    disabled={props.disabled}
+			    rows={props.rows}
 			>
 				{props.children}
 			</Field>
