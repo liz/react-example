@@ -21,7 +21,7 @@ export const FormInput = (props) => {
 	    Field = 'select';
 	}
 
-	if (props.fieldType =xw== 'textarea') {
+	if (props.fieldType === 'textarea') {
 	    Field = 'textarea';
 	}
 
