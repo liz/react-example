@@ -24,3 +24,5 @@ jest.mock('./theme', () => {
 React.useLayoutEffect = React.useEffect;
 
 nock.disableNetConnect();
+
+require('jest-localstorage-mock');
