@@ -51,8 +51,17 @@ CreatedAtButton.displayName = 'CreatedAtButton';
 const UpdatedAtButton = styled(Button)``;
 UpdatedAtButton.displayName = 'UpdatedAtButton';
 
-const AssigneeCell= styled.td``;
+const AssigneeCell= styled.td`
+`;
 AssigneeCell.displayName = 'AssigneeCell';
+
+const Avatar = styled.span`
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+`;
+Avatar.displayName = 'Avatar';
 
 const TitleCell= styled.td``;
 TitleCell.displayName = 'TitleCell';
@@ -402,7 +411,9 @@ export default class IssueListing extends Component {
     							return (
     								<tr key={index}>
     									<AssigneeCell>
-    										{(issue.assignee && issue.assignee.avatar_url) ? <Image src={issue.assignee.avatar_url} alt={issue.assignee.login} width="40px" height="40px" /> : "None"}
+    										<Avatar>
+                                            {(issue.assignee && issue.assignee.avatar_url) ? <Image src={issue.assignee.avatar_url} alt={issue.assignee.login} width="40px" height="40px" /> : "None"}
+                                            </Avatar>
     									</AssigneeCell>
     									<TitleCell>
                                             {this.truncateByWord(issue.title, 25)}
