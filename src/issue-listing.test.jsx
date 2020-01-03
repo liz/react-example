@@ -72,6 +72,10 @@ describe('IssueListing', () => {
     		fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
 		});
 
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
 		describe('sets sort column and sort direction states to default values sessionStorage values do not exist on componentDidMount', () => {
 			beforeEach(() => {
 	        	wrapper = mount(
@@ -134,6 +138,10 @@ describe('IssueListing', () => {
 	  		wrapper.update();
     	});
 
+    	afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
     	it('calls fetchIssues() on componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
@@ -171,6 +179,7 @@ describe('IssueListing', () => {
 
 	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(null);
 	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
+	    	jest.restoreAllMocks();
 	  	});
 
 	  	it('renders LoadingSpinner when issuesLoaded state is false', () => {
@@ -192,6 +201,7 @@ describe('IssueListing', () => {
 
 	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(false);
 	    	expect(wrapper.find('IssueListing').find('LoadingSpinner')).toHaveLength(1);
+	    	jest.restoreAllMocks();
 	  	});
 
 	  	describe('Renders when github responds with github data', () => {
@@ -327,6 +337,9 @@ describe('IssueListing', () => {
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
+					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
+ 					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
+
 					wrapper.find('MobileSort').find('#sort-direction').instance().value = 'asc';
 					wrapper.find('MobileSort').find('#sort-direction').simulate('change');
 
@@ -374,6 +387,9 @@ describe('IssueListing', () => {
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
+					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
+ 					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
+
 					wrapper.find('MobileSort').find('#sort-direction').instance().value = 'asc';
 					wrapper.find('MobileSort').find('#sort-direction').simulate('change');
 
@@ -419,6 +435,9 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
+ 					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
 
 					wrapper.find('MobileSort').find('#sort-direction').instance().value = 'asc';
 					wrapper.find('MobileSort').find('#sort-direction').simulate('change');
@@ -467,13 +486,16 @@ describe('IssueListing', () => {
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
+					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
+ 					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
+
 					wrapper.find('MobileSort').find('#sort-direction').instance().value = 'asc';
 					wrapper.find('MobileSort').find('#sort-direction').simulate('change');
 
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('UpdatedAtCell').text()).toEqual('9 years ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('UpdatedAtCell').text()).toEqual('a year ago');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('a month ago');
-					
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
