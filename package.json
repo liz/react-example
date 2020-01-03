@@ -8,9 +8,11 @@
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
     "core-js": "^3.6.1",
+    "husky": "^3.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
+    "lint-staged": "^9.5.0",
     "moment": "^2.24.0",
     "nock": "^11.7.0",
     "node-sass": "^4.13.0",
@@ -50,6 +52,17 @@
       "last 1 firefox version",
       "last 1 safari version",
       "ie 11"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write",
+       "git add"
     ]
   },
   "devDependencies": {
