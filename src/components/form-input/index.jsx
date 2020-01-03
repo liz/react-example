@@ -10,20 +10,20 @@ FieldContainer.displayName = 'FieldContainer';
 
 export const FormInput = (props) => {
 	const onChange = (event) => {
-        if (props.fieldChange) {
-            props.fieldChange(event);
-        }
-    };
+	    if (props.fieldChange) {
+	        props.fieldChange(event);
+	    }
+	};
 
 	let Field = 'input';
 
-    if (props.fieldType === 'select') {
-        Field = 'select';
-    }
+	if (props.fieldType === 'select') {
+	    Field = 'select';
+	}
 
-    if (props.fieldType === 'textarea') {
-        Field = 'textarea';
-    }
+	if (props.fieldType =xw== 'textarea') {
+	    Field = 'textarea';
+	}
 
     return (
     	<FieldContainer 
