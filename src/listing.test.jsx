@@ -45,7 +45,7 @@ describe('Listing', () => {
 			}
 		];
 
-	   	issues = [
+		issues = [
 			{ 
 				assignee: {
 					avatar_url: 'http://path/to/avatar.png',
@@ -64,45 +64,45 @@ describe('Listing', () => {
 				created_at: "2015-10-09T22:32:41Z",
 				updated_at: "2017-11-30T13:46:22Z"
 			}
-	    ];
+		];
 
 		nock.disableNetConnect();
-	  	scope = nock('https://api.github.com')
-	  	.persist()
+		scope = nock('https://api.github.com')
+		.persist()
 		.get('/user/repos')
 		.reply(200, repos);
 
 		octokit = new Octokit({
-		    auth: apiKey
+			auth: apiKey
 		});
 
-	  	wrapper = mount(
+		wrapper = mount(
 			<Provider store={store}>
 				<Listing apiKey={apiKey} />
 			</Provider>
 		);
 
-	  	await octokit.request('/user/repos');
+		await octokit.request('/user/repos');
 		scope.done();
 		wrapper.update();
-    });
+	});
 
 	afterEach(() => {
 		nock.cleanAll();
 		jest.restoreAllMocks();
-    });
+	});
 
     describe('componentDidMount', () => {
     	it('calls fetchRepos() on componentDidMount', () => {
-		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
+    		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
 
-			wrapper = mount(
-				<Provider store={store}>
-					<Listing apiKey={apiKey} />
-				</Provider>
-			);
-			expect(fetchReposSpy).toHaveBeenCalled();
-	  	});
+    		wrapper = mount(
+    			<Provider store={store}>
+    				<Listing apiKey={apiKey} />
+    			</Provider>
+    		);
+    		expect(fetchReposSpy).toHaveBeenCalled();
+    	});
     });
 
     describe('componentDidUpdate', () => {
