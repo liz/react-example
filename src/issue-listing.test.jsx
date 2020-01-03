@@ -65,6 +65,53 @@ describe('IssueListing', () => {
 		sessionStorage.clear();
     });
 
+    describe('componentDidMount', () => {
+    	let fetchIssuesSpy;
+
+    	beforeEach(() => {
+    		fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+		});
+
+		describe('sets sort column and sort direction states to default values sessionStorage values do not exist on componentDidMount', () => {
+			beforeEach(() => {
+	        	wrapper = mount(
+					<Provider store={store}>
+						<IssueListing />
+					</Provider>
+				);
+			});
+
+			it('calls sets sort column state to  "sort_column" sessionStorage value if it exists on componentDidMount', () => {
+				expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
+		  	});
+
+		  	it('calls sets sort column state to  "sort_direction" sessionStorage value if it exists on componentDidMount', () => {
+				expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+		  	});
+		});
+
+		describe('sets sort column and sort direction states to sessionStorage values if they exists on componentDidMount', () => {
+			beforeEach(() => {
+				window.sessionStorage.setItem("sort_column", 'some_column');
+        		window.sessionStorage.setItem("sort_direction", 'some_driection');
+
+	        	wrapper = mount(
+					<Provider store={store}>
+						<IssueListing />
+					</Provider>
+				);
+			});
+
+			it('calls sets sort column state to  "sort_column" sessionStorage value if it exists on componentDidMount', () => {
+				expect(wrapper.find('IssueListing').state().sort.column).toEqual('some_column');
+		  	});
+
+		  	it('calls sets sort column state to  "sort_direction" sessionStorage value if it exists on componentDidMount', () => {
+				expect(wrapper.find('IssueListing').state().sort.direction).toEqual('some_driection');
+		  	});
+		});
+    });
+
     describe('componentDidUpdate', () => {
     	let fetchIssuesSpy;
 
