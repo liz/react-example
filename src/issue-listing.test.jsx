@@ -301,7 +301,6 @@ describe('IssueListing', () => {
 					wrapper.find('MobileSort').find('#sort-by').simulate('change');
 
 					expect(wrapper.find('MobileSort').find('#sort-direction').props().value).toEqual('desc');
-					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
