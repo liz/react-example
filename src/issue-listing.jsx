@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components/macro';
 import Octokit from '@octokit/rest';
 import Moment from 'react-moment';
-import SimpleStorage from "react-simple-storage";
 
 import theme from './theme';
 import mediaQueries from './media-queries';
@@ -247,6 +246,18 @@ export default class IssueListing extends Component {
             });
     }
 
+    componentDidMount() {
+        const column = window.sessionStorage.getItem("sort_column") || 'created_at';
+        const direction = window.sessionStorage.getItem("sort_direction") || 'desc';
+
+        this.setState({
+            sort: {
+                column: column,
+                direction: direction
+            }
+        });
+    }
+
     componentDidUpdate(prevProps) {
         if (prevProps.selectedRepo !== this.props.selectedRepo) {
         	if (this.props.selectedRepo) {
@@ -305,6 +316,9 @@ export default class IssueListing extends Component {
             direction,
           }
         });
+
+        window.sessionStorage.setItem("sort_column", column);
+        window.sessionStorage.setItem("sort_direction", direction);
     };
 
     setArrow = (column) => {
@@ -467,7 +481,6 @@ export default class IssueListing extends Component {
     render() {
     	return (
             <div>
-            	<SimpleStorage parent={this} />
         		<IssueListingContainer 
                     className={this.props.className}
                 >

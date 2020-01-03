@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/macro';
 import Octokit from '@octokit/rest';
-import SimpleStorage from "react-simple-storage";
 
 import theme from './theme';
 import mediaQueries from './media-queries';
@@ -180,7 +179,6 @@ export default class Listing extends Component {
 		if (this.state.reposLoaded && this.state.repos && this.state.repos.length) {
             return (
                 <ListingContainer>
-                    <SimpleStorage parent={this} />
                     <Row>
                         <ColA>
                             <Row>
