@@ -129,7 +129,7 @@ const Table = styled.table`
             border-bottom: 0;
 
             @media (min-width: ${mediaQueries.min.medium}) {
-            	max-width: 350px;
+            	max-width: 250px;
             }
         }
     }
