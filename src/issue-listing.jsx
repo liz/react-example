@@ -285,7 +285,7 @@ export default class IssueListing extends Component {
         }
     }
 
-    onSort(e, column, sortDirection = true) {
+    onSort(e, column, sortDirection=true) {
         let direction = this.state.sort.direction;
 
         if (sortDirection) {
