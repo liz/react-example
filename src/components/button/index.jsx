@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { darken } from 'polished';
@@ -100,62 +100,60 @@ const Text = styled.span`
 `;
 Text.displayName = 'Text';
 
-export class Button extends Component {
-    handleClick = (event) => {
-        if (this.props.handleClick) {
+export const Button = (props) => {
+    const handleClick = (event) => {
+        if (props.handleClick) {
             event.preventDefault();
-            this.props.handleClick(event);
+            props.handleClick(event);
         }
         return false;
     };
 
-    renderTitleOrText = () => {
-        if (this.props.title) {
-            return this.props.title;
+    const renderTitleOrText = () => {
+        if (props.title) {
+            return props.title;
         }
-        if (this.props.buttonText) {
-            return this.props.buttonText;
-        }
-        return null;
-    };
-
-    renderIcon = () => {
-        if (this.props.icon) {
-            return <Icon iconOnRight={this.props.iconOnRight}>{this.props.icon}</Icon>;
+        if (props.buttonText) {
+            return props.buttonText;
         }
         return null;
     };
 
-    renderText = () => {
-        if (this.props.buttonText) {
-            return <Text iconOnRight={this.props.iconOnRight}>{this.props.buttonText}</Text>;
+    const renderIcon = () => {
+        if (props.icon) {
+            return <Icon iconOnRight={props.iconOnRight}>{props.icon}</Icon>;
         }
         return null;
     };
 
-    render() {
-        return (
-            <ColoredButton
-                color={this.props.color}
-                colorAlt={this.props.colorAlt}
-                iconOnRight={this.props.iconOnRight}
-                onClick={this.handleClick}
-                className={this.props.className}
-                title={this.renderTitleOrText()}
-                type={this.props.type}
-                aria-label={this.renderTitleOrText()}
-                disabled={this.props.disabled}
-                hidden={this.props.hidden}
-                minWidth={this.props.minWidth}
-            >
-                <Content>
-                    {this.renderIcon()}
-                    {this.renderText()}
-                </Content>
-            </ColoredButton>
-        );
-    }
-}
+    const renderText = () => {
+        if (props.buttonText) {
+            return <Text iconOnRight={props.iconOnRight}>{props.buttonText}</Text>;
+        }
+        return null;
+    };
+
+    return (
+        <ColoredButton
+            color={props.color}
+            colorAlt={props.colorAlt}
+            iconOnRight={props.iconOnRight}
+            onClick={handleClick}
+            className={props.className}
+            title={renderTitleOrText()}
+            type={props.type}
+            aria-label={renderTitleOrText()}
+            disabled={props.disabled}
+            hidden={props.hidden}
+            minWidth={props.minWidth}
+        >
+            <Content>
+                {renderIcon()}
+                {renderText()}
+            </Content>
+        </ColoredButton>
+    );
+};
 
 Button.defaultProps = {
     color: theme.primaryColor,
