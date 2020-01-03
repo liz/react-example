@@ -179,6 +179,7 @@ describe('IssueListing', () => {
 
 	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(null);
 	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
+	    	expect(wrapper.find('IssueListing').find('NoRepoSelected').text()).toEqual('Please select a repo from the lefthand column');
 	    	jest.restoreAllMocks();
 	  	});
 
@@ -724,6 +725,7 @@ describe('IssueListing', () => {
 		  	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
 		  	expect(wrapper.find('IssueListing').state().issues).toEqual([]);
 		  	expect(wrapper.find('IssueListing').find('NoIssuesMessage')).toHaveLength(1);
+		  	expect(wrapper.find('IssueListing').find('NoIssuesMessage').text()).toEqual('Github cannot find any issues for this repo');
 		  	nock.cleanAll();
 		});
 	});

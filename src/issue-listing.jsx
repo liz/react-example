@@ -439,7 +439,7 @@ export default class IssueListing extends Component {
     	}
 
     	if (this.state.issuesLoaded && this.state.issues && !this.state.issues.length) {
-    		return <NoIssuesMessage>This repo has no issues.</NoIssuesMessage>;
+    		return <NoIssuesMessage>Github cannot find any issues for this repo</NoIssuesMessage>;
     	}
     	
     	return <LoadingSpinner />;
