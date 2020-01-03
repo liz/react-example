@@ -8,6 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import nock from 'nock';
+import 'jest-localstorage-mock';
 
 configure({ adapter: new Adapter() });
 
@@ -24,5 +25,3 @@ jest.mock('./theme', () => {
 React.useLayoutEffect = React.useEffect;
 
 nock.disableNetConnect();
-
-require('jest-localstorage-mock');
