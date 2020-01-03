@@ -25,11 +25,11 @@ export const FormInput = (props) => {
 	    Field = 'textarea';
 	}
 
-    return (
-    	<FieldContainer 
-    		className={props.className}
-    		bottomSpacing={props.bottomSpacing}
-    	>
+	return (
+		<FieldContainer 
+		className={props.className}
+		bottomSpacing={props.bottomSpacing}
+		>
 			<label htmlFor={props.fieldId}>
 				{props.fieldLabel}
 			</label>
@@ -48,7 +48,7 @@ export const FormInput = (props) => {
 			</Field>
 			<FormInputError fieldError={props.fieldError} />
 		</FieldContainer>
-    );
+	);
 }
 
 FormInput.defaultProps = {
