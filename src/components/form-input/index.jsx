@@ -10,47 +10,45 @@ FieldContainer.displayName = 'FieldContainer';
 
 export const FormInput = (props) => {
 	const onChange = (event) => {
-        if (props.fieldChange) {
-            props.fieldChange(event);
-        }
-    };
+	    if (props.fieldChange) {
+	        props.fieldChange(event);
+	    }
+	};
 
 	let Field = 'input';
 
-    if (props.fieldType === 'select') {
-        Field = 'select';
-    }
+	if (props.fieldType === 'select') {
+	    Field = 'select';
+	}
 
-    if (props.fieldType === 'textarea') {
-        Field = 'textarea';
-    }
+	if (props.fieldType === 'textarea') {
+	    Field = 'textarea';
+	}
 
-    return (
-    	<FieldContainer 
-    		className={props.className}
-    		bottomSpacing={props.bottomSpacing}
-    	>
-    		<label
-    			htmlFor={props.fieldId}
-    		>
-    			{props.fieldLabel}
-    		</label>
-		   	<Field
+	return (
+		<FieldContainer 
+		className={props.className}
+		bottomSpacing={props.bottomSpacing}
+		>
+			<label htmlFor={props.fieldId}>
+				{props.fieldLabel}
+			</label>
+			<Field
 				id={props.fieldId}
 				type={props.fieldType}
 				name={props.fieldId}
 				value={props.value}	
 				placeholder={props.placeHolder}
-		        onChange={(event) => onChange(event)}
-		        required={props.required}
-		        disabled={props.disabled}
-		        rows={props.rows}
+			    onChange={(event) => onChange(event)}
+			    required={props.required}
+			    disabled={props.disabled}
+			    rows={props.rows}
 			>
 				{props.children}
 			</Field>
 			<FormInputError fieldError={props.fieldError} />
 		</FieldContainer>
-    );
+	);
 }
 
 FormInput.defaultProps = {

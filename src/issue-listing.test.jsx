@@ -23,9 +23,9 @@ describe('IssueListing', () => {
 
 	beforeEach( () => {
 	    selectedRepo = {
-    		id: 332626,
-    		name: 'example-repo',
-    		created_at: "2009-10-09T22:32:41Z",
+			id: 332626,
+			name: 'example-repo',
+			created_at: "2009-10-09T22:32:41Z",
 			updated_at: "2013-11-30T13:46:22Z",
 			owner: {
 				login: "liz"
@@ -38,23 +38,23 @@ describe('IssueListing', () => {
 		    		avatar_url: 'http://path/to/avatar.png',
 		    		login: 'asignee-login'
 		    	},
-		    	title: "An issue title that is more than twenty-five characters, this issue was created more recently",
-	    		created_at: "2017-10-09T22:32:41Z",
+				title: "An issue title that is more than twenty-five characters, this issue was created more recently",
+				created_at: "2017-10-09T22:32:41Z",
 				updated_at: "2018-11-30T13:46:22Z"
 			},
 			{ 
-		    	title: "B is a 25 character title",
-	    		created_at: "2009-10-09T22:32:41Z",
+				title: "B is a 25 character title",
+				created_at: "2009-10-09T22:32:41Z",
 				updated_at: "2010-11-30T13:46:22Z"
 			},
 			{ 
-		    	title: "C has a zzzz login",
-	    		created_at: "2005-10-09T22:32:41Z",
+				title: "C has a zzzz login",
+				created_at: "2005-10-09T22:32:41Z",
 				updated_at: "2019-11-30T13:46:22Z",
 				assignee: {
-		    		avatar_url: 'http://path/to/zeeeavatar.png',
-		    		login: 'ziggee-login'
-		    	},
+					avatar_url: 'http://path/to/zeeeavatar.png',
+					login: 'ziggee-login'
+				}
 			}
 	    ];
     });
@@ -68,8 +68,8 @@ describe('IssueListing', () => {
     describe('componentDidMount', () => {
     	let fetchIssuesSpy;
 
-    	beforeEach(() => {
-    		fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+		beforeEach(() => {
+			fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
 		});
 
 		afterEach(() => {
@@ -78,7 +78,7 @@ describe('IssueListing', () => {
 
 		describe('sets sort column and sort direction states to default values sessionStorage values do not exist on componentDidMount', () => {
 			beforeEach(() => {
-	        	wrapper = mount(
+				wrapper = mount(
 					<Provider store={store}>
 						<IssueListing />
 					</Provider>
@@ -97,9 +97,9 @@ describe('IssueListing', () => {
 		describe('sets sort column and sort direction states to sessionStorage values if they exists on componentDidMount', () => {
 			beforeEach(() => {
 				window.sessionStorage.setItem("sort_column", 'some_column');
-        		window.sessionStorage.setItem("sort_direction", 'some_driection');
+				window.sessionStorage.setItem("sort_direction", 'some_driection');
 
-	        	wrapper = mount(
+				wrapper = mount(
 					<Provider store={store}>
 						<IssueListing />
 					</Provider>
@@ -117,11 +117,11 @@ describe('IssueListing', () => {
     });
 
     describe('componentDidUpdate', () => {
-    	let fetchIssuesSpy;
+		let fetchIssuesSpy;
 
-    	beforeEach(() => {
-    		fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
-			
+		beforeEach(() => {
+			fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+
 			wrapper = mount(
 				<Provider store={store}>
 					<IssueListing selectedRepo={null} />
@@ -131,26 +131,26 @@ describe('IssueListing', () => {
 			wrapper.update();
 
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
-	  		expect(wrapper.find('IssueListing').state().issuesLoaded).toEqual(null);
+			expect(wrapper.find('IssueListing').state().issuesLoaded).toEqual(null);
 
 			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
 
-	  		wrapper.update();
-    	});
+			wrapper.update();
+		});
 
-    	afterEach(() => {
+		afterEach(() => {
 			jest.restoreAllMocks();
 		});
 
-    	it('calls fetchIssues() on componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
+		it('calls fetchIssues() on componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
-	  	});
+		});
 
-	  	it('sets issuesLoaded state to false componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
+		it('sets issuesLoaded state to false componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
 			expect(wrapper.find('IssueListing').state().issuesLoaded).toEqual(false);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
-	  	});
+		});
     });
 
 	describe('Renders', () => {
@@ -163,7 +163,7 @@ describe('IssueListing', () => {
 
 			wrapper.update();
 
-	    	expect(wrapper.html()).toMatchSnapshot();
+			expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
 	  	it('renders NoRepoSelected when issuesLoaded state is null', () => {
@@ -177,10 +177,10 @@ describe('IssueListing', () => {
 			
 			wrapper.update();
 
-	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(null);
-	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
-	    	expect(wrapper.find('IssueListing').find('NoRepoSelected').text()).toEqual('Please select a repo from the lefthand column');
-	    	jest.restoreAllMocks();
+			expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(null);
+			expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
+			expect(wrapper.find('IssueListing').find('NoRepoSelected').text()).toEqual('Please select a repo from the lefthand column');
+			jest.restoreAllMocks();
 	  	});
 
 	  	it('renders LoadingSpinner when issuesLoaded state is false', () => {
@@ -197,12 +197,12 @@ describe('IssueListing', () => {
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
 
 			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
-			
+
 			wrapper.update();
 
-	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(false);
-	    	expect(wrapper.find('IssueListing').find('LoadingSpinner')).toHaveLength(1);
-	    	jest.restoreAllMocks();
+			expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(false);
+			expect(wrapper.find('IssueListing').find('LoadingSpinner')).toHaveLength(1);
+			jest.restoreAllMocks();
 	  	});
 
 	  	describe('Renders when github responds with github data', () => {
@@ -213,12 +213,12 @@ describe('IssueListing', () => {
 	  			nock.disableNetConnect();
 			  	scope = nock('https://api.github.com')
 			  	.persist()
-			    .get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
-			    .reply(200, issues);
+				.get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
+				.reply(200, issues);
 
 				octokit = new Octokit({
-		            auth: apiKey
-		        });
+					auth: apiKey
+				});
 				
 				wrapper = mount(
 					<Provider store={store}>
@@ -236,11 +236,11 @@ describe('IssueListing', () => {
 		  		scope.done();
 		  		wrapper.update();
 
-		  		expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
-		  		expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
-		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
-		  		expect(onSortSpy).toHaveBeenCalledWith(null, wrapper.find('IssueListing').state().sort.column, false);
-		  		expect(setArrowSpy).toHaveBeenCalledWith(wrapper.find('IssueListing').state().sort.column);
+				expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
+				expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
+				expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
+				expect(onSortSpy).toHaveBeenCalledWith(null, wrapper.find('IssueListing').state().sort.column, false);
+				expect(setArrowSpy).toHaveBeenCalledWith(wrapper.find('IssueListing').state().sort.column);
 
 	  		});
 
@@ -298,8 +298,8 @@ describe('IssueListing', () => {
 			describe('Table sorting in mobile', () => {
 				beforeEach(() => {
 					global.innerWidth = 599;
-			        global.dispatchEvent(new Event('resize'));
-			        wrapper.update();
+					global.dispatchEvent(new Event('resize'));
+					wrapper.update();
 				});
 
 				it('sorts table by created_at by default', () => {
@@ -518,9 +518,8 @@ describe('IssueListing', () => {
 			describe('Table sorting in desktop', () => {
 				beforeEach(() => {
 					global.innerWidth = 1024;
-			        global.dispatchEvent(new Event('resize'));
-			        wrapper.update();
-
+					global.dispatchEvent(new Event('resize'));
+					wrapper.update();
 				});
 
 				it('sorts table by created_at by default', () => {
@@ -551,7 +550,6 @@ describe('IssueListing', () => {
 					
 					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
-
 				});
 
 				it('sorts table by avatar_url and and sets sort direction to asc when AssigneeButton is clicked twice in a row in desktop', () => {
@@ -691,8 +689,8 @@ describe('IssueListing', () => {
 			nock.disableNetConnect();
 		  	scope = nock('https://api.github.com')
 		  	.persist()
-		    .get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
-		    .reply(404, {
+			.get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
+			.reply(404, {
 			  "message": "Not Found",
 			  "documentation_url": "https://developer.github.com/v3/issues/#list-issues-for-a-repository"
 			});

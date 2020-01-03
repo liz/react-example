@@ -8,9 +8,7 @@ const App = (props) => {
        return <Listing apiKey={props.apiKey.key} />;
     }
 
-    return (
-        <SaveKey />
-    );
+    return <SaveKey />;
 }
 
 export default App
