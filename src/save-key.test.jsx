@@ -22,16 +22,16 @@ describe('SaveKey', () => {
     });
 
 	afterEach(() => {
-        jest.resetAllMocks();
+		jest.resetAllMocks();
     });
 
 	describe('Renders', () => {
 		it('should match the snapshot', () => {
-	    	expect(wrapper.html()).toMatchSnapshot();
+			expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
 	  	it('renders FormInput with expected props', () => {
-	    	expect(wrapper.find('FormInput')).toHaveLength(1);
+			expect(wrapper.find('FormInput')).toHaveLength(1);
 			expect(wrapper.find('FormInput').props()).toEqual({
 				value: '',
 				fieldChange: expect.any(Function),
@@ -41,14 +41,14 @@ describe('SaveKey', () => {
 				fieldType: 'text',
 				fieldError:  '',
 				disabled: false,
-		        required: false,
-		        rows: 2,
-		        bottomSpacing: '1rem'
+				required: false,
+				rows: 2,
+				bottomSpacing: '1rem'
 			});
 	  	});
 
 	  	 it('renders submit Button with expected props', () => {
-	    	expect(wrapper.find('Button')).toHaveLength(1);
+	  	 	expect(wrapper.find('Button')).toHaveLength(1);
 			expect(wrapper.find('Button').props()).toEqual({
 				type: 'submit',
 				buttonText: 'Submit',
@@ -70,20 +70,14 @@ describe('SaveKey', () => {
 		});
 
 		it('enables submit button when form input field has text', () => {
-			// act(() => { 
-			// 	wrapper.find('#save-key').props().onChange({target: {
-			// 	   value: '1234567900'
-			// 	}});
-			// });
-
 			expect(wrapper.find('#save-key').props().value).toEqual('');
 
 			act(() => { 
 				wrapper.find('#save-key').instance().value = '1234567900';
-	        	wrapper.find('#save-key').simulate('change');
-        	});
+				wrapper.find('#save-key').simulate('change');
+			});
 
-		    wrapper.update();
+			wrapper.update();
 
 			expect(wrapper.find('#save-key').props().value).toEqual('1234567900');
 			expect(wrapper.find('Button').prop('disabled')).toBe(false);
@@ -103,18 +97,18 @@ describe('SaveKey', () => {
 
 			act(() => { 
 				wrapper.find('#save-key').instance().value = '1234567900';
-	        	wrapper.find('#save-key').simulate('change');
-        	});
+				wrapper.find('#save-key').simulate('change');
+			});
 
-        	wrapper.update();
+			wrapper.update();
 
 			expect(wrapper.find('#save-key').props().value).toEqual('1234567900');
-        	expect(wrapper.find('Button').prop('disabled')).toBe(false);
+			expect(wrapper.find('Button').prop('disabled')).toBe(false);
 
-        	act(() => { 
-	        	wrapper.find('form').simulate('submit');
-        	});
-			
+			act(() => { 
+				wrapper.find('form').simulate('submit');
+			});
+
 			wrapper.update();
 
 			const expectedParams = {"key": "1234567900", "type": "SAVE_KEY"};
