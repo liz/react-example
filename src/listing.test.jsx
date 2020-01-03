@@ -126,7 +126,7 @@ describe('Listing', () => {
 
     		expect(wrapper.find('Listing').props().apiKey).toEqual(apiKey);
     		expect(fetchReposSpy).toHaveBeenCalled();
-	  	});
+    	});
     });
 
 	describe('Renders', () => {
