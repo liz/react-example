@@ -107,25 +107,25 @@ describe('Listing', () => {
 
     describe('componentDidUpdate', () => {
     	it('calls fetchRepos() on componentDidUpdate when apiKey prevProp is different then apiKey prop', () => {
-		  	const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
+    		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
 
-			wrapper = mount(
-				<Provider store={store}>
-					<Listing apiKey="anythingelse" />
-				</Provider>
-			);
+    		wrapper = mount(
+    			<Provider store={store}>
+    				<Listing apiKey="anythingelse" />
+    			</Provider>
+    		);
 
-			wrapper.update();
+    		wrapper.update();
 
-			expect(wrapper.find('Listing').props().apiKey).toEqual("anythingelse");
-			expect(fetchReposSpy).toHaveBeenCalled();
+    		expect(wrapper.find('Listing').props().apiKey).toEqual("anythingelse");
+    		expect(fetchReposSpy).toHaveBeenCalled();
 
-			wrapper.setProps({ children: <Listing apiKey={apiKey} /> });
+    		wrapper.setProps({ children: <Listing apiKey={apiKey} /> });
 
-			wrapper.update();
+    		wrapper.update();
 
-			expect(wrapper.find('Listing').props().apiKey).toEqual(apiKey);
-			expect(fetchReposSpy).toHaveBeenCalled();
+    		expect(wrapper.find('Listing').props().apiKey).toEqual(apiKey);
+    		expect(fetchReposSpy).toHaveBeenCalled();
 	  	});
     });
 
@@ -145,16 +145,16 @@ describe('Listing', () => {
 	  	it('renders LoadingSpinner when reposLoaded state is false', () => {
 	  		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
 
-		    wrapper = mount(
-				<Provider store={store}>
-					<Listing apiKey={apiKey} />
-				</Provider>
-			);
+	  		wrapper = mount(
+	  			<Provider store={store}>
+	  				<Listing apiKey={apiKey} />
+	  			</Provider>
+	  		);
 
-			wrapper.update();
+	  		wrapper.update();
 
-	    	expect(wrapper.find('Listing').state().reposLoaded).toBe(false);
-	    	expect(wrapper.find('Listing').find('LoadingSpinner')).toHaveLength(1);
+	  		expect(wrapper.find('Listing').state().reposLoaded).toBe(false);
+	  		expect(wrapper.find('Listing').find('LoadingSpinner')).toHaveLength(1);
 	  	});
 
 	  	describe('Renders when github responds with github data', () => {
