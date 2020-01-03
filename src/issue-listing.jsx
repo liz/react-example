@@ -152,7 +152,7 @@ const Table = styled.table`
     		display: flex;
     		align-items: center;
     		justify-content: space-between;
-            min-height: 40px;
+            min-height: 60px;
             max-width: 100%;
     	}
     }

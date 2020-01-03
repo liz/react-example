@@ -47,7 +47,7 @@ export const SaveKey = (props) => {
     useEffect(() => {
         setFieldError(props.fieldError);
 
-        if (fieldValue || fieldError) {
+        if (fieldValue) {
             setButtonDisabled(false)
         } else {
             setButtonDisabled(true)
