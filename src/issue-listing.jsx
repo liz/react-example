@@ -361,6 +361,41 @@ export default class IssueListing extends Component {
 			return text;
 	}
 
+    renderMobileSort() {
+        return (
+            <MobileSort>
+                <form>
+                    <fieldset>
+                        <FormInput
+                            fieldChange={(e) => { this.onSort(e, e.target.value, false); this.setArrow(e.target.value);}}
+                            value={this.state.sort.column}
+                            onBlur={this.state.sort.column}
+                            fieldType="select"
+                            fieldId="sort-by"
+                            fieldLable="Sort by:"
+                        >
+                             <option value="created_at">Created Time</option>
+                             <option value="avatar_url">Assignee</option>
+                             <option value="title">Title</option>
+                             <option value="updated_at">Last Updated</option>
+                        </FormInput>
+                        <FormInput
+                            fieldChange={(e) => this.onSort(e, this.state.sort.column)}
+                            value={this.state.sort.direction}
+                            onBlur={this.state.sort.direction}
+                            fieldType="select"
+                            fieldId="sort-direction"
+                            fieldLable="Sort direction:"
+                        >
+                             <option value="asc">Ascending</option>
+                             <option value="desc">Descending</option>
+                        </FormInput>
+                    </fieldset>
+                </form>
+            </MobileSort>
+        );
+    };
+
     renderIssueTable() {
     	if (this.state.issuesLoaded && this.state.issues && this.state.issues.length) {
 			return (
@@ -462,41 +497,6 @@ export default class IssueListing extends Component {
 
         return null;
     }
-
-    renderMobileSort() {
-    	return (
-    		<MobileSort>
-                <form>
-                	<fieldset>
-                        <FormInput
-                            fieldChange={(e) => { this.onSort(e, e.target.value, false); this.setArrow(e.target.value);}}
-                            value={this.state.sort.column}
-                            onBlur={this.state.sort.column}
-                            fieldType="select"
-                            fieldId="sort-by"
-                            fieldLable="Sort by:"
-                        >
-                             <option value="created_at">Created Time</option>
-                             <option value="avatar_url">Assignee</option>
-                             <option value="title">Title</option>
-                             <option value="updated_at">Last Updated</option>
-                        </FormInput>
-                        <FormInput
-                            fieldChange={(e) => this.onSort(e, this.state.sort.column)}
-                            value={this.state.sort.direction}
-                            onBlur={this.state.sort.direction}
-                            fieldType="select"
-                            fieldId="sort-direction"
-                            fieldLable="Sort direction:"
-                        >
-                             <option value="asc">Ascending</option>
-                             <option value="desc">Descending</option>
-                        </FormInput>
-                    </fieldset>
-                </form>
-            </MobileSort>
-    	);
-    };
 
     render() {
     	return (
