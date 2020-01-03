@@ -25,56 +25,56 @@ describe('Listing', () => {
 
 	beforeEach(async () => {
 		repos = [
-	    	{
-	    		id: 332626,
-	    		name: 'example-repo',
-	    		created_at: "2009-10-09T22:32:41Z",
+			{
+				id: 332626,
+				name: 'example-repo',
+				created_at: "2009-10-09T22:32:41Z",
 				updated_at: "2013-11-30T13:46:22Z",
 				owner: {
 					login: "liz"
 				}
-	    	},
-	    	{
-	    		id: 432627,
-	    		name: 'other-repo',
-	    		created_at: "2018-10-09T22:32:41Z",
+			},
+			{
+				id: 432627,
+				name: 'other-repo',
+				created_at: "2018-10-09T22:32:41Z",
 				updated_at: "2019-11-30T13:46:22Z",
 				owner: {
 					login: "jim"
 				}
-	    	}
-	    ];
+			}
+		];
 
 	   	issues = [
-	    	{ 
-	    		assignee: {
-		    		avatar_url: 'http://path/to/avatar.png',
-		    		login: 'asignee-login'
-		    	},
-		    	title: "An issue title that is more than twenty-five characters",
-	    		created_at: "2009-10-09T22:32:41Z",
+			{ 
+				assignee: {
+					avatar_url: 'http://path/to/avatar.png',
+					login: 'asignee-login'
+				},
+				title: "An issue title that is more than twenty-five characters",
+				created_at: "2009-10-09T22:32:41Z",
 				updated_at: "2013-11-30T13:46:22Z"
 			},
 			{ 
-	    		assignee: {
-		    		avatar_url: 'http://path/to/bob/avatar.png',
-		    		login: 'bob-login'
-		    	},
-		    	title: "Bob is another issue that is more than twenty-five characters",
-	    		created_at: "2015-10-09T22:32:41Z",
+				assignee: {
+					avatar_url: 'http://path/to/bob/avatar.png',
+					login: 'bob-login'
+				},
+				title: "Bob is another issue that is more than twenty-five characters",
+				created_at: "2015-10-09T22:32:41Z",
 				updated_at: "2017-11-30T13:46:22Z"
-			},
+			}
 	    ];
 
 		nock.disableNetConnect();
 	  	scope = nock('https://api.github.com')
 	  	.persist()
-	    .get('/user/repos')
-	    .reply(200, repos);
+		.get('/user/repos')
+		.reply(200, repos);
 
-	    octokit = new Octokit({
-	        auth: apiKey
-	    });
+		octokit = new Octokit({
+		    auth: apiKey
+		});
 
 	  	wrapper = mount(
 			<Provider store={store}>
@@ -89,8 +89,7 @@ describe('Listing', () => {
 
 	afterEach(() => {
 		nock.cleanAll();
-        // jest.clearAllMocks();
-        jest.restoreAllMocks();
+		jest.restoreAllMocks();
     });
 
     describe('componentDidMount', () => {
