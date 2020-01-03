@@ -306,6 +306,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 
+					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('desc')).toBe(true);
+
  					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
 				});
@@ -330,6 +332,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
+					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('asc')).toBe(true);
+
 					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
 				});
@@ -343,6 +347,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('C has a zzzz login');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('desc')).toBe(true);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -368,6 +374,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('asc')).toBe(true);
+
 					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
 				});
@@ -381,6 +389,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2005');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('desc')).toBe(true);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -406,6 +416,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
+					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('asc')).toBe(true);
+
 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
 				});
@@ -419,6 +431,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('9 years ago');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('desc')).toBe(true);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -444,6 +458,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
+					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('asc')).toBe(true);
+
 					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
 				});
@@ -467,15 +483,19 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 				});
 
-				it('sorts table by avatar_url and sets sort direction to desc when AssigneeButton is clicked in desktop', () => {
+				it
+				('sorts table by avatar_url and sets sort direction to desc when AssigneeButton is clicked in desktop', () => {
 					wrapper.find('IssueListing').find('Table').find('AssigneeButton').simulate('click');
 
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(0).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/avatar.png');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(1).find('AssigneeCell').text()).toEqual('None');
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('AssigneeCell').find('Image').props().src).toEqual('http://path/to/zeeeavatar.png');
+
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('desc')).toBe(true);
 					
 					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -492,6 +512,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('avatar_url');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
 
+					expect(wrapper.find('IssueListing').find('Table').find('AssigneeButton').find('SmallArrow').hasClass('asc')).toBe(true);
+
 					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
 				});
@@ -504,6 +526,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('C has a zzzz login');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('desc')).toBe(true);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -518,6 +542,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('TitleCell').text()).toEqual('An issue title that is...');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('title');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('TitleButton').find('SmallArrow').hasClass('asc')).toBe(true);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('title');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -536,6 +562,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2017');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at'); 
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('asc')).toBe(true);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
@@ -560,6 +588,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('CreatedAtCell').text()).toEqual('10/09/2005');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('created_at');
 
+					expect(wrapper.find('IssueListing').find('Table').find('CreatedAtButton').find('SmallArrow').hasClass('desc')).toBe(true);
+
 					expect(sessionStorage.__STORE__['sort_column']).toBe('created_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
 				});
@@ -572,6 +602,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('9 years ago');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('desc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('desc')).toBe(true);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
@@ -586,6 +618,8 @@ describe('IssueListing', () => {
 					expect(wrapper.find('IssueListing').find('Table').find('tbody').find('tr').at(2).find('UpdatedAtCell').text()).toEqual('a month ago');
 					expect(wrapper.find('IssueListing').state().sort.column).toEqual('updated_at');
 					expect(wrapper.find('IssueListing').state().sort.direction).toEqual('asc');
+
+					expect(wrapper.find('IssueListing').find('Table').find('UpdatedAtButton').find('SmallArrow').hasClass('asc')).toBe(true);
 
 					expect(sessionStorage.__STORE__['sort_column']).toBe('updated_at');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('asc');
