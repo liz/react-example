@@ -70,20 +70,14 @@ describe('SaveKey', () => {
 		});
 
 		it('enables submit button when form input field has text', () => {
-			// act(() => { 
-			// 	wrapper.find('#save-key').props().onChange({target: {
-			// 	   value: '1234567900'
-			// 	}});
-			// });
-
 			expect(wrapper.find('#save-key').props().value).toEqual('');
 
 			act(() => { 
 				wrapper.find('#save-key').instance().value = '1234567900';
-	        	wrapper.find('#save-key').simulate('change');
-        	});
+				wrapper.find('#save-key').simulate('change');
+			});
 
-		    wrapper.update();
+			wrapper.update();
 
 			expect(wrapper.find('#save-key').props().value).toEqual('1234567900');
 			expect(wrapper.find('Button').prop('disabled')).toBe(false);
