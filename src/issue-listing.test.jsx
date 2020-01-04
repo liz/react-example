@@ -23,8 +23,8 @@ describe('IssueListing', () => {
 
 	beforeEach( () => {
 	    selectedRepo = {
-    		id: 332626,
-    		name: 'example-repo',
+			id: 332626,
+			name: 'example-repo',
 			created_at: "2009-10-09T22:32:41Z",
 			updated_at: "2013-11-30T13:46:22Z",
 			owner: {
@@ -38,17 +38,17 @@ describe('IssueListing', () => {
 		    		avatar_url: 'http://path/to/avatar.png',
 		    		login: 'asignee-login'
 		    	},
-		    	title: "An issue title that is more than twenty-five characters, this issue was created more recently",
+				title: "An issue title that is more than twenty-five characters, this issue was created more recently",
 				created_at: "2017-10-09T22:32:41Z",
 				updated_at: "2018-11-30T13:46:22Z"
 			},
 			{ 
-		    	title: "B is a 25 character title",
+				title: "B is a 25 character title",
 				created_at: "2009-10-09T22:32:41Z",
 				updated_at: "2010-11-30T13:46:22Z"
 			},
 			{ 
-		    	title: "C has a zzzz login",
+				title: "C has a zzzz login",
 				created_at: "2005-10-09T22:32:41Z",
 				updated_at: "2019-11-30T13:46:22Z",
 				assignee: {
