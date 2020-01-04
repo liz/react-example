@@ -27,7 +27,7 @@ describe('SaveKey', () => {
 
 	describe('Renders', () => {
 		it('should match the snapshot', () => {
-	    	expect(wrapper.html()).toMatchSnapshot();
+			expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
 	  	it('renders FormInput with expected props', () => {
