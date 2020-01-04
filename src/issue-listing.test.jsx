@@ -25,7 +25,7 @@ describe('IssueListing', () => {
 	    selectedRepo = {
     		id: 332626,
     		name: 'example-repo',
-    		created_at: "2009-10-09T22:32:41Z",
+			created_at: "2009-10-09T22:32:41Z",
 			updated_at: "2013-11-30T13:46:22Z",
 			owner: {
 				login: "liz"
