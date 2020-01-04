@@ -49,12 +49,12 @@ describe('IssueListing', () => {
 			},
 			{ 
 		    	title: "C has a zzzz login",
-	    		created_at: "2005-10-09T22:32:41Z",
+				created_at: "2005-10-09T22:32:41Z",
 				updated_at: "2019-11-30T13:46:22Z",
 				assignee: {
-		    		avatar_url: 'http://path/to/zeeeavatar.png',
-		    		login: 'ziggee-login'
-		    	},
+					avatar_url: 'http://path/to/zeeeavatar.png',
+					login: 'ziggee-login'
+				},
 			}
 	    ];
     });
