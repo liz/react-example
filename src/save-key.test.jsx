@@ -97,18 +97,18 @@ describe('SaveKey', () => {
 
 			act(() => { 
 				wrapper.find('#save-key').instance().value = '1234567900';
-	        	wrapper.find('#save-key').simulate('change');
-        	});
+				wrapper.find('#save-key').simulate('change');
+			});
 
-        	wrapper.update();
+			wrapper.update();
 
 			expect(wrapper.find('#save-key').props().value).toEqual('1234567900');
-        	expect(wrapper.find('Button').prop('disabled')).toBe(false);
+			expect(wrapper.find('Button').prop('disabled')).toBe(false);
 
-        	act(() => { 
-	        	wrapper.find('form').simulate('submit');
-        	});
-			
+			act(() => { 
+				wrapper.find('form').simulate('submit');
+			});
+
 			wrapper.update();
 
 			const expectedParams = {"key": "1234567900", "type": "SAVE_KEY"};
