@@ -54,7 +54,7 @@ describe('IssueListing', () => {
 				assignee: {
 					avatar_url: 'http://path/to/zeeeavatar.png',
 					login: 'ziggee-login'
-				},
+				}
 			}
 	    ];
     });
@@ -142,15 +142,15 @@ describe('IssueListing', () => {
 			jest.restoreAllMocks();
 		});
 
-    	it('calls fetchIssues() on componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
+		it('calls fetchIssues() on componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
-	  	});
+		});
 
-	  	it('sets issuesLoaded state to false componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
+		it('sets issuesLoaded state to false componentDidUpdate when selectedRepo prevProp is different then selectedRepo prop', () => {
 			expect(wrapper.find('IssueListing').state().issuesLoaded).toEqual(false);
 			expect(fetchIssuesSpy).toHaveBeenCalled();
-	  	});
+		});
     });
 
 	describe('Renders', () => {
@@ -298,8 +298,8 @@ describe('IssueListing', () => {
 			describe('Table sorting in mobile', () => {
 				beforeEach(() => {
 					global.innerWidth = 599;
-			        global.dispatchEvent(new Event('resize'));
-			        wrapper.update();
+					global.dispatchEvent(new Event('resize'));
+					wrapper.update();
 				});
 
 				it('sorts table by created_at by default', () => {
@@ -518,9 +518,8 @@ describe('IssueListing', () => {
 			describe('Table sorting in desktop', () => {
 				beforeEach(() => {
 					global.innerWidth = 1024;
-			        global.dispatchEvent(new Event('resize'));
-			        wrapper.update();
-
+					global.dispatchEvent(new Event('resize'));
+					wrapper.update();
 				});
 
 				it('sorts table by created_at by default', () => {
@@ -551,7 +550,6 @@ describe('IssueListing', () => {
 					
 					expect(sessionStorage.__STORE__['sort_column']).toBe('avatar_url');
  					expect(sessionStorage.__STORE__['sort_direction']).toBe('desc');
-
 				});
 
 				it('sorts table by avatar_url and and sets sort direction to asc when AssigneeButton is clicked twice in a row in desktop', () => {
@@ -691,8 +689,8 @@ describe('IssueListing', () => {
 			nock.disableNetConnect();
 		  	scope = nock('https://api.github.com')
 		  	.persist()
-		    .get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
-		    .reply(404, {
+			.get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
+			.reply(404, {
 			  "message": "Not Found",
 			  "documentation_url": "https://developer.github.com/v3/issues/#list-issues-for-a-repository"
 			});
