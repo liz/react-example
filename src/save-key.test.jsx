@@ -22,7 +22,7 @@ describe('SaveKey', () => {
     });
 
 	afterEach(() => {
-        jest.resetAllMocks();
+		jest.resetAllMocks();
     });
 
 	describe('Renders', () => {
