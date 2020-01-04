@@ -48,7 +48,7 @@ describe('SaveKey', () => {
 	  	});
 
 	  	 it('renders submit Button with expected props', () => {
-	    	expect(wrapper.find('Button')).toHaveLength(1);
+	  	 	expect(wrapper.find('Button')).toHaveLength(1);
 			expect(wrapper.find('Button').props()).toEqual({
 				type: 'submit',
 				buttonText: 'Submit',
