@@ -68,8 +68,8 @@ describe('IssueListing', () => {
     describe('componentDidMount', () => {
     	let fetchIssuesSpy;
 
-    	beforeEach(() => {
-    		fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+		beforeEach(() => {
+			fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
 		});
 
 		afterEach(() => {
