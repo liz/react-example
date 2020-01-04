@@ -31,7 +31,7 @@ describe('SaveKey', () => {
 	  	});
 
 	  	it('renders FormInput with expected props', () => {
-	    	expect(wrapper.find('FormInput')).toHaveLength(1);
+			expect(wrapper.find('FormInput')).toHaveLength(1);
 			expect(wrapper.find('FormInput').props()).toEqual({
 				value: '',
 				fieldChange: expect.any(Function),
@@ -41,9 +41,9 @@ describe('SaveKey', () => {
 				fieldType: 'text',
 				fieldError:  '',
 				disabled: false,
-		        required: false,
-		        rows: 2,
-		        bottomSpacing: '1rem'
+				required: false,
+				rows: 2,
+				bottomSpacing: '1rem'
 			});
 	  	});
 
