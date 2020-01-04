@@ -246,8 +246,8 @@ describe('Listing', () => {
 		nock.disableNetConnect();
 	  	scope = nock('https://api.github.com')
 	  	.persist()
-	    .get('/user/repos')
-	    .reply(401, {
+		.get('/user/repos')
+		.reply(401, {
 		  "message": "Bad credentials",
 		  "documentation_url": "https://developer.github.com/v3"
 		});
