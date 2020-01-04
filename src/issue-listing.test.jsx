@@ -213,12 +213,12 @@ describe('IssueListing', () => {
 	  			nock.disableNetConnect();
 			  	scope = nock('https://api.github.com')
 			  	.persist()
-			    .get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
-			    .reply(200, issues);
+				.get(`/repos/${selectedRepo.owner.login}/${selectedRepo.name}/issues`)
+				.reply(200, issues);
 
 				octokit = new Octokit({
-		            auth: apiKey
-		        });
+					auth: apiKey
+				});
 				
 				wrapper = mount(
 					<Provider store={store}>
