@@ -78,7 +78,7 @@ describe('IssueListing', () => {
 
 		describe('sets sort column and sort direction states to default values sessionStorage values do not exist on componentDidMount', () => {
 			beforeEach(() => {
-	        	wrapper = mount(
+				wrapper = mount(
 					<Provider store={store}>
 						<IssueListing />
 					</Provider>
@@ -97,9 +97,9 @@ describe('IssueListing', () => {
 		describe('sets sort column and sort direction states to sessionStorage values if they exists on componentDidMount', () => {
 			beforeEach(() => {
 				window.sessionStorage.setItem("sort_column", 'some_column');
-        		window.sessionStorage.setItem("sort_direction", 'some_driection');
+				window.sessionStorage.setItem("sort_direction", 'some_driection');
 
-	        	wrapper = mount(
+				wrapper = mount(
 					<Provider store={store}>
 						<IssueListing />
 					</Provider>
@@ -117,11 +117,11 @@ describe('IssueListing', () => {
     });
 
     describe('componentDidUpdate', () => {
-    	let fetchIssuesSpy;
+		let fetchIssuesSpy;
 
-    	beforeEach(() => {
-    		fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
-			
+		beforeEach(() => {
+			fetchIssuesSpy = jest.spyOn(IssueListing.prototype, 'fetchIssues').mockImplementation();
+
 			wrapper = mount(
 				<Provider store={store}>
 					<IssueListing selectedRepo={null} />
@@ -131,14 +131,14 @@ describe('IssueListing', () => {
 			wrapper.update();
 
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
-	  		expect(wrapper.find('IssueListing').state().issuesLoaded).toEqual(null);
+			expect(wrapper.find('IssueListing').state().issuesLoaded).toEqual(null);
 
 			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
 
-	  		wrapper.update();
-    	});
+			wrapper.update();
+		});
 
-    	afterEach(() => {
+		afterEach(() => {
 			jest.restoreAllMocks();
 		});
 
