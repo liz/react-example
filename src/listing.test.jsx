@@ -93,40 +93,40 @@ describe('Listing', () => {
 	});
 
     describe('componentDidMount', () => {
-    	it('calls fetchRepos() on componentDidMount', () => {
-    		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
+		it('calls fetchRepos() on componentDidMount', () => {
+			const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
 
-    		wrapper = mount(
-    			<Provider store={store}>
-    				<Listing apiKey={apiKey} />
-    			</Provider>
-    		);
-    		expect(fetchReposSpy).toHaveBeenCalled();
-    	});
+			wrapper = mount(
+				<Provider store={store}>
+					<Listing apiKey={apiKey} />
+				</Provider>
+			);
+			expect(fetchReposSpy).toHaveBeenCalled();
+		});
     });
 
     describe('componentDidUpdate', () => {
-    	it('calls fetchRepos() on componentDidUpdate when apiKey prevProp is different then apiKey prop', () => {
-    		const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
+		it('calls fetchRepos() on componentDidUpdate when apiKey prevProp is different then apiKey prop', () => {
+			const fetchReposSpy = jest.spyOn(Listing.prototype, 'fetchRepos').mockImplementation();
 
-    		wrapper = mount(
-    			<Provider store={store}>
-    				<Listing apiKey="anythingelse" />
-    			</Provider>
-    		);
+			wrapper = mount(
+				<Provider store={store}>
+					<Listing apiKey="anythingelse" />
+				</Provider>
+			);
 
-    		wrapper.update();
+			wrapper.update();
 
-    		expect(wrapper.find('Listing').props().apiKey).toEqual("anythingelse");
-    		expect(fetchReposSpy).toHaveBeenCalled();
+			expect(wrapper.find('Listing').props().apiKey).toEqual("anythingelse");
+			expect(fetchReposSpy).toHaveBeenCalled();
 
-    		wrapper.setProps({ children: <Listing apiKey={apiKey} /> });
+			wrapper.setProps({ children: <Listing apiKey={apiKey} /> });
 
-    		wrapper.update();
+			wrapper.update();
 
-    		expect(wrapper.find('Listing').props().apiKey).toEqual(apiKey);
-    		expect(fetchReposSpy).toHaveBeenCalled();
-    	});
+			expect(wrapper.find('Listing').props().apiKey).toEqual(apiKey);
+			expect(fetchReposSpy).toHaveBeenCalled();
+		});
     });
 
 	describe('Renders', () => {
