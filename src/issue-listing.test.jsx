@@ -163,7 +163,7 @@ describe('IssueListing', () => {
 
 			wrapper.update();
 
-	    	expect(wrapper.html()).toMatchSnapshot();
+			expect(wrapper.html()).toMatchSnapshot();
 	  	});
 
 	  	it('renders NoRepoSelected when issuesLoaded state is null', () => {
@@ -177,10 +177,10 @@ describe('IssueListing', () => {
 			
 			wrapper.update();
 
-	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(null);
-	    	expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
-	    	expect(wrapper.find('IssueListing').find('NoRepoSelected').text()).toEqual('Please select a repo from the lefthand column');
-	    	jest.restoreAllMocks();
+			expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(null);
+			expect(wrapper.find('IssueListing').find('NoRepoSelected')).toHaveLength(1);
+			expect(wrapper.find('IssueListing').find('NoRepoSelected').text()).toEqual('Please select a repo from the lefthand column');
+			jest.restoreAllMocks();
 	  	});
 
 	  	it('renders LoadingSpinner when issuesLoaded state is false', () => {
@@ -197,12 +197,12 @@ describe('IssueListing', () => {
 			expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(null);
 
 			wrapper.setProps({ children: <IssueListing selectedRepo={selectedRepo} /> });
-			
+
 			wrapper.update();
 
-	    	expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(false);
-	    	expect(wrapper.find('IssueListing').find('LoadingSpinner')).toHaveLength(1);
-	    	jest.restoreAllMocks();
+			expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(false);
+			expect(wrapper.find('IssueListing').find('LoadingSpinner')).toHaveLength(1);
+			jest.restoreAllMocks();
 	  	});
 
 	  	describe('Renders when github responds with github data', () => {
@@ -236,11 +236,11 @@ describe('IssueListing', () => {
 		  		scope.done();
 		  		wrapper.update();
 
-		  		expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
-		  		expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
-		  		expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
-		  		expect(onSortSpy).toHaveBeenCalledWith(null, wrapper.find('IssueListing').state().sort.column, false);
-		  		expect(setArrowSpy).toHaveBeenCalledWith(wrapper.find('IssueListing').state().sort.column);
+				expect(wrapper.find('IssueListing').props().selectedRepo).toEqual(selectedRepo);
+				expect(wrapper.find('IssueListing').state().issuesLoaded).toBe(true);
+				expect(wrapper.find('IssueListing').state().issues).toEqual(expect.arrayContaining(issues));
+				expect(onSortSpy).toHaveBeenCalledWith(null, wrapper.find('IssueListing').state().sort.column, false);
+				expect(setArrowSpy).toHaveBeenCalledWith(wrapper.find('IssueListing').state().sort.column);
 
 	  		});
 
