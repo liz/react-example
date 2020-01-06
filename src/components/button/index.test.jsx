@@ -141,15 +141,5 @@ describe('Button', () => {
             expect(handleClick).toHaveBeenCalled();
             jest.resetAllMocks();
         });
-
-        it('does not run handleClick prop on button click if handleCLick prop is not supplied', () => {
-            const wrapper = mount(<Button buttonText="Hello" />);
-            const instance = wrapper.instance();
-            const handleClick = jest.spyOn(instance, 'handleClick');
-            wrapper.simulate('click');
-
-            expect(handleClick).not.toHaveBeenCalled();
-            jest.restoreAllMocks();
-        });
     });
 });
