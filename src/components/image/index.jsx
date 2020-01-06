@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
@@ -34,41 +34,77 @@ Img.defaultProps = {
     maxHeight: '100%'
 };
 
-export class Image extends Component {
-    render() {
-        if (this.props.type === 'css') {
-            return (
-                <Container className="bst">
-                    <Background
-                        src={this.props.src}
-                        width={this.props.width}
-                        height={this.props.height}
-                        maxWidth={this.props.maxWidth}
-                        maxHeight={this.props.maxHeight}
-                        horizontalAlignment={this.props.horizontalAlignment}
-                        verticalAlignment={this.props.verticalAlignment}
-                        className={`${this.props.className || ''} ${
-                            this.props.children ? '' : 'text-hide'
-                        }`}
-                    >
-                        {this.props.children || this.props.alt}
-                    </Background>
-                </Container>
-            );
-        }
+export const Image = (props) => {
+    if (props.type === 'css') {
         return (
-            <Img
-                src={this.props.src}
-                width={this.props.width}
-                maxWidth={this.props.maxWidth}
-                height={this.props.height}
-                maxHeight={this.props.maxHeight}
-                alt={this.props.alt}
-                className={this.props.className}
-            />
+            <Container className="bst">
+                <Background
+                    src={props.src}
+                    width={props.width}
+                    height={props.height}
+                    maxWidth={props.maxWidth}
+                    maxHeight={props.maxHeight}
+                    horizontalAlignment={props.horizontalAlignment}
+                    verticalAlignment={props.verticalAlignment}
+                    className={`${props.className || ''} ${
+                        props.children ? '' : 'text-hide'
+                    }`}
+                >
+                    {props.children || props.alt}
+                </Background>
+            </Container>
         );
     }
-}
+
+    return (
+        <Img
+            src={props.src}
+            width={props.width}
+            maxWidth={props.maxWidth}
+            height={props.height}
+            maxHeight={props.maxHeight}
+            alt={props.alt}
+            className={props.className}
+        />
+    );
+};
+
+// export class Image extends Component {
+//     render() {
+//         if (this.props.type === 'css') {
+//             return (
+//                 <Container className="bst">
+//                     <Background
+//                         src={this.props.src}
+//                         width={this.props.width}
+//                         height={this.props.height}
+//                         maxWidth={this.props.maxWidth}
+//                         maxHeight={this.props.maxHeight}
+//                         horizontalAlignment={this.props.horizontalAlignment}
+//                         verticalAlignment={this.props.verticalAlignment}
+//                         className={`${this.props.className || ''} ${
+//                             this.props.children ? '' : 'text-hide'
+//                         }`}
+//                     >
+//                         {this.props.children || this.props.alt}
+//                     </Background>
+//                 </Container>
+//             );
+//         }
+
+//         return (
+//             <Img
+//                 src={this.props.src}
+//                 width={this.props.width}
+//                 maxWidth={this.props.maxWidth}
+//                 height={this.props.height}
+//                 maxHeight={this.props.maxHeight}
+//                 alt={this.props.alt}
+//                 className={this.props.className}
+//             />
+//         );
+//     }
+// }
 
 Image.propTypes = {
     /** URL of image. */
