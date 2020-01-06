@@ -17,17 +17,17 @@ const SmallArrowContainer = styled.span`
 		border-top: ${(props) => props.width} solid ${(props) => props.color};
 	}
 
-    &.open {
-    	border-bottom: ${(props) => props.width} solid ${(props) => props.color};
-        transform: rotate(180deg);
-    	transition-duration: 0.3s;
-    }
+	&.open {
+		border-bottom: ${(props) => props.width} solid ${(props) => props.color};
+		transform: rotate(180deg);
+		transition-duration: 0.3s;
+	}
 
-    &.close {
-       border-bottom: ${(props) => props.width} solid ${(props) => props.color};
-       transform: rotate(90deg);
-       transition-duration: 0.3s;
-    }
+	&.close {
+		border-bottom: ${(props) => props.width} solid ${(props) => props.color};
+		transform: rotate(90deg);
+		transition-duration: 0.3s;
+	}
 `;
 SmallArrowContainer.displayName = 'SmallArrowContainer';
 
