@@ -35,9 +35,9 @@ Img.defaultProps = {
 };
 
 export const Image = (props) => {
-    const isBackgroundImage = (event) =>{
+    const isBackgroundImage = (event) => {
         return props.type === 'css'
-    }
+    };
 
     if (isBackgroundImage()) {
         return (
