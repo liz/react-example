@@ -11,12 +11,15 @@ In the project directory, you can run:
 
 #### `npm install`
 
+<<<<<<< HEAD
 To install dependencies 
 
 In the project directory, you can run:
 
 #### `npm start`
 
+=======
+>>>>>>> 7e30cd9350b174fff9fcdacfcc14a38e872d1e2d
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -27,6 +30,7 @@ You will also see any lint errors in the console.
 
 #### `npm test`
 
+<<<<<<< HEAD
 Launches the test runner in the interactive watch mode. This currently has 111 passing tests for me.
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
@@ -37,6 +41,16 @@ Create a simple interface with two screens:
 * After submitting an accepted token, list the user's repos on the left side of the screen. After selecting a repo on the left side of the screen, list the repo's issues in a sortable table (in desktop, these stack in mobile)
 
 Sort order and sort direction should be saved in the user's session and stay after refresh
+=======
+Launches the test runner in the interactive watch mode.
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+## Task:
+* Create a simple interface with two screens:
+** Initial screen to enter a [github API Token](https://github.com/settings/tokens)
+** After submitting an accepted token, list the user's repos on the left side of the screen. After selecting a repo on the left side of the screen, list the repo's issues in a sortable table (in desktop, these stack in mobile)
+** Sort order and sort direction should be saved in the user's session and stay after refresh
+>>>>>>> 7e30cd9350b174fff9fcdacfcc14a38e872d1e2d
 
 ## This is:
 * Basic react app setup with [Create React App](https://github.com/facebook/create-react-app)
