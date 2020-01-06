@@ -51,49 +51,49 @@ Sort order and sort direction should be saved in the user's session and stay aft
 * Theres a mix of functional and class components, all could be changed to functional components if that's desired. In general in terms of coding style/syntax I tend to follow the patterns I see if I am working in a project that already exists to stay consistent with the project and can learn and follow new patterns if any patterns are seen in this project that are not desired.
 
 ## Screenshots of this when I run it locally in chrome:
-Desktop on load:
+###### Desktop on load:
 ![image](https://user-images.githubusercontent.com/3377/71750909-b9468000-2e2e-11ea-8a5c-948d591caee4.png)
 
-Mobile on load:
+###### Mobile on load:
 ![image](https://user-images.githubusercontent.com/3377/71750927-c7949c00-2e2e-11ea-8401-6f479c296850.png)
 
-Button enables when field is not empty:
+###### Button enables when field is not empty:
 ![image](https://user-images.githubusercontent.com/3377/71750967-e4c96a80-2e2e-11ea-8ec2-7160db78145a.png)
 
-Error response when Github responds with an error:
+###### Error response when Github responds with an error:
 ![image](https://user-images.githubusercontent.com/3377/71751046-28bc6f80-2e2f-11ea-8934-1baa35601de9.png)
 
-Desktop when github responds with repo results:
+###### Desktop when github responds with repo results:
 ![image](https://user-images.githubusercontent.com/3377/71751065-37a32200-2e2f-11ea-8006-4fe45b11dd86.png)
 
-Mobile when github responds with repo results:
+###### Mobile when github responds with repo results:
 ![image](https://user-images.githubusercontent.com/3377/71751081-47bb0180-2e2f-11ea-9203-46be6d4e2450.png)
 
-Desktop when a repo is selected from the "Select a Repo" list list and the repo has issues:
+###### Desktop when a repo is selected from the "Select a Repo" list list and the repo has issues:
 ![image](https://user-images.githubusercontent.com/3377/71751104-573a4a80-2e2f-11ea-93b8-b3d3f6d37c66.png)
 
-Mobile when a repo is selected from the "Select a Repo" list and the repo has issues:
+###### Mobile when a repo is selected from the "Select a Repo" list and the repo has issues:
 ![image](https://user-images.githubusercontent.com/3377/71751292-efd0ca80-2e2f-11ea-9e10-ae7d838769c5.png)
 
-When github responds with an error when looking for issues for the repo (like if the repo has no issues):
+###### When github responds with an error when looking for issues for the repo (like if the repo has no issues):
 ![image](https://user-images.githubusercontent.com/3377/71751138-72a55580-2e2f-11ea-8d92-f8d6c632a88d.png)
 
-When the user has selected a different sort order/sort direction (different than the default of created/desc), and refreshes the page and looks a the issues for a repo in the same browser session, they see the different sort order/sort direction in desktop:
+###### When the user has selected a different sort order/sort direction (different than the default of created/desc), and refreshes the page and looks a the issues for a repo in the same browser session, they see the different sort order/sort direction in desktop:
 ![image](https://user-images.githubusercontent.com/3377/71851635-d7f58280-308b-11ea-8d69-f7c6af65279a.png)
 
-When the user has selected a different sort order/sort direction (different than the default of created/desc), and refreshes the page and looks a the issues for a repo in the same browser session, they see the different sort order/sort direction in mobile:
+###### When the user has selected a different sort order/sort direction (different than the default of created/desc), and refreshes the page and looks a the issues for a repo in the same browser session, they see the different sort order/sort direction in mobile:
 ![image](https://user-images.githubusercontent.com/3377/71851657-e5127180-308b-11ea-8cdc-6883d7ef2909.png)
 
-IE 11 compatibility:
+###### IE 11 compatibility:
 While locally testing, ran into some issues with react-create-app's scripts in IE 11:
 https://github.com/facebook/create-react-app/issues/8084 / https://github.com/facebook/create-react-app/issues/8153
 For now using the 3.2.0 version of `react-scrips` works for loading IE 11 locally.
 
-Initial screen in IE 11 on browserstack:
+###### Initial screen in IE 11 on browserstack:
 ![image](https://user-images.githubusercontent.com/3377/71693893-77500800-2d62-11ea-8e03-5c80a1e05d24.png)
 
-Listing screen in IE 11 on browserstack:
+###### Listing screen in IE 11 on browserstack:
 ![image](https://user-images.githubusercontent.com/3377/71693939-92227c80-2d62-11ea-8744-4ddef05c54d5.png)
 
-Listing screen in IE 11 on browserstack when a repo has been selected:
+###### Listing screen in IE 11 on browserstack when a repo has been selected:
 ![image](https://user-images.githubusercontent.com/3377/71751395-45a57280-2e30-11ea-9ed0-090c9be8c96b.png)
