@@ -62,9 +62,9 @@
     ]
   },
   "husky": {
-     "hooks": {
-        "pre-commit": "lint-staged"
-     }
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.10.0",

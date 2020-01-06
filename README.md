@@ -15,7 +15,7 @@ In the project directory, you can run:
 
 To install dependencies 
 
-After dependencies are installed the project directory, you can run:
+After dependencies are installed in the project directory, you can run:
 
 #### `npm start`
 
@@ -30,7 +30,6 @@ You will also see any lint errors in the console.
 #### `npm test`
 
 Launches the test runner in the interactive watch mode. This currently has 111 passing tests for me.
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ## Task:
 Create a simple interface with two screens:
