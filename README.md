@@ -3,6 +3,8 @@
 
 ## To run the app locally:
 
+Install Node.js: [https://nodejs.org/en/](https://nodejs.org/en/)
+
 Clone the repo into a directory: 
 
 #### `git clone https://github.com/liz/react-example.git`
@@ -13,7 +15,7 @@ In the project directory, you can run:
 
 To install dependencies 
 
-In the project directory, you can run:
+After dependencies are installed the project directory, you can run:
 
 #### `npm start`
 
