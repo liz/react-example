@@ -35,7 +35,11 @@ Img.defaultProps = {
 };
 
 export const Image = (props) => {
-    if (props.type === 'css') {
+    const isBackgroundImage = (event) =>{
+        return props.type === 'css'
+    }
+
+    if (isBackgroundImage()) {
         return (
             <Container>
                 <Background
@@ -68,43 +72,6 @@ export const Image = (props) => {
         />
     );
 };
-
-// export class Image extends Component {
-//     render() {
-//         if (this.props.type === 'css') {
-//             return (
-//                 <Container className="bst">
-//                     <Background
-//                         src={this.props.src}
-//                         width={this.props.width}
-//                         height={this.props.height}
-//                         maxWidth={this.props.maxWidth}
-//                         maxHeight={this.props.maxHeight}
-//                         horizontalAlignment={this.props.horizontalAlignment}
-//                         verticalAlignment={this.props.verticalAlignment}
-//                         className={`${this.props.className || ''} ${
-//                             this.props.children ? '' : 'text-hide'
-//                         }`}
-//                     >
-//                         {this.props.children || this.props.alt}
-//                     </Background>
-//                 </Container>
-//             );
-//         }
-
-//         return (
-//             <Img
-//                 src={this.props.src}
-//                 width={this.props.width}
-//                 maxWidth={this.props.maxWidth}
-//                 height={this.props.height}
-//                 maxHeight={this.props.maxHeight}
-//                 alt={this.props.alt}
-//                 className={this.props.className}
-//             />
-//         );
-//     }
-// }
 
 Image.propTypes = {
     /** URL of image. */
