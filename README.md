@@ -78,6 +78,12 @@ Mobile when a repo is selected from the "Select a Repo" list and the repo has is
 When github responds with an error when looking for issues for the repo (like if the repo has no issues):
 ![image](https://user-images.githubusercontent.com/3377/71751138-72a55580-2e2f-11ea-8d92-f8d6c632a88d.png)
 
+When the user has selected a different sort order/sort direction (different than the default of created/desc), and refreshes the page and looks a the issues for a repo in the same browser session, they see the different sort order/sort direction in desktop:
+![image](https://user-images.githubusercontent.com/3377/71851635-d7f58280-308b-11ea-8d69-f7c6af65279a.png)
+
+When the user has selected a different sort order/sort direction (different than the default of created/desc), and refreshes the page and looks a the issues for a repo in the same browser session, they see the different sort order/sort direction in mobile:
+![image](https://user-images.githubusercontent.com/3377/71851657-e5127180-308b-11ea-8cdc-6883d7ef2909.png)
+
 IE 11 compatibility:
 While locally testing, ran into some issues with react-create-app's scripts in IE 11:
 https://github.com/facebook/create-react-app/issues/8084 / https://github.com/facebook/create-react-app/issues/8153
