@@ -37,7 +37,7 @@ Img.defaultProps = {
 export const Image = (props) => {
     if (props.type === 'css') {
         return (
-            <Container className="bst">
+            <Container>
                 <Background
                     src={props.src}
                     width={props.width}
