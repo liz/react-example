@@ -155,63 +155,6 @@ export const Button = (props) => {
     );
 };
 
-// export class Button extends Component {
-//     handleClick = (event) => {
-//         if (this.props.handleClick) {
-//             event.preventDefault();
-//             this.props.handleClick(event);
-//         }
-//         return false;
-//     };
-
-//     renderTitleOrText = () => {
-//         if (this.props.title) {
-//             return this.props.title;
-//         }
-//         if (this.props.buttonText) {
-//             return this.props.buttonText;
-//         }
-//         return null;
-//     };
-
-//     renderIcon = () => {
-//         if (this.props.icon) {
-//             return <Icon iconOnRight={this.props.iconOnRight}>{this.props.icon}</Icon>;
-//         }
-//         return null;
-//     };
-
-//     renderText = () => {
-//         if (this.props.buttonText) {
-//             return <Text iconOnRight={this.props.iconOnRight}>{this.props.buttonText}</Text>;
-//         }
-//         return null;
-//     };
-
-//     render() {
-//         return (
-//             <ColoredButton
-//                 color={this.props.color}
-//                 colorAlt={this.props.colorAlt}
-//                 iconOnRight={this.props.iconOnRight}
-//                 onClick={this.handleClick}
-//                 className={this.props.className}
-//                 title={this.renderTitleOrText()}
-//                 type={this.props.type}
-//                 aria-label={this.renderTitleOrText()}
-//                 disabled={this.props.disabled}
-//                 hidden={this.props.hidden}
-//                 minWidth={this.props.minWidth}
-//             >
-//                 <Content>
-//                     {this.renderIcon()}
-//                     {this.renderText()}
-//                 </Content>
-//             </ColoredButton>
-//         );
-//     }
-// }
-
 Button.defaultProps = {
     color: theme.primaryColor,
     colorAlt: null,
