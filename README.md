@@ -84,7 +84,7 @@ Sort order and sort direction should be saved in the user's session and stay aft
 ###### When the user has selected a different sort order/sort direction (different than the default of created/desc), and refreshes the page and looks a the issues for a repo in the same browser session, they see the different sort order/sort direction in mobile:
 ![image](https://user-images.githubusercontent.com/3377/71851657-e5127180-308b-11ea-8cdc-6883d7ef2909.png)
 
-###### IE 11 compatibility:
+## IE 11 compatibility:
 While locally testing, ran into some issues with react-create-app's scripts in IE 11:
 https://github.com/facebook/create-react-app/issues/8084 / https://github.com/facebook/create-react-app/issues/8153
 For now using the 3.2.0 version of `react-scrips` works for loading IE 11 locally.
