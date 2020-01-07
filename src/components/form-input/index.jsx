@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import { FormInputError } from './error';
@@ -59,3 +60,20 @@ FormInput.defaultProps = {
 	rows: 2,
 	bottomSpacing: '1rem'
 }
+
+FormInput.propTypes = {
+    /** Id # for input */
+    fieldId: PropTypes.string,
+    /** Type of input */
+    fieldType: PropTypes.string,
+    /** Shoild this input be disabled? */
+    disabled: PropTypes.bool,
+    /** Shoild this input be required? */
+    required: PropTypes.bool,
+    /** How many rows should a textarea element have? */
+    rows: PropTypes.number,
+    /** Bottom spacing under input */
+    bottomSpacing: PropTypes.string,
+    /** Class name. */
+    className: PropTypes.string
+};

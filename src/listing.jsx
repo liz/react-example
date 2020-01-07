@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import Octokit from '@octokit/rest';
 
@@ -224,3 +225,9 @@ export default class Listing extends Component {
 Listing.defaultProps = {
     selectedRepo: null
 };
+
+Listing.propTypes = {
+    /** Github token provided by the user */
+    apiKey: PropTypes.string
+};
+
