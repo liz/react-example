@@ -41,7 +41,7 @@ describe('SaveKey', () => {
 				fieldType: 'text',
 				fieldError:  '',
 				disabled: false,
-				required: false,
+				required: true,
 				rows: 2,
 				bottomSpacing: '1rem'
 			});

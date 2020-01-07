@@ -87,6 +87,7 @@ export const SaveKey = (props) => {
                                         fieldError={fieldError}
                                         fieldId="save-key"
                                         fieldLabel="Please submit your Github API Key to see issues for your repos"
+                                        required
                                     />
                                 </Col>
                             </Row>

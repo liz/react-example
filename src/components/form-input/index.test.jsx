@@ -23,7 +23,26 @@ describe('FormInput', () => {
 	        rows: 2,
 	        bottomSpacing: '1rem'
 		});
-	  });
+	});
+
+    it('renders FormInputRequired with expected props', () => {
+        const wrapper = mount(<FormInput />);
+
+        expect(wrapper.find('FormInputRequired')).toHaveLength(1);
+        expect(wrapper.find('FormInputRequired').props()).toEqual({
+            fieldError: '',
+            required: false
+        });
+    });
+
+    it('renders FormInputError with expected props', () => {
+        const wrapper = mount(<FormInput />);
+
+        expect(wrapper.find('FormInputError')).toHaveLength(1);
+        expect(wrapper.find('FormInputError').props()).toEqual({
+            fieldError: ''
+        });
+    });
 
 	describe('renders correct input element', () => {
         it('renders select element when fieldType is "select"', () => {

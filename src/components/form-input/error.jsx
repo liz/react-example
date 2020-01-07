@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const FormInputError = (props) => {
 	if (props.fieldError) {
@@ -9,5 +10,10 @@ export const FormInputError = (props) => {
 }
 
 FormInputError.defaultProps = {
-	fieldError: null
+	fieldError: ''
 }
+
+FormInputError.propTypes = {
+    /** Error response to the FormInput */
+    fieldError: PropTypes.string
+};
