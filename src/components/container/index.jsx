@@ -37,7 +37,7 @@ Container.propTypes = {
     maxWidth: PropTypes.string,
     /** Horizontal padding of the container */
     horizontalPadding: PropTypes.string,
-    /** Vertical  padding of the container */
+    /** Vertical padding of the container */
     verticalPadding: PropTypes.string,
     /** Class name. */
     className: PropTypes.string

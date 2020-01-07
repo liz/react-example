@@ -66,9 +66,9 @@ FormInput.propTypes = {
     fieldId: PropTypes.string,
     /** Type of input */
     fieldType: PropTypes.string,
-    /** Shoild this input be disabled? */
+    /** Should this input be disabled? */
     disabled: PropTypes.bool,
-    /** Shoild this input be required? */
+    /** Should this input be required? */
     required: PropTypes.bool,
     /** How many rows should a textarea element have? */
     rows: PropTypes.number,

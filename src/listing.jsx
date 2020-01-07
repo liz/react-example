@@ -230,4 +230,3 @@ Listing.propTypes = {
     /** Github token provided by the user */
     apiKey: PropTypes.string
 };
-
