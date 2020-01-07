@@ -52,10 +52,10 @@ Sort order and sort direction should be saved in the user's session and stay aft
 
 ## Screenshots of this when I run it locally in chrome:
 ###### Desktop on load:
-![image](https://user-images.githubusercontent.com/3377/71750909-b9468000-2e2e-11ea-8a5c-948d591caee4.png)
+![image](https://user-images.githubusercontent.com/3377/71938575-bc11df80-3164-11ea-9613-0eb748906acb.png)
 
 ###### Mobile on load:
-![image](https://user-images.githubusercontent.com/3377/71750927-c7949c00-2e2e-11ea-8401-6f479c296850.png)
+![image](https://user-images.githubusercontent.com/3377/71938587-c8963800-3164-11ea-8117-a4365b3ede2a.png)
 
 ###### Button enables when field is not empty:
 ![image](https://user-images.githubusercontent.com/3377/71750967-e4c96a80-2e2e-11ea-8ec2-7160db78145a.png)
