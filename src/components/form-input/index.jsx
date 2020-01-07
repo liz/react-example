@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import { FormInputError } from './error';
+import { FormInputRequired } from './required';
 
 const FieldContainer = styled.div`
     margin-bottom: ${(props) => props.bottomSpacing};
@@ -41,12 +42,15 @@ export const FormInput = (props) => {
 				value={props.value}	
 				placeholder={props.placeHolder}
 			    onChange={(event) => onChange(event)}
-			    required={props.required}
 			    disabled={props.disabled}
 			    rows={props.rows}
 			>
 				{props.children}
 			</Field>
+			<FormInputRequired 
+				fieldError={props.fieldError}
+				required={props.required}
+			/>
 			<FormInputError fieldError={props.fieldError} />
 		</FieldContainer>
 	);

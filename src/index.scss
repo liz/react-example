@@ -83,6 +83,7 @@ input, textarea, select {
 	box-sizing: border-box;
 	border: 1px solid $alto;
 	background: $white;
+	color: $form-text-color;
 }
 
 select {
@@ -109,6 +110,13 @@ form {
 	.error {
 		font-size: $xxxsmall-base-font;
 		text-align: left;
+		margin-top: 0.5rem;
+	}
+
+	.required {
+		font-size: $xxxsmall-base-font;
+		text-align: left;
+		color: $form-text-color;
 		margin-top: 0.5rem;
 	}
 } // end form
