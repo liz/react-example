@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import Octokit from '@octokit/rest';
 import Moment from 'react-moment';
@@ -522,4 +523,13 @@ export default class IssueListing extends Component {
 
 IssueListing.defaultProps = {
     selectedRepo: null
+};
+
+IssueListing.propTypes = {
+    /** Github token provided by the user */
+    apiKey: PropTypes.object,
+    /** Github repo selected by the user */
+    selectedRepo: PropTypes.object,
+    /** Class name. */
+    className: PropTypes.string
 };

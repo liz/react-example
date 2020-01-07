@@ -29,7 +29,7 @@ You will also see any lint errors in the console.
 
 #### `npm test`
 
-Launches the test runner in the interactive watch mode. This currently has 111 passing tests for me.
+Launches the test runner in the interactive watch mode. This currently has 109 passing tests for me.
 
 ## Task:
 Create a simple interface with two screens:

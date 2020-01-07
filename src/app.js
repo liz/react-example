@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SaveKey from './save-key';
 import Listing from './listing';
@@ -10,5 +11,10 @@ const App = (props) => {
 
     return <SaveKey />;
 }
+
+App.propTypes = {
+	/** Github token provided by the user */
+	apiKey: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+};
 
 export default App

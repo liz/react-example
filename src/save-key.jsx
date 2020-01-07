@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { connect } from 'react-redux'
 
@@ -108,6 +109,13 @@ export const SaveKey = (props) => {
 
 SaveKey.defaultProps = {
     fieldError: '',
+};
+
+SaveKey.propTypes = {
+    /** Error response to the FormInput */
+    fieldError: PropTypes.string,
+    /** Dispatch action to run when FormInput is submitted */
+    dispatch: PropTypes.func
 };
 
 export default connect()(SaveKey)
