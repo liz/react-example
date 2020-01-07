@@ -26,12 +26,12 @@ const IssueListingContainer = styled(Container)`
 IssueListingContainer.displayName = 'IssueListingContainer';
 
 const NoIssuesMessage = styled.p`
-	padding-left: ${theme.gutter};
+    padding-left: ${theme.gutter};
     padding-right: ${theme.gutter};
 
     @media (min-width: ${mediaQueries.min.medium}) {
-    	padding-left: 0;
-    	padding-right: 0;
+        padding-left: 0;
+        padding-right: 0;
     }
 `;
 NoIssuesMessage.displayName = 'NoIssuesMessage';
