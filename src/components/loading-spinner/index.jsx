@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import loading from '../../images/loading.gif';
@@ -23,3 +24,10 @@ export const LoadingSpinner = (props) => (
 LoadingSpinner.defaultProps = {
 	width: "25px"
 }
+
+LoadingSpinner.propTypes = {
+    /** A CSS color code. */
+    color: PropTypes.string,
+    /** Width spinner */
+    width: PropTypes.string
+};

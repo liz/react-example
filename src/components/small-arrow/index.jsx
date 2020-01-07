@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import theme from '../../theme';
@@ -45,5 +46,14 @@ SmallArrow.defaultProps = {
 	color: theme.primaryColor,
 	width: '5px'
 }
+
+SmallArrow.propTypes = {
+    /** A CSS color code. */
+    color: PropTypes.string,
+    /** Width of arrow */
+    width: PropTypes.string,
+    /** Class name. */
+    className: PropTypes.string
+};
 
 export default SmallArrow

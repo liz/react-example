@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import theme from '../../theme';
@@ -28,3 +29,12 @@ Row.defaultProps = {
 	breakPoint: mediaQueries.min.medium,
 	height: null
 }
+
+Row.propTypes = {
+    /** Window width to stop stacking elements */
+    breakPoint: PropTypes.string,
+    /** Height of conainer */
+    height: PropTypes.string,
+    /** Child elements */
+    children: PropTypes.node
+};

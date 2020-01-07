@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import theme from '../../theme';
@@ -30,3 +31,14 @@ Container.defaultProps = {
 	horizontalPadding: theme.gutter,
 	verticalPadding: null
 }
+
+Container.propTypes = {
+    /** Max width of the container */
+    maxWidth: PropTypes.string,
+    /** Horizontal padding of the container */
+    horizontalPadding: PropTypes.string,
+    /** Vertical padding of the container */
+    verticalPadding: PropTypes.string,
+    /** Class name. */
+    className: PropTypes.string
+};
